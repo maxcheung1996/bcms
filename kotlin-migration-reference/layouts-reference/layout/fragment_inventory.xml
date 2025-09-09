@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            android:id="@+id/tagNumbers_all"
+            style="@style/TextViewStyle"
+            android:layout_weight="0.3"
+            android:text="@string/tag_number"
+            android:textStyle="bold"/>
+
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            android:id="@+id/readNumbers_all"
+            style="@style/TextViewStyle"
+            android:layout_weight="0.4"
+            android:text="@string/read_number"
+            android:textStyle="bold"/>
+
+        <include layout="@layout/vertical_line"
+            />
+
+        <TextView
+            android:id="@+id/useTimes_all"
+            style="@style/TextViewStyle"
+            android:layout_weight="0.3"
+            android:text="@string/user_time"
+            android:textStyle="bold"/>
+
+        <include layout="@layout/vertical_line" />
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_weight="0.05"
+            android:text="@string/sn_code"
+            android:textStyle="bold"/>
+
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_weight="0.1"
+            android:text="@string/type"
+            android:textStyle="bold"/>
+
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_weight="0.3"
+            android:text="@string/epc_code"
+            android:textStyle="bold"/>
+
+        <include
+            layout="@layout/vertical_line" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_weight="0.3"
+            android:text="@string/tid_code"
+            android:textStyle="bold"/>
+        <include layout="@layout/vertical_line" />
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_weight="0.15"
+            android:text="@string/read_numbers"
+            android:textStyle="bold"/>
+
+        <include layout="@layout/vertical_line" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <ListView
+        android:id="@+id/tag_info_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/colorPrimaryDark"
+        android:dividerHeight="1dp"
+        android:transcriptMode="alwaysScroll" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <Button
+            android:id="@+id/btn_inventory_all"
+            style="@style/TextViewStyle"
+            android:text="@string/read_rfid"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/btn_clear_all"
+            style="@style/TextViewStyle"
+            android:text="@string/clear_data"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LeftFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/read_RFID"
+            style="@style/TextViewStyle"
+            android:layout_height="40dp"
+            android:text="@string/read_rfid" />
+
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:id="@+id/temp"
+            android:layout_height="40dp"
+            android:text="温度"
+            android:visibility="gone"/>
+
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            android:id="@+id/clear_Data"
+            style="@style/TextViewStyle"
+            android:layout_height="40dp"
+            android:text="@string/clear_data" />
+        <include layout="@layout/vertical_line" />
+
+        <TextView
+            android:id="@+id/export"
+            style="@style/TextViewStyle"
+            android:layout_height="match_parent"
+            android:text="@string/export"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <include layout="@layout/headview_layout" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <ListView
+        android:id="@+id/specific_Msg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/colorPrimaryDark"
+        android:dividerHeight="1dp"
+        android:transcriptMode="alwaysScroll" />
+
+    <LinearLayout
+        android:id="@+id/invDataSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_weight="0.4"
+            android:text="@string/inventory_data_back" />
+
+        <Spinner
+            android:id="@+id/invModSet"
+            style="@style/TextViewStyle"
+            android:layout_weight="0.6"
+            android:entries="@array/readTagType" />
+
+    </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="10dp">-->
+
+<!--        <EditText-->
+<!--            style="@style/TextViewStyle"-->
+<!--            android:layout_weight="0.7"-->
+<!--            />-->
+
+<!--    </LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <EditText
+            style="@style/TextViewStyle"
+            android:layout_weight="0.5"
+            android:id="@+id/et_power"/>
+
+        <Button
+            android:id="@+id/btn_power"
+            style="@style/TextViewStyle"
+            android:layout_weight="0.5"
+            android:text="下发电量"/>
+
+
+    </LinearLayout>
+
+    <!--   <ProgressBar
+           android:id="@+id/singnalStrength"
+           style="@android:style/Widget.ProgressBar.Horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:max="40"
+           android:padding="5dp"
+           android:visibility="gone" />-->
+</LinearLayout>

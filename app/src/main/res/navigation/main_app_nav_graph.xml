@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_app_nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.socam.bcms.presentation.main.MainFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_main">
+        
+        <action
+            android:id="@+id/action_main_to_tag_activation"
+            app:destination="@id/tagActivationFragment" />
+        
+        <action
+            android:id="@+id/action_main_to_single_scan"
+            app:destination="@id/singleScanFragment" />
+        
+        <action
+            android:id="@+id/action_main_to_batch_process"
+            app:destination="@id/batchProcessFragment" />
+        
+        <action
+            android:id="@+id/action_main_to_settings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tagActivationFragment"
+        android:name="com.socam.bcms.presentation.modules.TagActivationFragment"
+        android:label="@string/tag_activation_title"
+        tools:layout="@layout/fragment_tag_activation">
+        
+        <action
+            android:id="@+id/action_tag_activation_back"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/singleScanFragment"
+        android:name="com.socam.bcms.presentation.modules.SingleScanFragment"
+        android:label="@string/single_scan_title"
+        tools:layout="@layout/fragment_single_scan">
+        
+        <action
+            android:id="@+id/action_single_scan_back"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/batchProcessFragment"
+        android:name="com.socam.bcms.presentation.modules.BatchProcessFragment"
+        android:label="@string/batch_process_title"
+        tools:layout="@layout/fragment_batch_process">
+        
+        <action
+            android:id="@+id/action_batch_process_back"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.socam.bcms.presentation.modules.SettingsFragment"
+        android:label="@string/settings_title"
+        tools:layout="@layout/fragment_settings">
+        
+        <action
+            android:id="@+id/action_settings_back"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+
+</navigation>

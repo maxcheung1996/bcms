@@ -1,0 +1,66 @@
+-- User table for local authentication
+CREATE TABLE User (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    salt TEXT NOT NULL,
+    token TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'USER',
+    full_name TEXT NOT NULL,
+    email TEXT,
+    department TEXT,
+    is_active INTEGER NOT NULL DEFAULT 1,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+-- Insert predefined users
+INSERT INTO User (username, password_hash, salt, token, role, full_name, email, department, created_at, updated_at)
+VALUES 
+('admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'salt123', 'admin_token_123', 'ADMIN', 'System Administrator', 'admin@socam.com', 'IT', strftime('%s', 'now'), strftime('%s', 'now')),
+('demo', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'salt456', 'demo_token_456', 'USER', 'Demo User', 'demo@socam.com', 'Operations', strftime('%s', 'now'), strftime('%s', 'now')),
+('operator', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'salt789', 'operator_token_789', 'OPERATOR', 'System Operator', 'operator@socam.com', 'Warehouse', strftime('%s', 'now'), strftime('%s', 'now'));
+
+-- Queries
+selectAll:
+SELECT * FROM User WHERE is_active = 1;
+
+selectByUsername:
+SELECT * FROM User WHERE username = ? AND is_active = 1;
+
+selectByUsernameAndPassword:
+SELECT * FROM User WHERE username = ? AND password_hash = ? AND is_active = 1;
+
+selectByToken:
+SELECT * FROM User WHERE token = ? AND is_active = 1;
+
+insertUser:
+INSERT INTO User (username, password_hash, salt, token, role, full_name, email, department, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'));
+
+updateUser:
+UPDATE User SET 
+    full_name = ?,
+    email = ?,
+    department = ?,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+updateUserPassword:
+UPDATE User SET 
+    password_hash = ?,
+    salt = ?,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+updateUserToken:
+UPDATE User SET 
+    token = ?,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+deactivateUser:
+UPDATE User SET 
+    is_active = 0,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;

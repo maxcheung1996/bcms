@@ -1,0 +1,33 @@
+-- SyncLog table for audit trail
+CREATE TABLE SyncLog (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sync_type TEXT NOT NULL, -- MANUAL, AUTO, BATCH
+    status TEXT NOT NULL, -- STARTED, COMPLETED, FAILED
+    total_records INTEGER NOT NULL DEFAULT 0,
+    successful_records INTEGER NOT NULL DEFAULT 0,
+    failed_records INTEGER NOT NULL DEFAULT 0,
+    error_summary TEXT,
+    started_at INTEGER NOT NULL,
+    completed_at INTEGER,
+    duration_ms INTEGER
+);
+
+-- Queries for SyncLog
+insertSyncLog:
+INSERT INTO SyncLog (sync_type, status, total_records, started_at)
+VALUES (?, 'STARTED', ?, strftime('%s', 'now'));
+
+updateSyncLog:
+UPDATE SyncLog SET 
+    status = ?,
+    successful_records = ?,
+    failed_records = ?,
+    error_summary = ?,
+    completed_at = strftime('%s', 'now'),
+    duration_ms = (strftime('%s', 'now') - started_at) * 1000
+WHERE id = ?;
+
+selectRecentSyncLogs:
+SELECT * FROM SyncLog 
+ORDER BY started_at DESC 
+LIMIT :limit_count;

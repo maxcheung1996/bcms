@@ -1,0 +1,199 @@
+<resources>
+    <string name="app_name">UHFDemo</string>
+    <string name="app_name_custom">Shanghai Taopin</string>
+
+    <string name="port">Port No.：</string>
+    <string name="ipAdress">IP Address</string>
+    <string name="main_page">>Home</string>
+    <string name="search_tag">Tag Search</string>
+    <string name="settings_page">Settings</string>
+
+    <string name="read_rfid">Inventory</string>
+    <string name="stop_rfid">Stop Inventory</string>
+    <string name="clear_data">Clear</string>
+
+    <string name="tag_number">Tags</string>
+    <string name="read_number">Tags/S</string>
+    <string name="user_time">Time(ms)</string>
+
+    <string name="ant_power">ANT PWR：</string>
+    <string name="ant_read_power">ANT Read PWR：</string>
+    <string name="ant_write_power">ANT Write PWR：</string>
+    <string name="regional_frequency">Frequency:</string>
+
+    <string name="MBank">MEM Bank：</string>
+    <string name="startToEnd">Start Address</string>
+    <string name="length">Length:</string>
+    <string name="data_hexadecimal">Data(hex):</string>
+    <string name="save">Save as default</string>
+    <string name="filter">Filter</string>
+    <string name="clear_filter">Filter Clear</string>
+    <string name="aces_pwd">Access password：</string>
+    <string name="kill_pwd">Kill password：</string>
+
+    <string name="open_filter">Enable Filter</string>
+    <string name="read_operate">Read Tag</string>
+    <string name="write_operate">rite Tag</string>
+
+    <string name="read">Read</string>
+    <string name="write">Write</string>
+
+    <string name="lock_operate">Lock Tag</string>
+    <string name="lock_area">Lock Area:</string>
+    <string name="lock">Lock</string>
+    <string name="unlock">Unlock</string>
+
+    <string name="kill_Tag">Kill Tag</string>
+
+    <string name="sn_code">SN</string>
+    <string name="epc_code">EPC</string>
+    <string name="tid_code">TID</string>
+    <string name="usr_code">USR</string>
+    <string name="rfu_code">RFU</string>
+    <string name="read_numbers">Times</string>
+    <string name="rssi_code">RSSI</string>
+    <string name="code_area">Code Area</string>
+    <string name="gtin">GTIN</string>
+    <string name="type">Type</string>
+
+
+    <string name="get_power">Get Power</string>
+    <string name="set_power">Set Power</string>
+
+    <string name="set_area_frequency">Set Frequency</string>
+    <string name="get_area_frequency">Get Frequency</string>
+
+    <string name="data_notnull">Can not be Empty</string>
+
+    <string name="software_version">Software Version:</string>
+    <string name="hareware_version">Hardware Version:</string>
+    <string name="firmware_version">Firmware Version:</string>
+    <string name="seleted_version">Firmware Update</string>
+
+    <string name="select_bin_file">select bin/mdfw filename</string>
+    <string name="firmware_update">firmware update</string>
+    <string name="auto_test_start">auto test start </string>
+    <string name="auto_test_stop">auto test stop</string>
+
+    <string name="inv_mode">Inventory Mode:</string>
+    <string name="save_inv_mode">ElectronicStorageInInventoryMode</string>
+    <string name="set_inv_mode">Set Mode</string>
+    <string name="get_inv_mode">Get Mode</string>
+
+    <string name="session_mode">Session:</string>
+    <string name="set_session_mode">Set Session</string>
+    <string name="get_session_mode">Get Session</string>
+    <string name="work_freq">Work Frequency:</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="current_qrcode">Barcode</string>
+    <string name="start_search">Start Searching</string>
+    <string name="stop_search">Stop Searching</string>
+    <string name="current_Tag">Tags:</string>
+    <string name="sound_switch">Enable/Disable Beeper</string>
+    <string name="start_scanner_code">Start Barcode Scanning</string>
+    <string name="stop_scanner_code">Stop Barcode Scanning</string>
+    <string name="findtag_operate">Search</string>
+
+    <string name="set_inventory_time">Set Inventory time</string>
+    <string name="get_inventory_time">Get Inventory time</string>
+    <string name="inventory_time">inventory time(ms)</string>
+    <string name="sleep_time">Sleep time(ms)</string>
+    <string name="poweroff_save">Power off and save</string>
+    <string name="inv_freq">Inventory and sleep time:</string>
+    <string name="set_frq_range">Set frequency range</string>
+    <string name="get_frq_range">Get frequency range</string>
+    <string name="get_temp">Get Temp</string>
+    <string name="temp">Temp</string>
+    <string name="stop_time">Read label stop time</string>
+    <string name="Automatically_stop_reading_labels">Automatically stop reading labels</string>
+    <string name="Enable_automatic_card_reading">Enable automatic card reading</string>
+    <string name="Disenable_automatic_card_reading">Disenable automatic card reading</string>
+    <string name="protocol_type">Protocol type:</string>
+    <string name="set_protocol_type">Set protocol type</string>
+    <string name="get_protocol_type">Get protocol type</string>
+
+    <string name="exit_app">Double-click the back button to exit</string>
+    <string name="notice_close_inventroy">Please close the RFID count operation first</string>
+    <string name="poweron_success">Power on successful</string>
+    <string name="charing">Charing</string>
+    <string name="charing_full">The gun battery is full</string>
+    <string name="notice_clean_data">Please stop Read first, then empty the data</string>
+    <string name="fiter_success">Filter successful</string>
+    <string name="fiter_failed">Filter fail</string>
+    <string name="clean_success">Clear succeeful</string>
+    <string name="clean_failed">Clear fail</string>
+    <string name="read_success">Read successful</string>
+    <string name="read_failed">Read fail</string>
+    <string name="write_success">write successful</string>
+    <string name="write_failed">write fail</string>
+
+    <string name="kill_tag_success">Kill tag successful</string>
+    <string name="kill_tag_failed">Kill tag fail</string>
+    <string name="lock_success">Lock successful</string>
+    <string name="lock_failed">Lock fail</string>
+    <string name="unlock_success">Unlock successful</string>
+    <string name="unlock_failed">Unlock fail</string>
+    <string name="success">successful</string>
+    <string name="failed">fail</string>
+    <string name="time_empty_notice">Time cannot be empty</string>
+    <string name="firmware_update_success">Update firmware successul</string>
+    <string name="firmware_update_failed">Update firmware fail</string>
+    <string name="firmware_update_wait">update Firmware,Please Wait</string>
+    <string name="firmware_getinfo_failed">Get Hardware version fail</string>
+    <string name="software_ver">Software version:</string>
+    <string name="hardware_ver">Hardware version:</string>
+    <string name="firemware_ver">Firmware version:</string>
+    <string name="select_firemaware_ver">Selected firmware version:</string>
+    <string name="notice_power_failed">
+         1.Please check Settings-〉User Define-〉EMSH Service Settings-〉Chose Enable EMSH service \n
+                            2.Please make sure there are two battery icons in the upper right corner of the PDA, and both display power；\n
+                            If there is only one battery icon, make sure the gun is connected reliably to the PDA；\n If the battery icon on the left show the gun battery is out of power, please use 3-in-1 seat for charging\n
+                            3.If you still have questions, please take a screenshot of EMSH setting -> EMSH status and send it to technical engineer
+    </string>
+    <string name="poweon_failed">Power on fail</string>
+    <string name="current_rssi">RSSI:</string>
+    <string name="inventory_data_back">INV Data Settings:</string>
+    <string name="init_msg">Initializing module configuration, please wait…</string>
+    <string name="determine">Determine</string>
+    <string name="cancel">Cancel</string>
+    <string name="selected_fq_rang">The currently selectable frequency range</string>
+    <string name="slr_module_type">Slr module type:</string>
+
+    <string name="select_um_module_type">UM SERIES MODULES</string>
+    <string name="select_slr_module_type">SLR SERIES MODULES</string>
+    <string name="select_rm_module_type">RM SERIES MODULES</string>
+    <string name="select_gx_module_type">GX SERIES MODULES</string>
+    <string name="about_modify_module_type">Modify module type</string>
+
+    <string name="open_led">Open LED</string>
+    <string name="close_led">Close LED</string>
+
+    <string name="less_power_test">Return loss test</string>
+
+    <string name="ASCII_show">Display in ASCII code</string>
+    <string name="export">Export</string>
+    <string name="notice_export_data">Please stop Read first, then export the data</string>
+    <string name="fastid">FasTid Mode：</string>
+    <string name="get_fastid">Get FasTid</string>
+    <string name="set_fastid">Set FasTid</string>
+    <string name="tid_filter">Tid Filter</string>
+    <string name="set_tid">Set Tid Filter</string>
+    <string name="lock_action">Lock Action:</string>
+    <string name="lock_object">Lock Object:</string>
+    <string name="restricted_reading">Restricted reading</string>
+    <string name="low_power">The battery is too low, stop using RFID</string>
+    <string name="tid_to_be_matched">Tid to be matched</string>
+    <string name="lock_address">lock address</string>
+    <string name="select_baud">Select the module baud rate</string>
+    <string name="dialog_confirm">Sure</string>
+    <string name="switching_baud">Switching baud rate</string>
+    <string name="now_baud">Baud rate of the current module：</string>
+    <string name="hint_baud">After switching the baud rate, please reopen the APP</string>
+    <string name="target">Target</string>
+    <string name="get_target">Get Target</string>
+    <string name="set_target">Set Target</string>
+    <string name="decode">Gen2 Encode</string>
+    <string name="get_decode">Get Gen2 Encode</string>
+    <string name="set_decode">Set Gen2 Encode</string>
+</resources>

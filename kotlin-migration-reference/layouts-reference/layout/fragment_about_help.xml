@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.uhf.setting.AboutHelpFragment">
+
+    <TextView
+        android:id="@+id/sw_ver"
+        style="@style/BtnStyle"
+        android:text="@string/software_version" />
+
+    <TextView
+        android:id="@+id/hw_ver"
+        style="@style/BtnStyle"
+        android:text="@string/hareware_version" />
+
+    <TextView
+        android:id="@+id/fm_ver"
+        style="@style/BtnStyle"
+        android:text="@string/firmware_version" />
+
+    <TextView
+        android:id="@+id/slrModuleType"
+        style="@style/BtnStyle"
+        android:text="@string/slr_module_type"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/be_seleted_ver"
+        style="@style/BtnStyle"
+        android:text="@string/seleted_version" />
+
+    <TextView
+        android:id="@+id/be_baud_ver"
+        style="@style/BtnStyle"
+        android:text="@string/now_baud" />
+
+    <Button
+        android:id="@+id/bin_file"
+        style="@style/BtnStyle"
+        android:text="@string/select_bin_file" />
+
+    <Button
+        android:id="@+id/fm_update"
+        style="@style/BtnStyle"
+        android:enabled="false"
+        android:text="@string/firmware_update" />
+
+    <Button
+        android:id="@+id/switch_module"
+        style="@style/BtnStyle"
+        android:text="@string/about_modify_module_type" />
+
+    <Button
+        android:id="@+id/switch_baud"
+        style="@style/BtnStyle"
+        android:text="@string/switching_baud"
+        android:visibility="visible"/>
+
+</LinearLayout>

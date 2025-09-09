@@ -1,0 +1,63 @@
+-- SyncStatus table for tracking data synchronization
+CREATE TABLE SyncStatus (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    table_name TEXT NOT NULL,
+    record_id INTEGER NOT NULL,
+    operation TEXT NOT NULL, -- CREATE, UPDATE, DELETE
+    status TEXT NOT NULL DEFAULT 'PENDING', -- PENDING, IN_PROGRESS, COMPLETED, FAILED
+    sync_attempts INTEGER NOT NULL DEFAULT 0,
+    error_message TEXT,
+    last_sync_attempt INTEGER,
+    next_retry_time INTEGER,
+    payload TEXT, -- JSON payload for API call
+    response TEXT, -- API response
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    UNIQUE(table_name, record_id, operation)
+);
+
+
+-- Queries for SyncStatus
+selectPendingSyncs:
+SELECT * FROM SyncStatus 
+WHERE status IN ('PENDING', 'FAILED') 
+AND (next_retry_time IS NULL OR next_retry_time <= strftime('%s', 'now'))
+ORDER BY created_at ASC;
+
+selectSyncsByTable:
+SELECT * FROM SyncStatus WHERE table_name = ? ORDER BY created_at DESC;
+
+selectSyncByRecord:
+SELECT * FROM SyncStatus WHERE table_name = ? AND record_id = ? AND operation = ?;
+
+insertSyncStatus:
+INSERT INTO SyncStatus (table_name, record_id, operation, payload, created_at, updated_at)
+VALUES (?, ?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'));
+
+updateSyncStatus:
+UPDATE SyncStatus SET 
+    status = ?,
+    sync_attempts = sync_attempts + 1,
+    error_message = ?,
+    response = ?,
+    last_sync_attempt = strftime('%s', 'now'),
+    next_retry_time = ?,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+markSyncCompleted:
+UPDATE SyncStatus SET 
+    status = 'COMPLETED',
+    response = ?,
+    last_sync_attempt = strftime('%s', 'now'),
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+deleteSyncRecord:
+DELETE FROM SyncStatus WHERE id = ?;
+
+cleanupCompletedSyncs:
+DELETE FROM SyncStatus 
+WHERE status = 'COMPLETED' 
+AND updated_at < strftime('%s', 'now') - (7 * 24 * 60 * 60); -- older than 7 days
+

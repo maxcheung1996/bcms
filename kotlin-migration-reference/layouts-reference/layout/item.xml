@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/vertical_line" />
+
+    <TextView
+        android:id="@+id/sn"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.1" />
+
+    <include layout="@layout/vertical_line" />
+
+    <TextView
+        android:id="@+id/epc"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.7"
+        android:textIsSelectable="true"/>
+
+    <include
+        android:id="@+id/epc_tid_divd_Line"
+        layout="@layout/vertical_line"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tid"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.7"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/epc_usr_divd_Line"
+        layout="@layout/vertical_line"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/usr"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.7"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/epc_rfu_divd_Line"
+        layout="@layout/vertical_line"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/rfu"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.7"
+        android:visibility="gone" />
+
+    <include layout="@layout/vertical_line" />
+
+    <TextView
+        android:id="@+id/rssi"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.1"
+        android:visibility="gone"/>
+
+    <include layout="@layout/vertical_line" />
+
+    <TextView
+        android:id="@+id/gtin"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.7"
+        android:visibility="visible"/>
+
+    <include layout="@layout/vertical_line" />
+
+    <TextView
+        android:id="@+id/count"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.2" />
+
+    <include layout="@layout/vertical_line" />
+
+
+</LinearLayout>

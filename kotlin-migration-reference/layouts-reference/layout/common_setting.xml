@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/ant_power" />
+
+            <Spinner
+                android:id="@+id/powerGet"
+                style="@style/SpinnerStyle"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/getPower"
+                style="@style/TextViewStyle"
+                android:text="@string/get_power" />
+
+            <Button
+                android:id="@+id/setPower"
+                style="@style/TextViewStyle"
+                android:text="@string/set_power" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/ant_read_power" />
+
+            <Spinner
+                android:id="@+id/powerReadGet"
+                style="@style/SpinnerStyle"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/getReadPower"
+                style="@style/TextViewStyle"
+                android:text="@string/get_power" />
+
+            <Button
+                android:id="@+id/setReadPower"
+                style="@style/TextViewStyle"
+                android:text="@string/set_power" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/ant_write_power" />
+
+            <Spinner
+                android:id="@+id/powerWriteGet"
+                style="@style/SpinnerStyle"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/getWritePower"
+                style="@style/TextViewStyle"
+                android:text="@string/get_power" />
+
+            <Button
+                android:id="@+id/setWritePower"
+                style="@style/TextViewStyle"
+                android:text="@string/set_power" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/regional_frequency" />
+
+            <Spinner
+                android:id="@+id/area_frequency"
+                style="@style/SpinnerStyle"
+                android:entries="@array/frequency" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/get_area_frequency"
+                style="@style/TextViewStyle"
+                android:text="@string/get_area_frequency" />
+
+            <Button
+                android:id="@+id/set_area_frequency"
+                style="@style/TextViewStyle"
+                android:text="@string/set_area_frequency" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frq_param"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/work_freq" />
+
+            <EditText
+                android:id="@+id/showNeedList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false" />
+
+            <Button
+                android:id="@+id/get_frq_rang"
+                style="@style/BtnStyle"
+                android:text="@string/get_frq_range" />
+
+            <Button
+                android:id="@+id/set_frq_rang"
+                style="@style/BtnStyle"
+                android:text="@string/set_frq_range" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/temp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/temp"/>
+
+            <EditText
+                android:id="@+id/showTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false" />
+
+            <Button
+                android:id="@+id/get_temp"
+                style="@style/BtnStyle"
+                android:text="@string/get_temp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/fastid"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/fastid" />
+
+                <Spinner
+                    android:id="@+id/sp_fastid"
+                    style="@style/SpinnerStyle"
+                    android:entries="@array/enable_disable" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/get_fastid"
+                style="@style/BtnStyle"
+                android:text="@string/get_fastid"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/set_fastid"
+                style="@style/BtnStyle"
+                android:text="@string/set_fastid"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/tid_filter"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/tid_filter" />
+
+                <Spinner
+                    android:id="@+id/sp_tid_filter"
+                    style="@style/SpinnerStyle"
+                    android:entries="@array/enable_disable" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/set_tid_filter"
+                style="@style/BtnStyle"
+                android:text="@string/set_tid"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:id="@+id/protocolType"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/protocol_type"/>
+            <Spinner
+                android:id="@+id/protocol"
+                style="@style/SpinnerStyle"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/protocol_set_get">
+
+            <Button
+                android:id="@+id/getProtocol"
+                style="@style/TextViewStyle"
+                android:text="@string/get_protocol_type" />
+
+            <Button
+                android:id="@+id/setProtocol"
+                style="@style/TextViewStyle"
+                android:text="@string/set_protocol_type" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/stop_time"/>
+
+            <EditText
+                android:id="@+id/stop_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:inputType="number"/>
+            <Button
+                android:id="@+id/start_stop_time"
+                style="@style/BtnStyle"
+                android:text="@string/Enable_automatic_card_reading" />
+            <Button
+                android:id="@+id/close_stop_time"
+                style="@style/BtnStyle"
+                android:text="@string/Disenable_automatic_card_reading" />
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/um7ExtraFun"
+            layout="@layout/um7_added_fun_layout"
+            android:layout_height="488dp" />
+
+        <include
+            android:id="@+id/ct_params"
+            layout="@layout/tag_ct_mode_params"
+            android:visibility="gone"/>
+
+        <CheckBox
+            android:id="@+id/soundSwitch"
+            style="@style/SpinnerStyle"
+            android:layout_marginTop="10dp"
+            android:text="@string/sound_switch" />
+
+        <CheckBox
+            android:id="@+id/ASCIIorHex"
+            style="@style/SpinnerStyle"
+            android:layout_marginTop="10dp"
+            android:text="@string/ASCII_show" />
+
+        <CheckBox
+            android:id="@+id/restricted_reading"
+            style="@style/SpinnerStyle"
+            android:layout_marginTop="10dp"
+            android:text="@string/restricted_reading"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

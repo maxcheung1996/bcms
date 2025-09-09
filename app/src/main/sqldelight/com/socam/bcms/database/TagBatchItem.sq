@@ -1,0 +1,30 @@
+-- TagBatchItem table for tags in batches
+CREATE TABLE TagBatchItem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    batch_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    processing_status TEXT NOT NULL DEFAULT 'PENDING', -- PENDING, PROCESSED, FAILED
+    processed_at INTEGER,
+    notes TEXT,
+    FOREIGN KEY (batch_id) REFERENCES TagBatch(id),
+    FOREIGN KEY (tag_id) REFERENCES Tag(id),
+    UNIQUE(batch_id, tag_id)
+);
+
+-- Queries for TagBatchItem
+insertBatchItem:
+INSERT INTO TagBatchItem (batch_id, tag_id)
+VALUES (?, ?);
+
+updateBatchItemStatus:
+UPDATE TagBatchItem SET 
+    processing_status = ?,
+    processed_at = strftime('%s', 'now'),
+    notes = ?
+WHERE batch_id = ? AND tag_id = ?;
+
+selectBatchItems:
+SELECT tbi.*, t.epc, t.rssi
+FROM TagBatchItem tbi
+JOIN Tag t ON tbi.tag_id = t.id
+WHERE tbi.batch_id = ?;

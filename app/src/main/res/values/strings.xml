@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App name -->
+    <string name="app_name">BCMS</string>
+    
+    <!-- Login screen -->
+    <string name="login_title">Login</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button_text">Login</string>
+    <string name="app_logo_description">BCMS Logo</string>
+    <string name="version_placeholder">version 1.0.0</string>
+    <string name="version_format">version %s</string>
+    <string name="environment_dev">DEV</string>
+    <string name="environment_prod">PROD</string>
+    
+    <!-- Login errors -->
+    <string name="error_username_required">Username is required</string>
+    <string name="error_password_required">Password is required</string>
+    
+    <!-- Main screen -->
+    <string name="welcome_message">Welcome to BCMS</string>
+    <string name="user_placeholder">Unknown User</string>
+    <string name="welcome_user_format">Hello, %s</string>
+    
+    <!-- Module cards -->
+    <string name="tag_activation_title">Tag Activation</string>
+    <string name="tag_activation_subtitle">Activate RFID tags</string>
+    <string name="tag_activation_description">Tag Activation Module</string>
+    
+    <string name="single_scan_title">Single Scan</string>
+    <string name="single_scan_subtitle">Scan individual tags</string>
+    <string name="single_scan_description">Single Scan Module</string>
+    
+    <string name="batch_process_title">Batch Process</string>
+    <string name="batch_process_subtitle">Process tag batches</string>
+    <string name="batch_process_description">Batch Process Module</string>
+    
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">App configuration</string>
+    <string name="settings_description">Settings Module</string>
+    
+    <!-- Data synchronization -->
+    <string name="data_synchronization_title">Data Synchronization</string>
+    <string name="sync_status_placeholder">Last sync: Never</string>
+    <string name="sync_status_ready">Ready to sync</string>
+    <string name="sync_status_syncing">Syncing data…</string>
+    <string name="sync_status_success">Last sync: %s</string>
+    <string name="sync_status_error">Sync failed</string>
+    <string name="sync_now_button">Sync Now</string>
+    
+    <!-- Statistics -->
+    <string name="total_tags_label">Total Tags</string>
+    <string name="active_tags_label">Active Tags</string>
+    <string name="pending_sync_label">Pending Sync</string>
+    
+    <!-- Common -->
+    <string name="back_button_text">Back</string>
+    <string name="module_placeholder_description">This module is under development.\nMore features coming soon!</string>
+    
+    <!-- Menu -->
+    <string name="action_logout">Logout</string>
+    <string name="action_refresh">Refresh</string>
+    
+    <!-- Module specific titles for navigation -->
+    <string name="select_module_title">Select Module</string>
+    
+    <!-- Legacy SelectActivity strings (for compatibility) -->
+    <string name="select_module_description">Choose a module to continue</string>
+    <string name="select_um_module_type">UHF Module</string>
+    <string name="select_slr_module_type">SLR Module</string>
+    <string name="select_rm_module_type">RM Module</string>
+    <string name="select_gx_module_type">GX Module</string>
+    <string name="module_selection_help">Select the appropriate module for your device</string>
+</resources>

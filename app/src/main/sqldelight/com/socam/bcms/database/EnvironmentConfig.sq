@@ -1,0 +1,46 @@
+-- Environment configuration table
+CREATE TABLE EnvironmentConfig (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    environment_name TEXT NOT NULL UNIQUE, -- 'dev' or 'prod'
+    base_url TEXT NOT NULL,
+    api_key TEXT,
+    timeout_seconds INTEGER NOT NULL DEFAULT 30,
+    retry_count INTEGER NOT NULL DEFAULT 3,
+    is_active INTEGER NOT NULL DEFAULT 0,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+-- Insert default environment configurations
+INSERT INTO EnvironmentConfig (environment_name, base_url, timeout_seconds, retry_count, is_active, created_at, updated_at)
+VALUES 
+('dev', 'https://dev.socam.com/iot/api', 30, 3, 1, strftime('%s', 'now'), strftime('%s', 'now')),
+('prod', 'https://micservice.shuion.com.hk/api', 30, 3, 0, strftime('%s', 'now'), strftime('%s', 'now'));
+
+-- Queries for EnvironmentConfig
+selectActiveEnvironment:
+SELECT * FROM EnvironmentConfig WHERE is_active = 1 LIMIT 1;
+
+selectEnvironmentByName:
+SELECT * FROM EnvironmentConfig WHERE environment_name = ?;
+
+selectAllEnvironments:
+SELECT * FROM EnvironmentConfig ORDER BY environment_name;
+
+updateActiveEnvironment:
+UPDATE EnvironmentConfig SET is_active = 0;
+
+setActiveEnvironment:
+UPDATE EnvironmentConfig SET 
+    is_active = 1,
+    updated_at = strftime('%s', 'now')
+WHERE environment_name = ?;
+
+updateEnvironmentConfig:
+UPDATE EnvironmentConfig SET 
+    base_url = ?,
+    api_key = ?,
+    timeout_seconds = ?,
+    retry_count = ?,
+    updated_at = strftime('%s', 'now')
+WHERE environment_name = ?;

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/sleep_time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/inv_freq" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/inventory_time"
+                style="@style/TextViewStyle"
+                android:hint="@string/inventory_time"
+                android:inputType="number"
+                android:maxLength="4" />
+
+            <EditText
+                android:id="@+id/sleep_time"
+                style="@style/TextViewStyle"
+                android:hint="@string/sleep_time"
+                android:inputType="number"
+                android:maxLength="4" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/poweroff_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/poweroff_save" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/get_inventory_time"
+                style="@style/TextViewStyle"
+                android:text="@string/get_inventory_time" />
+
+            <Button
+                android:id="@+id/set_inventory_time"
+                style="@style/TextViewStyle"
+                android:text="@string/set_inventory_time" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/inv_mode" />
+
+        <Spinner
+            android:id="@+id/invMode"
+            style="@style/SpinnerStyle"
+            android:entries="@array/invMode" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/save_inv_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/save_inv_mode" />
+
+    <Button
+        android:id="@+id/get_inv_mode"
+        style="@style/BtnStyle"
+        android:text="@string/get_inv_mode" />
+
+    <Button
+        android:id="@+id/set_inv_mode"
+        style="@style/BtnStyle"
+        android:text="@string/set_inv_mode" />
+
+    <LinearLayout
+        android:id="@+id/session_fun_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/session_setting_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/session_mode" />
+
+            <Spinner
+                android:id="@+id/sesionMode"
+                style="@style/SpinnerStyle"
+                android:layout_weight="1"
+                android:entries="@array/sesionMode" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/get_session_mode"
+            style="@style/BtnStyle"
+            android:text="@string/get_session_mode" />
+
+        <Button
+            android:id="@+id/set_session_mode"
+            style="@style/BtnStyle"
+            android:text="@string/set_session_mode" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/target_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/target_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/target" />
+
+            <Spinner
+                android:id="@+id/target"
+                style="@style/SpinnerStyle"
+                android:layout_weight="1"
+                android:entries="@array/targetMode" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/get_target_mode"
+            style="@style/BtnStyle"
+            android:text="@string/get_target" />
+
+        <Button
+            android:id="@+id/set_target_mode"
+            style="@style/BtnStyle"
+            android:text="@string/set_target" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/decode_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/decode_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/decode" />
+
+            <Spinner
+                android:id="@+id/decode"
+                style="@style/SpinnerStyle"
+                android:layout_weight="1"
+                android:entries="@array/gen2_decode" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/get_decode_mode"
+            style="@style/BtnStyle"
+            android:text="@string/get_decode" />
+
+        <Button
+            android:id="@+id/set_decode_mode"
+            style="@style/BtnStyle"
+            android:text="@string/set_decode" />
+
+    </LinearLayout>
+</LinearLayout>

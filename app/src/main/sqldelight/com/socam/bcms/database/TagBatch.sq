@@ -1,0 +1,31 @@
+-- TagBatch table for batch processing
+CREATE TABLE TagBatch (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    batch_name TEXT NOT NULL,
+    description TEXT,
+    status TEXT NOT NULL DEFAULT 'ACTIVE', -- ACTIVE, COMPLETED, CANCELLED
+    created_by INTEGER NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    FOREIGN KEY (created_by) REFERENCES User(id)
+);
+
+-- Queries for TagBatch
+selectAllBatches:
+SELECT b.*, u.username AS createdByUsername
+FROM TagBatch b
+LEFT JOIN User u ON b.created_by = u.id
+ORDER BY b.created_at DESC;
+
+selectBatchById:
+SELECT * FROM TagBatch WHERE id = ?;
+
+insertBatch:
+INSERT INTO TagBatch (batch_name, description, created_by, created_at, updated_at)
+VALUES (?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'));
+
+updateBatchStatus:
+UPDATE TagBatch SET 
+    status = ?,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;

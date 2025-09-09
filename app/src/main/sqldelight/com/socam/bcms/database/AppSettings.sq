@@ -1,0 +1,47 @@
+-- AppSettings table for application configuration
+CREATE TABLE AppSettings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    setting_key TEXT NOT NULL UNIQUE,
+    setting_value TEXT NOT NULL,
+    setting_type TEXT NOT NULL DEFAULT 'STRING', -- STRING, INTEGER, BOOLEAN, JSON
+    description TEXT,
+    is_user_configurable INTEGER NOT NULL DEFAULT 1,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+-- Insert default app settings
+INSERT INTO AppSettings (setting_key, setting_value, setting_type, description, is_user_configurable, created_at, updated_at)
+VALUES 
+('auto_sync_enabled', 'true', 'BOOLEAN', 'Enable automatic data synchronization', 1, strftime('%s', 'now'), strftime('%s', 'now')),
+('sync_interval_minutes', '30', 'INTEGER', 'Sync interval in minutes', 1, strftime('%s', 'now'), strftime('%s', 'now')),
+('max_retry_attempts', '3', 'INTEGER', 'Maximum retry attempts for failed syncs', 1, strftime('%s', 'now'), strftime('%s', 'now')),
+('uhf_power_level', '30', 'INTEGER', 'UHF reader power level (0-30)', 1, strftime('%s', 'now'), strftime('%s', 'now')),
+('scan_timeout_seconds', '5', 'INTEGER', 'Tag scan timeout in seconds', 1, strftime('%s', 'now'), strftime('%s', 'now')),
+('batch_size_limit', '1000', 'INTEGER', 'Maximum items per batch', 1, strftime('%s', 'now'), strftime('%s', 'now')),
+('offline_mode_enabled', 'true', 'BOOLEAN', 'Enable offline operation mode', 0, strftime('%s', 'now'), strftime('%s', 'now')),
+('app_version', '1.0.0', 'STRING', 'Current app version', 0, strftime('%s', 'now'), strftime('%s', 'now')),
+('last_sync_timestamp', '0', 'INTEGER', 'Last successful sync timestamp', 0, strftime('%s', 'now'), strftime('%s', 'now'));
+
+-- Queries for AppSettings
+selectAllSettings:
+SELECT * FROM AppSettings ORDER BY setting_key;
+
+selectSettingByKey:
+SELECT * FROM AppSettings WHERE setting_key = ?;
+
+selectUserConfigurableSettings:
+SELECT * FROM AppSettings WHERE is_user_configurable = 1 ORDER BY setting_key;
+
+updateSetting:
+UPDATE AppSettings SET 
+    setting_value = ?,
+    updated_at = strftime('%s', 'now')
+WHERE setting_key = ?;
+
+insertSetting:
+INSERT INTO AppSettings (setting_key, setting_value, setting_type, description, is_user_configurable, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'));
+
+deleteSetting:
+DELETE FROM AppSettings WHERE setting_key = ?;

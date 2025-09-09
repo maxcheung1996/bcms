@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/vertical_line" />
+
+    <TextView
+        android:id="@+id/epc"
+        style="@style/TextViewStyle"
+        android:layout_weight="0.1" />
+
+    <include layout="@layout/vertical_line" />
+
+</LinearLayout>

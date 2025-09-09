@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:background="#f5f5f5"
+    tools:context=".SelectActivity">
+
+    <!-- 標題 / Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_module_title"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="40dp" />
+    
+    <!-- 描述文字 / Description -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_module_description"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:gravity="center"
+        android:layout_marginBottom="60dp" />
+
+    <!-- UM 模組按鈕 / UM Module Button -->
+    <Button
+        android:id="@+id/umModule"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:text="@string/select_um_module_type"
+        android:textSize="18sp"
+        android:background="@drawable/button_selector"
+        android:textColor="#ffffff"
+        android:elevation="4dp"
+        android:visibility="invisible" />
+
+    <!-- SLR 模組按鈕 / SLR Module Button -->
+    <Button
+        android:id="@+id/slrModule"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:text="@string/select_slr_module_type"
+        android:textSize="18sp"
+        android:background="@drawable/button_selector"
+        android:textColor="#ffffff"
+        android:elevation="4dp"
+        android:visibility="invisible" />
+
+    <!-- RM 模組按鈕 / RM Module Button -->
+    <Button
+        android:id="@+id/rmModule"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:text="@string/select_rm_module_type"
+        android:textSize="18sp"
+        android:background="@drawable/button_selector"
+        android:textColor="#ffffff"
+        android:elevation="4dp"
+        android:visibility="invisible" />
+
+    <!-- GX 模組按鈕 / GX Module Button -->
+    <Button
+        android:id="@+id/gxModule"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:text="@string/select_gx_module_type"
+        android:textSize="18sp"
+        android:background="@drawable/button_selector"
+        android:textColor="#ffffff"
+        android:elevation="4dp"
+        android:visibility="invisible" />
+        
+    <!-- 說明文字 / Help text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/module_selection_help"
+        android:textSize="14sp"
+        android:textColor="#999999"
+        android:gravity="center"
+        android:layout_marginTop="40dp" />
+
+</LinearLayout>

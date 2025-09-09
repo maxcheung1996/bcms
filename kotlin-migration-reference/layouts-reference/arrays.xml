@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="title_test">
+        <item>Setting</item>
+        <item>Read/write</item>
+        <item>Lock Tag</item>
+        <item>Kill Tag</item>
+        <item>About</item>
+        <item>Test</item>
+    </string-array>
+
+    <string-array name="title">
+        <item>Setting</item>
+        <item>Read/write</item>
+        <item>Lock Tag</item>
+        <item>Kill Tag</item>
+        <item>About</item>
+<!--        <item>Test</item>-->
+    </string-array>
+
+
+
+    <string-array name="adress">
+        <item>Port No.</item>
+        <item>IP Address</item>
+    </string-array>
+
+
+    <string-array name="frequency">
+        <item>CN(840－845MHz)</item>
+        <item>CN(920－925MHz)</item>
+        <item>EU(865－868MHz)</item>
+        <item>US(902－928MHz)</item>
+    </string-array>
+
+    <string-array name="frequency_7100">
+        <item>CN(920－925MHz)</item>
+        <item>EU(865－868MHz)</item>
+        <item>US(902－928MHz)</item>
+    </string-array>
+
+    <string-array name="frequency_only_cn2_usa">
+        <item>CN(920－925MHz)</item>
+        <item>US(902－928MHz)</item>
+        <item>UM2</item>
+    </string-array>
+
+    <string-array name="frequency_only_cn2_usa_l">
+        <item>CN(920－925MHz)</item>
+        <item>US(902－928MHz)</item>
+    </string-array>
+
+    <string-array name="tag_filter">
+        <item>EPC</item>
+        <item>TID</item>
+        <item>USR</item>
+    </string-array>
+
+    <string-array name="rw_filter">
+        <item>RFU</item>
+        <item>EPC</item>
+        <item>TID</item>
+        <item>USR</item>
+    </string-array>
+
+    <string-array name="sesionMode">
+        <item>S0</item>
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+    </string-array>
+
+    <string-array name="targetMode">
+        <item>A</item>
+        <item>B</item>
+        <item>A->B</item>
+        <item>B->A</item>
+    </string-array>
+
+    <string-array name="gen2_decode">
+        <item>FM0</item>
+        <item>M2</item>
+        <item>M4</item>
+        <item>M8</item>
+        <item>PROF0</item>
+        <item>PROF1</item>
+        <item>PROF2</item>
+        <item>PROF3</item>
+        <item>PROF4</item>
+        <item>PROF5</item>
+        <item>RFM_1</item>
+        <item>RFM_3</item>
+        <item>RFM_5</item>
+        <item>RFM_7</item>
+        <item>RFM_11</item>
+        <item>RFM_12</item>
+        <item>RFM_13</item>
+        <item>RFM_15</item>
+        <item>RFM_103</item>
+        <item>RFM_345</item>
+        <item>RFM_120</item>
+    </string-array>
+
+    <string-array name="invMode_only_fast_auto">
+        <item>FastReadMode</item>
+        <item>AutoPowerSavingMode</item>
+    </string-array>
+
+    <string-array name="e710_invMode">
+        <item>CommonMode</item>
+        <item>New QuickMode</item>
+        <item>IntelligentModel</item>
+        <item>QuickMode</item>
+    </string-array>
+
+    <string-array name="RM01_invMode">
+        <item>IntelligentModel</item>
+        <item>QuickMode</item>
+        <item>CustomMode</item>
+    </string-array>
+
+    <string-array name="invMode">
+        <item>MultiLabelMode</item>
+        <item>FastReadMode</item>
+        <item>UltraLowPowerMode</item>
+        <item>TestMode</item>
+        <item>AutoPowerSavingMode</item>
+    </string-array>
+
+    <string-array name="r2000_invMode">
+        <item>CommonMode</item>
+        <item>IntelligentModel</item>
+    </string-array>
+
+    <string-array name="invMode_gx">
+        <item>Single label mode</item>
+        <item>Multi label mode</item>
+    </string-array>
+
+    <string-array name="gx_6b">
+        <item>TID</item>
+        <item>USR</item>
+    </string-array>
+
+    <string-array name="readTagType">
+        <item>EPC</item>
+        <item>TID</item>
+        <item>EPC+TID</item>
+        <item>EPC+USR</item>
+        <item>EPC+TID+USR</item>
+        <item>EPC+TID+RFU</item>
+        <item>EPC+RFU</item>
+    </string-array>
+    <string-array name="readTagType_7100">
+        <item>EPC</item>
+        <item>TID</item>
+        <item>EPC+TID</item>
+        <item>EPC+USR</item>
+    </string-array>
+
+    <string-array name="readTagType_gx_6b">
+        <item>TID</item>
+        <item>USR</item>
+        <item>USR+TID</item>
+    </string-array>
+    
+    <string-array name="protocol_type">
+        <item>ISO Protocol</item>
+        <item>GB Protocol</item>
+    </string-array>
+
+    <string-array name="protocol_type_gx">
+        <item>ISO Protocol 6C</item>
+        <item>ISO Protocol 6B</item>
+    </string-array>
+
+    <string-array name="enable_disable">
+        <item>disable</item>
+        <item>enable</item>
+    </string-array>
+
+    <string-array name="gb_select_area">
+        <item>Code Area</item>
+    </string-array>
+
+    <string-array name="gb_area">
+        <item>Information Area</item>
+        <item>Code Area</item>
+        <item>Safe Area</item>
+        <item>User Area</item>
+    </string-array>
+
+    <string-array name="gb_lock_action">
+        <item>Read and write</item>
+        <item>Readable but not writable</item>
+        <item>Not readable or writable</item>
+        <item>Cannot be read or written</item>
+    </string-array>
+
+    <string-array name="gb_lock_object">
+        <item>Store attribute</item>
+        <item>Safe mode</item>
+    </string-array>
+
+    <string-array name="gb_safe_mode">
+        <item>No certification required</item>
+        <item>Need authentication, no need secure communication</item>
+        <item>Need authentication, need secure communication</item>
+    </string-array>
+
+    <string-array name="baud">
+        <item>115200</item>
+        <item>921600</item>
+    </string-array>
+
+
+</resources>

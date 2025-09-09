@@ -1,0 +1,130 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'  // Replacement for deprecated kotlin-android-extensions
+apply plugin: 'com.squareup.sqldelight'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdk 30  // Updated syntax for AGP 7.0+
+    ndkVersion "21.4.7075529"  // CRITICAL: Use your proven working NDK version
+    
+    defaultConfig {
+        applicationId "com.socam.bcms"  // Keep your original package name
+        minSdk 23
+        targetSdk 30  // Keep same as original
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+        }
+    }
+
+    // CRITICAL: Required for vendor UHF libraries
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+    // CRITICAL: Required for vendor JNI libraries  
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    // Required for vendor library packaging
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
+
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.32"
+    
+    // AndroidX Core - Compatible with AGP 3.6.3
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.fragment:fragment-ktx:1.3.6'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.activity:activity-ktx:1.3.1'
+    
+    // Material Design 3 - Modern UI components
+    implementation 'com.google.android.material:material:1.4.0'
+    
+    // Navigation Component for routing
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    
+    // Lifecycle components
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    
+    // Coroutines for async operations
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    
+    // SQLDelight for local database
+    implementation 'com.squareup.sqldelight:android-driver:1.5.3'
+    implementation 'com.squareup.sqldelight:coroutines-extensions:1.5.3'
+    
+    // Retrofit for API calls
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
+    
+    // Security for encrypted preferences
+    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    
+    // CRITICAL: Vendor UHF Libraries - DO NOT CHANGE VERSIONS
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+    // Specifically:
+    // - UHFJar_V1.4.05.aar (Main UHF functionality)
+    // - iscanuserapi.jar (Barcode scanning support)
+    
+    // Data Persistence (Keep for compatibility)
+    implementation 'com.tencent:mmkv:1.2.11'
+    
+    // Excel Export (Same as original)
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+// SQLDelight configuration
+sqldelight {
+    Database {
+        packageName = "com.socam.bcms.database"
+        sourceFolders = ["sqldelight"]
+    }
+}
+
+// CRITICAL NOTES:
+// 1. Keep Java 1.8 compatibility for vendor libraries
+// 2. Must include vendor JAR/AAR files in libs folder
+// 3. JNI libraries path must be configured correctly
+// 4. MMKV version should match original for data compatibility

@@ -1,0 +1,68 @@
+-- Tag table for RFID tag data
+CREATE TABLE Tag (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    epc TEXT NOT NULL UNIQUE,
+    tid TEXT,
+    user_data TEXT,
+    rssi INTEGER,
+    antenna_id INTEGER,
+    read_count INTEGER NOT NULL DEFAULT 1,
+    battery_level INTEGER,
+    temperature REAL,
+    is_activated INTEGER NOT NULL DEFAULT 0,
+    activation_date INTEGER,
+    last_scanned INTEGER NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    sync_status TEXT NOT NULL DEFAULT 'PENDING' -- PENDING, SYNCED, FAILED
+);
+
+-- Queries for Tag
+selectAllTags:
+SELECT * FROM Tag ORDER BY last_scanned DESC;
+
+selectTagByEpc:
+SELECT * FROM Tag WHERE epc = ?;
+
+selectTagsNotSynced:
+SELECT * FROM Tag WHERE sync_status != 'SYNCED';
+
+selectRecentTags:
+SELECT * FROM Tag 
+WHERE last_scanned > :since_timestamp 
+ORDER BY last_scanned DESC 
+LIMIT :limit_count;
+
+insertTag:
+INSERT INTO Tag (epc, tid, user_data, rssi, antenna_id, battery_level, temperature, last_scanned, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'), strftime('%s', 'now'));
+
+updateTag:
+UPDATE Tag SET 
+    tid = ?,
+    user_data = ?,
+    rssi = ?,
+    antenna_id = ?,
+    read_count = read_count + 1,
+    battery_level = ?,
+    temperature = ?,
+    last_scanned = strftime('%s', 'now'),
+    updated_at = strftime('%s', 'now')
+WHERE epc = ?;
+
+activateTag:
+UPDATE Tag SET 
+    is_activated = 1,
+    activation_date = strftime('%s', 'now'),
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+updateSyncStatus:
+UPDATE Tag SET 
+    sync_status = ?,
+    updated_at = strftime('%s', 'now')
+WHERE id = ?;
+
+deleteTag:
+DELETE FROM Tag WHERE id = ?;
+

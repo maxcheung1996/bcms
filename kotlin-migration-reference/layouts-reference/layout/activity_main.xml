@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="@string/app_name_custom"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </FrameLayout>
+
+    <include layout="@layout/horizontal_line"
+        android:visibility="gone"/>
+
+    <FrameLayout
+        android:id="@+id/showData"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/vertical_line" />
+
+        <ImageView
+            android:id="@+id/toLeft"
+            style="@style/ImgStyle"
+            android:contentDescription="@string/main_page"
+            android:onClick="onClick"
+            android:src="@drawable/main_click" />
+
+        <include layout="@layout/vertical_line" />
+
+        <ImageView
+            android:id="@+id/toRight"
+            style="@style/ImgStyle"
+            android:contentDescription="@string/settings_page"
+            android:onClick="onClick"
+            android:src="@drawable/set_noclick" />
+
+        <include layout="@layout/vertical_line" />
+
+        <ImageView
+            android:id="@+id/searchTag"
+            style="@style/ImgStyle"
+            android:contentDescription="@string/search_tag"
+            android:onClick="onClick"
+            android:src="@drawable/search_noclcik" />
+
+        <include layout="@layout/vertical_line" />
+
+        <ImageView
+            android:id="@+id/inventoryTag"
+            style="@style/ImgStyle"
+            android:contentDescription="@string/search_tag"
+            android:onClick="onClick"
+            android:src="@drawable/custom_noclick" />
+
+        <include layout="@layout/vertical_line" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SearchFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/findtag_operate" />
+
+    <include layout="@layout/tagfilter_view" />
+
+    <CheckBox
+        android:id="@+id/CB_Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/Bt_SetFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/filter" />
+
+        <Button
+            android:id="@+id/Bt_Clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/clear_filter" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/currentTag"
+        style="@style/SpinnerStyle"
+        android:layout_marginTop="10dp"
+        android:hint="@string/current_Tag" />
+
+    <TextView
+        android:id="@+id/showRssi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_rssi" />
+
+    <ProgressBar
+        android:id="@+id/singnalStrength"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:max="40"
+        />
+
+    <Button
+        android:id="@+id/searchFilterTag"
+        style="@style/BtnStyle"
+        android:text="@string/start_search" />
+
+
+</LinearLayout>

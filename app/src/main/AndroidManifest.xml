@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.socam.bcms">
+
+    <!-- Required permissions for UHF RFID functionality -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission 
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    
+    <!-- 前景服務權限 / Foreground service permissions -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name=".BCMSApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BCMS">
+        
+        <!-- 啟動器活動：身份驗證 / Launcher Activity: Authentication -->
+        <activity
+            android:name=".presentation.AuthActivity"
+            android:exported="true"
+            android:label="@string/login_title"
+            android:theme="@style/Theme.BCMS">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- 主要活動：BCMS 主畫面 / Main Activity: BCMS Main Screen -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.BCMS" />
+        
+        <!-- 舊版模組選擇活動 (保留相容性) / Legacy Module Selection Activity (for compatibility) -->
+        <activity
+            android:name=".SelectActivity"
+            android:exported="false"
+            android:label="@string/select_module_title"
+            android:theme="@style/Theme.BCMS" />
+            
+        <!-- UHF 背景掃描服務 / UHF Background Scanning Service -->
+        <service
+            android:name=".service.UHFScanningService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+            
+    </application>
+
+</manifest>
