@@ -23,7 +23,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BCMS">
+        android:theme="@style/Theme.BCMS"
+        android:largeHeap="true"
+        android:hardwareAccelerated="true">
         
         <!-- 啟動器活動：身份驗證 / Launcher Activity: Authentication -->
         <activity

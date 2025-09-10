@@ -4,13 +4,16 @@
     
     <item
         android:id="@+id/action_refresh"
-        android:icon="@drawable/ic_sync"
-        android:title="@string/action_refresh"
-        app:showAsAction="ifRoom" />
+        android:title="Refresh"
+        android:visible="true"
+        android:enabled="true"
+        app:showAsAction="never" />
     
     <item
         android:id="@+id/action_logout"
-        android:title="@string/action_logout"
+        android:title="Logout"
+        android:visible="true"
+        android:enabled="true"
         app:showAsAction="never" />
     
 </menu>

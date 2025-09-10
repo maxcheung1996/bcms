@@ -66,3 +66,5 @@ WHERE id = ?;
 deleteTag:
 DELETE FROM Tag WHERE id = ?;
 
+-- COUNT queries removed for stability - no longer needed
+

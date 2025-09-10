@@ -61,3 +61,5 @@ DELETE FROM SyncStatus
 WHERE status = 'COMPLETED' 
 AND updated_at < strftime('%s', 'now') - (7 * 24 * 60 * 60); -- older than 7 days
 
+-- COUNT queries removed for stability - no longer needed
+

@@ -41,7 +41,8 @@ class LoginFragment : Fragment() {
         
         setupUI()
         setupObservers()
-        loadVersionInfo()
+        // Load version info in background to avoid blocking startup
+        loadVersionInfoAsync()
     }
     
     private fun setupUI(): Unit {
@@ -101,9 +102,7 @@ class LoginFragment : Fragment() {
         }
         
         if (!hasError) {
-            lifecycleScope.launch {
-                viewModel.login(username, password)
-            }
+            viewModel.login(username, password)
         }
     }
     
@@ -124,9 +123,16 @@ class LoginFragment : Fragment() {
         (requireActivity() as? AuthActivity)?.onLoginSuccess()
     }
     
-    private fun loadVersionInfo(): Unit {
+    private fun loadVersionInfoAsync(): Unit {
+        // Don't block startup - load version info asynchronously after a delay
         lifecycleScope.launch {
-            viewModel.loadAppInfo()
+            kotlinx.coroutines.delay(1000) // Wait 1 second to avoid blocking startup
+            try {
+                viewModel.loadAppInfo()
+            } catch (e: Exception) {
+                // Silently fail - version info is not critical for login
+                println("LoginFragment: Failed to load version info: ${e.message}")
+            }
         }
     }
     

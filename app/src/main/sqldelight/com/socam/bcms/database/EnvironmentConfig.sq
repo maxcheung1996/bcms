@@ -11,13 +11,12 @@ CREATE TABLE EnvironmentConfig (
     updated_at INTEGER NOT NULL
 );
 
--- Insert default environment configurations
-INSERT INTO EnvironmentConfig (environment_name, base_url, timeout_seconds, retry_count, is_active, created_at, updated_at)
-VALUES 
-('dev', 'https://dev.socam.com/iot/api', 30, 3, 1, strftime('%s', 'now'), strftime('%s', 'now')),
-('prod', 'https://micservice.shuion.com.hk/api', 30, 3, 0, strftime('%s', 'now'), strftime('%s', 'now'));
+-- Default environment configurations will be inserted programmatically by DatabaseManager
 
 -- Queries for EnvironmentConfig
+insertEnvironment:
+INSERT INTO EnvironmentConfig (environment_name, base_url, timeout_seconds, retry_count, is_active, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'));
 selectActiveEnvironment:
 SELECT * FROM EnvironmentConfig WHERE is_active = 1 LIMIT 1;
 

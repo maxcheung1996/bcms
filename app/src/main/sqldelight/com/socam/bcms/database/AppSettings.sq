@@ -10,18 +10,7 @@ CREATE TABLE AppSettings (
     updated_at INTEGER NOT NULL
 );
 
--- Insert default app settings
-INSERT INTO AppSettings (setting_key, setting_value, setting_type, description, is_user_configurable, created_at, updated_at)
-VALUES 
-('auto_sync_enabled', 'true', 'BOOLEAN', 'Enable automatic data synchronization', 1, strftime('%s', 'now'), strftime('%s', 'now')),
-('sync_interval_minutes', '30', 'INTEGER', 'Sync interval in minutes', 1, strftime('%s', 'now'), strftime('%s', 'now')),
-('max_retry_attempts', '3', 'INTEGER', 'Maximum retry attempts for failed syncs', 1, strftime('%s', 'now'), strftime('%s', 'now')),
-('uhf_power_level', '30', 'INTEGER', 'UHF reader power level (0-30)', 1, strftime('%s', 'now'), strftime('%s', 'now')),
-('scan_timeout_seconds', '5', 'INTEGER', 'Tag scan timeout in seconds', 1, strftime('%s', 'now'), strftime('%s', 'now')),
-('batch_size_limit', '1000', 'INTEGER', 'Maximum items per batch', 1, strftime('%s', 'now'), strftime('%s', 'now')),
-('offline_mode_enabled', 'true', 'BOOLEAN', 'Enable offline operation mode', 0, strftime('%s', 'now'), strftime('%s', 'now')),
-('app_version', '1.0.0', 'STRING', 'Current app version', 0, strftime('%s', 'now'), strftime('%s', 'now')),
-('last_sync_timestamp', '0', 'INTEGER', 'Last successful sync timestamp', 0, strftime('%s', 'now'), strftime('%s', 'now'));
+-- Default app settings will be inserted programmatically by DatabaseManager
 
 -- Queries for AppSettings
 selectAllSettings:

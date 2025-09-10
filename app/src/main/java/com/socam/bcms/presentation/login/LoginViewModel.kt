@@ -28,7 +28,7 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     /**
      * Perform user authentication
      */
-    suspend fun login(username: String, password: String): Unit {
+    fun login(username: String, password: String): Unit {
         _loginState.value = LoginState.Loading
         
         viewModelScope.launch {
@@ -51,19 +51,42 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     
     /**
      * Load application and environment information
+     * OPTIMIZED: Handle database errors gracefully and use defaults
      */
     suspend fun loadAppInfo(): Unit {
         viewModelScope.launch {
             try {
-                // Get app version
-                val versionSetting = databaseManager.database.appSettingsQueries
-                    .selectSettingByKey("app_version")
-                    .executeAsOneOrNull()
+                // Ensure database is ready before querying
+                val isDbReady = try {
+                    databaseManager.database.userQueries.selectByUsername("_test_").executeAsOneOrNull()
+                    true
+                } catch (e: Exception) {
+                    false
+                }
                 
-                // Get current environment
-                val currentEnv = databaseManager.database.environmentConfigQueries
-                    .selectActiveEnvironment()
-                    .executeAsOneOrNull()
+                if (!isDbReady) {
+                    // Database not ready, use defaults
+                    _environmentInfo.value = EnvironmentInfo("1.0.0", "dev", "")
+                    return@launch
+                }
+                
+                // Get app version (with safe fallback)
+                val versionSetting = try {
+                    databaseManager.database.appSettingsQueries
+                        .selectSettingByKey("app_version")
+                        .executeAsOneOrNull()
+                } catch (e: Exception) {
+                    null
+                }
+                
+                // Get current environment (with safe fallback)
+                val currentEnv = try {
+                    databaseManager.database.environmentConfigQueries
+                        .selectActiveEnvironment()
+                        .executeAsOneOrNull()
+                } catch (e: Exception) {
+                    null
+                }
                 
                 val envInfo = EnvironmentInfo(
                     version = versionSetting?.setting_value ?: "1.0.0",
@@ -73,7 +96,8 @@ class LoginViewModel(private val context: Context) : ViewModel() {
                 
                 _environmentInfo.value = envInfo
             } catch (e: Exception) {
-                // Use default values if database query fails
+                // Use default values if anything fails
+                println("LoginViewModel: Error loading app info: ${e.message}")
                 _environmentInfo.value = EnvironmentInfo("1.0.0", "dev", "")
             }
         }

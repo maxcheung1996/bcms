@@ -14,16 +14,14 @@ CREATE TABLE User (
     updated_at INTEGER NOT NULL
 );
 
--- Insert predefined users
-INSERT INTO User (username, password_hash, salt, token, role, full_name, email, department, created_at, updated_at)
-VALUES 
-('admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'salt123', 'admin_token_123', 'ADMIN', 'System Administrator', 'admin@socam.com', 'IT', strftime('%s', 'now'), strftime('%s', 'now')),
-('demo', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'salt456', 'demo_token_456', 'USER', 'Demo User', 'demo@socam.com', 'Operations', strftime('%s', 'now'), strftime('%s', 'now')),
-('operator', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'salt789', 'operator_token_789', 'OPERATOR', 'System Operator', 'operator@socam.com', 'Warehouse', strftime('%s', 'now'), strftime('%s', 'now'));
+-- Initial users will be created programmatically by DatabaseManager
 
 -- Queries
 selectAll:
 SELECT * FROM User WHERE is_active = 1;
+
+selectById:
+SELECT * FROM User WHERE id = ? AND is_active = 1;
 
 selectByUsername:
 SELECT * FROM User WHERE username = ? AND is_active = 1;
@@ -64,3 +62,6 @@ UPDATE User SET
     is_active = 0,
     updated_at = strftime('%s', 'now')
 WHERE id = ?;
+
+deleteAllUsers:
+DELETE FROM User;

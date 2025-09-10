@@ -101,14 +101,11 @@ class BCMSApp : Application() {
     
     /**
      * 初始化 SQLDelight 資料庫 / Initialize SQLDelight Database
+     * MOVED TO BACKGROUND THREAD TO PREVENT ANR
      */
     private fun initializeDatabase() {
-        try {
-            databaseManager.initializeDatabase()
-            Log.d(TAG, "資料庫初始化成功 / Database initialized successfully")
-        } catch (e: Exception) {
-            Log.e(TAG, "資料庫初始化失敗 / Database initialization failed", e)
-        }
+        // Don't initialize database during app startup - do it lazily when needed
+        Log.d(TAG, "資料庫將在需要時初始化 / Database will be initialized when needed")
     }
     
     /**

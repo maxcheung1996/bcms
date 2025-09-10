@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'  // Replacement for deprecated kotlin-android-extensions
 apply plugin: 'com.squareup.sqldelight'
-apply plugin: 'kotlin-kapt'
+// apply plugin: 'kotlin-kapt'  // Disabled - not needed without DataBinding
 
 android {
     compileSdk 30  // Updated syntax for AGP 7.0+
@@ -18,11 +18,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true              // 啟用程式碼縮減 / Enable code shrinking
+            shrinkResources true            // 縮減資源 / Shrink resources  
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable true
+            // 保持 debug 版本未優化以便調試 / Keep debug unoptimized for debugging
         }
     }
 
@@ -38,7 +40,7 @@ android {
 
     buildFeatures {
         viewBinding true
-        dataBinding true
+        // dataBinding true  // Disabled - not needed since we're using ViewBinding
     }
 
     // CRITICAL: Required for vendor JNI libraries  

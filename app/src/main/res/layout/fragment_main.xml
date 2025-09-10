@@ -21,7 +21,23 @@
             android:background="@color/primary"
             app:title="BCMS"
             app:titleTextColor="@android:color/white"
-            app:menu="@menu/main_menu" />
+            app:popupTheme="@android:style/ThemeOverlay.Material.Light">
+            
+            <!-- Manual logout button as backup (hidden by default since menu works) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/manual_logout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="Logout"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:minWidth="0dp"
+                android:visibility="gone" />
+                
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
