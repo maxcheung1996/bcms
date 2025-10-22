@@ -1,0 +1,33 @@
+-- MasterConcreteGrades table for Concrete Grades data
+CREATE TABLE MasterConcreteGrades (
+    id INTEGER PRIMARY KEY NOT NULL,
+    grade TEXT NOT NULL,
+    is_default INTEGER NOT NULL DEFAULT 0,
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+-- Queries for MasterConcreteGrades
+selectAllConcreteGrades:
+SELECT * FROM MasterConcreteGrades ORDER BY grade;
+
+selectConcreteGradeById:
+SELECT * FROM MasterConcreteGrades WHERE id = ?;
+
+selectDefaultConcreteGrade:
+SELECT * FROM MasterConcreteGrades WHERE is_default = 1;
+
+insertConcreteGrade:
+INSERT OR REPLACE INTO MasterConcreteGrades (id, grade, is_default) VALUES (?, ?, ?);
+
+updateConcreteGrade:
+UPDATE MasterConcreteGrades SET grade = ?, is_default = ?, sync_status = ?, last_sync_date = ? WHERE id = ?;
+
+deleteConcreteGrade:
+DELETE FROM MasterConcreteGrades WHERE id = ?;
+
+deleteAllConcreteGrades:
+DELETE FROM MasterConcreteGrades;
+
+countConcreteGrades:
+SELECT COUNT(*) FROM MasterConcreteGrades;

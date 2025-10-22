@@ -1,5 +1,6 @@
 package com.socam.bcms
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.socam.bcms.databinding.ActivityMainBinding
 import com.socam.bcms.domain.AuthManager
 import com.socam.bcms.presentation.AuthActivity
+import com.socam.bcms.utils.LocaleHelper
 
 /**
  * Main activity that hosts the primary app navigation
@@ -19,6 +21,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var authManager: AuthManager
+    
+    /**
+     * Apply saved language locale to Activity context
+     * This ensures all strings are loaded in the correct language
+     */
+    override fun attachBaseContext(newBase: Context?) {
+        val context = newBase ?: return
+        val localizedContext = LocaleHelper.applyLanguageToActivityContext(context)
+        super.attachBaseContext(localizedContext)
+    }
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 println("Available (可用空間): ${(maxMemory - usedMemory) / 1024 / 1024}MB")
                 println("===============================")
                 
-                authManager = AuthManager(this)
+                authManager = AuthManager.getInstance(this)
                 val isAuthenticated = authManager.isAuthenticated()
                 
                 runOnUiThread {
@@ -89,8 +101,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         
-        // Check authentication status
-        if (!authManager.isAuthenticated()) {
+        // Check authentication status (only if authManager is initialized)
+        if (::authManager.isInitialized && !authManager.isAuthenticated()) {
+            println("MainActivity: Authentication lost, redirecting to AuthActivity")
             startActivity(Intent(this, AuthActivity::class.java))
             finish()
         }

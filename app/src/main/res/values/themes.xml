@@ -23,4 +23,13 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <!-- Dialog theme for full screen dialogs -->
+    <style name="Theme.BCMS.Dialog.FullScreen" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/background_primary</item>
+        <item name="android:statusBarColor">@color/primary_variant</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+
 </resources>

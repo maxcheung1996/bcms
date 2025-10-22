@@ -1,0 +1,67 @@
+调用接口
+a）初始化模块操作类
+1) 引入UHFManager类：
+import com.uhf.base.UHFManager;
+
+2）实例化UHFManager
+UHFManager uhfmanager=UHFManager.getUHFImplSigleInstance(mType);
+
+3）UHFModuleType枚举
+使用UM模块mType传入UHFModuleType.UM_MODULE；
+使用SLR模块mType传入UHFModuleType.SLR_MODULE；
+
+
+b）模块上电
+uhfmanager.powerOn();
+
+c）开始盘点
+uhfmanager.startInventoryTag();
+
+d）结束盘点
+uhfmanager.stopInventory();
+
+e）模块下电
+uhfmanager.powerOff();
+
+f）其他常用接口
+powerGet，powerSet 
+读写功率设置和获取，功率值大小影
+响读取标签距离
+
+frequencyModeSet
+frequencyModeGetNotFixedFreq
+区域频率设置和获取，推荐使用美国
+频率
+
+sessionModeSet
+sessionModeGet
+session模式设置和获取，推荐S0或
+S1
+
+readT agModeGet
+readT agModeSet
+标签盘点返回数据类别设置和获取
+
+盘点标签接口调用示例 code implementation example:
+UHFManager uhfmanager =
+UHFManager.getUHFImplSigleInstance(UHFModuleType.SLR
+_
+操作类
+boolean ifsucesss = uhfmanager.powerOn(); //给模组上电
+if (!ifsucesss) {
+printf(“powerOn failed \n”);
+}
+SystemClock.sleep(3000); //延时 上电一定要延时
+uhfmanager.readTagModeSet(0,0,0,0);//设置返回数据种类
+uhfmanager.slrInventoryModeSet(3); //设置盘点模式
+uhfmanager.startInventoryTag()；//开始盘点
+boolean ifInventory = true;
+new Thread(new Runnable() { //开启线程接收标签数据
+@Override
+public void run() {
+while(ifInventory)
+String[] buf = uhfmanager.readTagFromBuffer();
+}
+}).start();
+uhfmanager.stopInventory()；//停止盘点
+ifInventory = false;//结束盘点线程

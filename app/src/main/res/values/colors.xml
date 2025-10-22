@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary colors (Material 3 inspired) -->
-    <color name="primary">#4CAF50</color>
-    <color name="primary_variant">#388E3C</color>
-    <color name="secondary">#2196F3</color>
-    <color name="secondary_variant">#1976D2</color>
-    <color name="tertiary">#FF9800</color>
-    <color name="tertiary_variant">#F57C00</color>
-    
-    <!-- Background colors -->
-    <color name="background_primary">#F5F5F5</color>
-    <color name="background_secondary">#FFFFFF</color>
+    <!-- Existing colors -->
+    <color name="primary">#4fb794</color>
+    <color name="primary_variant">#3D8F73</color>
+    <color name="secondary">#03DAC6</color>
+    <color name="background">#FFFBFE</color>
+    <color name="background_light">#F8F9FA</color>
+    <color name="surface">#FFFBFE</color>
+    <color name="error">#B3261E</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_secondary">#000000</color>
+    <color name="on_background">#1C1B1F</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_error">#FFFFFF</color>
+
+    <!-- Signal strength colors for RSSI display -->
+    <color name="signal_excellent">#4CAF50</color>  <!-- Green: > -40 dBm -->
+    <color name="signal_good">#FF9800</color>       <!-- Orange: -40 to -60 dBm -->
+    <color name="signal_fair">#FFC107</color>       <!-- Yellow: -60 to -80 dBm -->
+    <color name="signal_poor">#F44336</color>       <!-- Red: < -80 dBm -->
+
+    <!-- Card colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_shadow">#E0E0E0</color>
+
+    <!-- Status colors -->
+    <color name="status_ready">#2196F3</color>
+    <color name="status_scanning">#4CAF50</color>
+    <color name="status_error">#F44336</color>
+    <color name="status_processing">#FF9800</color>
+
+    <!-- Additional colors needed by existing layouts -->
+    <color name="white">#FFFFFF</color>
+    <color name="secondary_variant">#00A693</color>
     <color name="surface_primary">#FFFFFF</color>
-    <color name="surface_secondary">#F8F9FA</color>
+    <color name="text_primary">#1C1B1F</color>
+    <color name="text_secondary">#6B6B6B</color>
+    <color name="background_primary">#F8F9FA</color>
+    <color name="tertiary">#4fb794</color>
     
-    <!-- Text colors -->
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
-    <color name="text_hint">#BDBDBD</color>
-    
-    <!-- State colors -->
-    <color name="success">#4CAF50</color>
-    <color name="warning">#FF9800</color>
-    <color name="error">#F44336</color>
-    <color name="info">#2196F3</color>
-    
-    <!-- Icon colors -->
-    <color name="icon_primary">#424242</color>
-    <color name="icon_secondary">#9E9E9E</color>
-    
-    <!-- Environment indicator colors -->
+    <!-- Missing colors from other layouts -->
     <color name="environment_dev">#FF9800</color>
     <color name="environment_prod">#4CAF50</color>
-    
-    <!-- Material Design System colors -->
-    <color name="on_surface">#1C1B1F</color>
-    <color name="on_primary">#FFFFFF</color>
-    <color name="on_secondary">#FFFFFF</color>
-    
-    <!-- Standard colors -->
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="transparent">#00000000</color>
+    <color name="surface_secondary">#F0F0F0</color>
+    <color name="icon_secondary">#757575</color>
+    <color name="primary_light">#7BC7A8</color>
+    <color name="success">#4CAF50</color>
+    <color name="success_light">#C8E6C9</color>
+    <color name="surface_variant">#E6E1E5</color>
+    <color name="warning">#FF9800</color>
 </resources>

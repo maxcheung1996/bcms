@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:minWidth="600dp">
+
+    <!-- Dialog Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="20dp"
+        android:background="@color/primary">
+
+        <TextView
+            android:id="@+id/dialogTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Batch Edit - MIC10 Form"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            tools:text="Batch Edit - MIC10 Form" />
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:text="✕"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/transparent"
+            android:contentDescription="Close dialog" />
+
+    </LinearLayout>
+
+    <!-- Batch Info Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@color/design_default_color_surface">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_dialog_info"
+            android:layout_marginEnd="12dp"
+            app:tint="@color/design_default_color_primary" />
+
+        <TextView
+            android:id="@+id/batchInfoText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Editing workflow step for 5 MIC tags. Only enabled fields will be updated."
+            android:textSize="14sp"
+            android:textColor="@color/design_default_color_on_surface"
+            tools:text="Editing workflow step for 5 MIC tags. Only enabled fields will be updated." />
+
+    </LinearLayout>
+
+    <!-- Error Message -->
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Error message here"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="14sp"
+        android:padding="16dp"
+        android:background="@android:color/background_light"
+        android:visibility="gone"
+        tools:text="Error message here"
+        tools:visibility="visible" />
+
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="32dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <!-- Form Fields Container -->
+    <ScrollView
+        android:id="@+id/formScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:maxHeight="400dp"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:id="@+id/formFieldsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" />
+
+    </ScrollView>
+
+    <!-- Dialog Actions -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:padding="16dp"
+        android:background="@color/design_default_color_surface">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_marginEnd="8dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save to All Tags"
+            android:backgroundTint="@color/primary"
+            android:textColor="@android:color/white"
+            tools:text="Save to All Tags" />
+
+    </LinearLayout>
+
+</LinearLayout>

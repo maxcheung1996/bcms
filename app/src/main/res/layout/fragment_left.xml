@@ -94,7 +94,7 @@
             android:layout_weight="1"
             android:text="設定 / Set"
             android:textSize="14sp"
-            android:background="#673AB7"
+            android:background="#4fb794"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>

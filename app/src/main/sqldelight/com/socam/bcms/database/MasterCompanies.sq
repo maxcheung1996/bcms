@@ -1,0 +1,78 @@
+-- MasterCompanies table for RSCompany & Hinge Supplier data
+CREATE TABLE MasterCompanies (
+    id TEXT PRIMARY KEY NOT NULL,
+    type TEXT NOT NULL, -- Manufacturer, HingeSupplier, RSCompany
+    bc_type TEXT, -- TID, ALW, MIC
+    ref_code TEXT,
+    name_en TEXT,
+    name_tc TEXT,
+    name_sc TEXT,
+    address_en TEXT,
+    address_tc TEXT,
+    address_sc TEXT,
+    gps_lat REAL,
+    gps_long REAL,
+    is_default INTEGER NOT NULL DEFAULT 0,
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+-- Queries for MasterCompanies
+selectAllCompanies:
+SELECT * FROM MasterCompanies ORDER BY type, name_en;
+
+selectCompanyById:
+SELECT * FROM MasterCompanies WHERE id = ?;
+
+selectCompaniesByType:
+SELECT * FROM MasterCompanies WHERE type = ? ORDER BY name_en;
+
+selectCompaniesByBcType:
+SELECT * FROM MasterCompanies WHERE bc_type = ? ORDER BY type, name_en;
+
+selectDefaultCompanies:
+SELECT * FROM MasterCompanies WHERE is_default = 1 ORDER BY type;
+
+selectManufacturers:
+SELECT * FROM MasterCompanies WHERE type = 'Manufacturer' ORDER BY name_en;
+
+selectHingeSuppliers:
+SELECT * FROM MasterCompanies WHERE type = 'HingeSupplier' ORDER BY name_en;
+
+selectRsCompanies:
+SELECT * FROM MasterCompanies WHERE type = 'RSCompany' ORDER BY name_en;
+
+selectCompaniesByTypeAndBcType:
+SELECT * FROM MasterCompanies WHERE type = ? AND bc_type = ? ORDER BY name_en;
+
+-- Select companies by type and bc_type, including wildcard entries (bc_type = '*')
+selectCompaniesByTypeAndBcTypeWithWildcard:
+SELECT * FROM MasterCompanies WHERE type = ? AND (bc_type = ? OR bc_type = '*') ORDER BY name_en;
+
+insertCompany:
+INSERT OR REPLACE INTO MasterCompanies (
+    id, type, bc_type, ref_code, name_en, name_tc, name_sc,
+    address_en, address_tc, address_sc, gps_lat, gps_long, is_default
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateCompany:
+UPDATE MasterCompanies SET
+    type = ?, bc_type = ?, ref_code = ?, name_en = ?, name_tc = ?, name_sc = ?,
+    address_en = ?, address_tc = ?, address_sc = ?, gps_lat = ?, gps_long = ?,
+    is_default = ?, sync_status = ?, last_sync_date = ?
+WHERE id = ?;
+
+deleteCompany:
+DELETE FROM MasterCompanies WHERE id = ?;
+
+deleteAllCompanies:
+DELETE FROM MasterCompanies;
+
+deleteCompaniesByType:
+DELETE FROM MasterCompanies WHERE type = ?;
+
+countCompanies:
+SELECT COUNT(*) FROM MasterCompanies;
+
+countCompaniesByType:
+SELECT COUNT(*) FROM MasterCompanies WHERE type = ?;

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="16dp">
+
+    <!-- Dropdown Input Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropdownInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="Select Option"
+        android:layout_marginEnd="8dp"
+        android:enabled="false">
+
+        <AutoCompleteTextView
+            android:id="@+id/field_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:enabled="false"
+            android:textSize="14sp"
+            tools:text="Selected option" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Pen/Edit Button -->
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="✏"
+        android:textSize="14sp"
+        android:contentDescription="Enable field editing" />
+
+</LinearLayout>

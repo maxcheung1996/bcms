@@ -7,7 +7,7 @@
     android:background="@color/background_primary"
     tools:context=".presentation.modules.SingleScanFragment">
 
-    <!-- Top bar with back button -->
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -21,52 +21,341 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Content placeholder -->
-    <LinearLayout
+    <!-- Main Content 
+         Note: ScrollView is set to not focusable to ensure parent view maintains focus
+         This allows hardware trigger to work even when tag list is displayed -->
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp"
+        android:padding="16dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/ic_single_scan"
-            android:contentDescription="@string/single_scan_description"
-            app:tint="@color/secondary" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/single_scan_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:gravity="center" />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/module_placeholder_description"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"
-            android:gravity="center" />
+            <!-- Status Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/back_button_text"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/status_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_primary"
+                        android:gravity="center"
+                        android:text="@string/scan_ready_message"
+                        tools:text="Ready to scan. Press the scan button or physical trigger." />
+
+                    <!-- Note: Hardware trigger button is used for scanning -->
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Section 1: Tag Details -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/tag_details_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="@string/tag_details"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/bc_type_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="BC Type: MIC" />
+
+                    <TextView
+                        android:id="@+id/tag_chip_id_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Tag Chip ID: E280110020004611" />
+
+                    <TextView
+                        android:id="@+id/tag_no_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Tag No.: T001" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Section 2: Workflow Steps -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/workflow_steps_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="@string/workflow_steps"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/workflow_steps_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@android:layout/simple_list_item_1" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Section 3: Tag Information -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/tag_information_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="@string/tag_information"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/contract_no_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Contract No: 20210573" />
+
+                    <TextView
+                        android:id="@+id/contract_description_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Contract Description: Construction of Public Housing..." />
+
+                    <TextView
+                        android:id="@+id/contractor_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Contractor: Shui On Building Contractors Limited" />
+
+                    <TextView
+                        android:id="@+id/manufacturer_id_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Manufacturer ID: M001" />
+
+                    <TextView
+                        android:id="@+id/manufacturer_address_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        android:text="@string/manufacturer_address" />
+
+                    <TextView
+                        android:id="@+id/tag_id_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Tag ID: E280110020004611" />
+
+                    <TextView
+                        android:id="@+id/bc_type_info_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="BC Type: MIC" />
+
+                    <TextView
+                        android:id="@+id/tag_no_info_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="Tag No.: T001" />
+
+                    <TextView
+                        android:id="@+id/asn_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        tools:text="A.S.N.: ASN001" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Tag Selection Card (for manual mode) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/tag_selection_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Tag Selection Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Select Tag"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:id="@+id/tag_selection_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3 tags"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"
+                            android:background="@drawable/rounded_background"
+                            android:backgroundTint="@color/surface_secondary"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            tools:text="3 tags" />
+
+                    </LinearLayout>
+
+                    <!-- Instructions -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tap a tag below to continue with workflow steps:"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- RecyclerView for Tag Selection 
+                         Note: Not focusable to allow parent view to handle hardware trigger for rescanning -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/tag_selection_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:nestedScrollingEnabled="true"
+                        android:clipToPadding="false"
+                        android:paddingBottom="8dp"
+                        android:scrollbars="vertical"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        tools:listitem="@layout/item_candidate_tag" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

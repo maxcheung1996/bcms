@@ -72,4 +72,212 @@
     <string name="select_rm_module_type">RM Module</string>
     <string name="select_gx_module_type">GX Module</string>
     <string name="module_selection_help">Select the appropriate module for your device</string>
+    
+    <!-- Settings screen -->
+    <string name="user_details">User Details</string>
+    <string name="username">Username</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="department">Department</string>
+    <string name="role">Role</string>
+    
+    <string name="project_details">Project Details</string>
+    <string name="project_name">Project Name</string>
+    <string name="contract_number">Contract Number</string>
+    <string name="project_description">Project Description</string>
+    
+    <string name="app_configuration">App Configuration</string>
+    <string name="language_setting">Language Setting</string>
+    <string name="language_english">EN</string>
+    <string name="language_traditional_chinese">繁</string>
+    <string name="language_simplified_chinese">简</string>
+    
+    <string name="uhf_power_setting">UHF Transmission Power</string>
+    <string name="power_value_format">%d dBm</string>
+    <string name="api_endpoint">API Endpoint</string>
+    <string name="app_version">App Version</string>
+    
+    <string name="account_actions">Account Actions</string>
+    <string name="logout">Logout</string>
+    <string name="logout_confirmation_title">Logout Confirmation</string>
+    <string name="logout_confirmation_message">Are you sure you want to logout?</string>
+    <string name="cancel">Cancel</string>
+    <string name="language_changed_success">Language changed successfully</string>
+    
+    <string name="loading">Loading…</string>
+    
+    <!-- Single Scan Module -->
+    <string name="scan_ready_message">Ready to scan. Press the scan button or physical trigger.</string>
+    <string name="start_scan">Start Scan</string>
+    <string name="save_changes">Save</string>
+    <string name="mock_test">Mock Test</string>
+    <string name="tag_details">Tag Details</string>
+    <string name="workflow_steps">Workflow Steps</string>
+    <string name="tag_information">Tag Information</string>
+    <string name="manufacturer_address">Manufacturer Address: (To be added)</string>
+    <string name="select_tag">Select Tag</string>
+    <string name="tags_count_format">%d tags</string>
+    <string name="tap_tag_instruction">Tap a tag below to continue with workflow steps:</string>
+    
+    <!-- Tag Information Labels -->
+    <string name="tag_id_label">Tag ID:</string>
+    <string name="bc_type_label">BC Type:</string>
+    <string name="tag_no_label">Tag No.:</string>
+    <string name="asn_label">A.S.N.:</string>
+    <string name="epc_label">EPC:</string>
+    <string name="tid_label">TID:</string>
+    <string name="rssi_label">RSSI:</string>
+    <string name="rssi_raw_label">Raw:</string>
+    <string name="rssi_dbm_label">dBm:</string>
+    
+    <!-- Tag Modification Module -->
+    <string name="uhf_power_control">UHF Power Control</string>
+    <string name="power_level_label">Power Level:</string>
+    <string name="power_range">Range: 5-33 dBm</string>
+    <string name="tag_status_filtering">Tag Status Filtering</string>
+    <string name="filter_description">Select which tag status types to display during scanning:</string>
+    <string name="show_active">Show Active</string>
+    <string name="show_inactive">Show Inactive</string>
+    <string name="status_explanation">Active: Tags with 34 prefix • Inactive: Tags with 00 prefix or no status</string>
+    <string name="scan_mode_selection">Scan Mode Selection</string>
+    <string name="single_scan_mode">Single Scan</string>
+    <string name="multiple_scan_mode">Multiple Scan</string>
+    <string name="scan_control">Scan Control</string>
+    <string name="scan_ready_trigger">Ready to scan. Press and hold trigger to scan.</string>
+    <string name="write_epc_status">Write EPC Status</string>
+    <string name="available_when_scanned">Available when tag is scanned</string>
+    <string name="scan_results">Scan Results</string>
+    <string name="rssi_signal_strength">RSSI (Signal Strength)</string>
+    <string name="tid_tag_identifier">TID (Tag Identifier)</string>
+    <string name="epc_electronic_product_code">EPC (Electronic Product Code)</string>
+    <string name="epc_status_data">EPC (Status Data)</string>
+    <string name="epc_raw_hex_description">(Raw hexadecimal EPC data with status suffix)</string>
+    <string name="scanned_tags_realtime">Scanned Tags (Real-time)</string>
+    <string name="no_scanned_tags_message">No tags scanned yet.\n\nPress and hold the trigger to scan multiple tags simultaneously.</string>
+    <string name="multiple_scan_ready">Ready to scan multiple tags. Press and hold trigger to scan.</string>
+    
+    <!-- Common Status -->
+    <string name="active_status">Active</string>
+    <string name="inactive_status">Inactive</string>
+    <string name="placeholder_dash">--</string>
+    
+    <!-- Batch Process -->
+    <string name="component_type_filter">Component Type Filter</string>
+    <string name="select_bc_type_hint">Select BC Type</string>
+    <string name="batch_scan_ready">Ready to scan. Hold trigger to scan.</string>
+    <string name="no_workflow_steps">No workflow steps available for selected BC type</string>
+    <string name="scanned_tags">Scanned Tags</string>
+    <string name="clear_list">Clear List</string>
+    <string name="batch_scan_instruction">Press and hold trigger to scan multiple RFID tags.\n\nOnly activated tags matching selected BC type will be displayed.</string>
+    <string name="no_tags_scanned">No tags scanned yet</string>
+    
+    <!-- Menu Items -->
+    <string name="notifications_menu">Notifications</string>
+    <string name="no_sync_issues">No sync issues</string>
+    <string name="tag_modification_title">Tag Modification</string>
+    <string name="tag_modification_subtitle">Test UHF scanning and power</string>
+    
+    <!-- Notifications -->
+    <string name="sync_notifications_title">Sync Notifications</string>
+    <string name="sync_notifications_description">Issues encountered during data synchronization that require your attention.</string>
+    <string name="sync_errors_count">0 sync errors found</string>
+    <string name="clear_all">Clear All</string>
+    <string name="loading_sync_notifications">Loading sync notifications...</string>
+    <string name="no_sync_issues_description">All your data synchronization operations completed successfully. No issues to report at this time.</string>
+    
+    <!-- Tag Number Configuration -->
+    <string name="tag_number_configuration">Tag Number Configuration</string>
+    <string name="tag_config_description">Configure the prefix and reserved components for RFID tag number generation. Format: Prefix + Contract + Version + Reserved + BCType + ContractNo + Counter</string>
+    <string name="tag_preview_label">Tag Number Preview:</string>
+    <string name="prefix_label">Prefix</string>
+    <string name="contract_label">Contract</string>
+    <string name="version_label">Version</string>
+    <string name="reserved_label">Reserved</string>
+    <string name="auto_fields_label">BCType + Contract + Counter</string>
+    <string name="tag_prefix_hint">Prefix (5 digits)</string>
+    <string name="tag_prefix_helper">Configurable prefix for all tag numbers</string>
+    <string name="tag_contract_hint">Main contract number (2 digits)</string>
+    <string name="tag_contract_helper">Fixed contract number - cannot be modified</string>
+    <string name="tag_version_hint">Version number (1 digit)</string>
+    <string name="tag_version_helper">Fixed version number - cannot be modified</string>
+    <string name="tag_contract_no_hint">Tag Contract Number (6 digits)</string>
+    <string name="tag_contract_no_helper">User-configurable contract number for 24-character EPC generation</string>
+    <string name="tag_reserved_hint">Reserved number (1 digit)</string>
+    <string name="tag_reserved_helper">Configurable reserved field for custom use</string>
+    <string name="save_tag_configuration">Save Tag Configuration</string>
+    <string name="tag_config_saved">Tag configuration saved successfully</string>
+    <string name="tag_config_error">Failed to save tag configuration</string>
+    <string name="tag_prefix_required">Prefix must be exactly 5 digits</string>
+    <string name="tag_reserved_required">Reserved number must be exactly 1 digit</string>
+    <string name="tag_prefix_invalid">Prefix can only contain digits</string>
+    <string name="tag_reserved_invalid">Reserved number can only contain digits</string>
+    
+    <!-- Main Dashboard -->
+    <string name="test_uhf_scanning_power">Test UHF scanning &amp; power</string>
+    <string name="sync_issue_singular">issue</string>
+    <string name="sync_issues_plural">issues</string>
+    
+    <!-- Tag Activation Module -->
+    <string name="tag_activation_ready_message">Ready to scan. Press and hold trigger to scan inactive tags.</string>
+    <string name="tag_activation_instruction">Hold trigger to scan inactive tags, select BC Type, and activate</string>
+    <string name="tag_activation_ready_with_bctype">Ready. Select BC Type and scan tag to activate. Hold trigger to scan.</string>
+    <string name="activate_tag_button">ACTIVATE TAG</string>
+    <string name="scanning_inactive_tags">Scanning for inactive tags... (hold trigger)</string>
+    <string name="inactive_tag_found_with_bctype">Inactive tag found! BC Type: %1$s. Ready to activate.</string>
+    <string name="inactive_tag_found_select_bctype">Inactive tag found! EPC: %1$s. Select BC Type to activate.</string>
+    <string name="tag_already_active">Tag is already Active/Removed. Only inactive tags can be activated.</string>
+    <string name="no_tags_found_scan">No tags found. Press and hold trigger to scan.</string>
+    <string name="activating_tag_writing">Activating tag... Writing status to EPC...</string>
+    <string name="tag_activated_successfully">✅ Tag activated! Number: %1$s. Hold trigger to scan another tag.</string>
+    <string name="error_creating_tag_record">Error creating tag record</string>
+    <string name="database_insert_failed">Database insert failed</string>
+    
+    <!-- Single Scan Module -->
+    <string name="single_scan_ready_message">Ready to scan. Hold trigger to scan ACTIVATED RFID tags only.</string>
+    <string name="single_scan_ready_activated_only">Ready to scan ACTIVATED tags only. Hold trigger to scan.</string>
+    <string name="scanning_activated_tags">Scanning for ACTIVATED RFID tags... (hold trigger)</string>
+    
+    <!-- Data Synchronization Screen -->
+    <string name="choose_dataset_to_sync">Choose Dataset to Sync</string>
+    <string name="select_sync_instruction">Select the data you want to synchronize from server to local database</string>
+    <string name="master_data">Master Data</string>
+    <string name="master_data_description">Regions, Grades, Locations, Categories, Companies</string>
+    <string name="mic_components">MIC Components</string>
+    <string name="mic_components_description">Modular Integrated Construction components</string>
+    <string name="alw_components">ALW Components</string>
+    <string name="alw_components_description">Aluminum Window components</string>
+    <string name="tid_components">TID Components</string>
+    <string name="tid_components_description">Timber Internal Door components</string>
+    <string name="ready_to_sync">Ready to sync. Tap any dataset to begin synchronization.</string>
+    <string name="sync_failed_format">Sync failed: %1$s</string>
+    <string name="records_count_format">%1$d records</string>
+    <string name="datasets_records_format">5 datasets (%1$d records)</string>
+    <string name="syncing_regions_progress">Syncing regions... (1/7)</string>
+    <string name="syncing_concrete_grades_progress">Syncing concrete grades... (2/7)</string>
+    <string name="syncing_locations_progress">Syncing locations... (3/7)</string>
+    <string name="syncing_categories_progress">Syncing categories... (4/7)</string>
+    <string name="syncing_companies_progress">Syncing companies... (5/7)</string>
+    <string name="syncing_workflow_steps_progress">Syncing workflow steps... (6/7)</string>
+    <string name="syncing_contracts_progress">Syncing contracts... (7/7)</string>
+    <string name="master_data_sync_completed">Master data sync completed! All 7 datasets synchronized.</string>
+    <string name="master_data_sync_partial_failed">Master data sync partially failed. %1$d/%2$d datasets synchronized.</string>
+    
+    <!-- Batch Processing Module -->
+    <string name="batch_ready_scan_format">Ready to scan %1$s tags. Hold trigger to scan.</string>
+    
+    <!-- Common RFID Terms -->
+    <string name="rfid_tags">RFID tags</string>
+    <string name="hold_trigger">Hold trigger</string>
+    <string name="press_hold_trigger">Press and hold trigger</string>
+    <string name="datasets">datasets</string>
+    
+    <!-- Error Messages -->
+    <string name="error_format">Error: %1$s</string>
+    <string name="scan_start_error_format">Scan start error: %1$s</string>
+    <string name="failed_start_rfid_scanning">Failed to start RFID scanning</string>
+    <string name="error_loading_initial_data_format">Error loading initial data: %1$s</string>
+    
+    <!-- Status Messages -->
+    <string name="system_ready_for_scanning">System ready for RFID scanning</string>
+    <string name="scanning_status_format">%1$s sync %2$s</string>
 </resources>

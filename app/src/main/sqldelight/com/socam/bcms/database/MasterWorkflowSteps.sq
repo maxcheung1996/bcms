@@ -1,0 +1,71 @@
+-- MasterWorkflowSteps table for workflow step data
+CREATE TABLE MasterWorkflowSteps (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    step TEXT NOT NULL,
+    portion INTEGER NOT NULL,
+    bc_type TEXT NOT NULL,
+    can_update INTEGER NOT NULL,
+    type_en TEXT,
+    type_tc TEXT,
+    type_sc TEXT,
+    step_desc_en TEXT,
+    step_desc_tc TEXT,
+    step_desc_sc TEXT,
+    allow_field TEXT, -- JSON array stored as TEXT
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    UNIQUE(step, bc_type)
+);
+
+-- Queries for MasterWorkflowSteps
+selectAllWorkflowSteps:
+SELECT * FROM MasterWorkflowSteps ORDER BY bc_type, portion, step;
+
+selectWorkflowStepsByBcType:
+SELECT * FROM MasterWorkflowSteps WHERE bc_type = ? ORDER BY portion, step;
+
+selectWorkflowStepByKey:
+SELECT * FROM MasterWorkflowSteps WHERE step = ? AND bc_type = ?;
+
+selectWorkflowStepsByCanUpdate:
+SELECT * FROM MasterWorkflowSteps WHERE can_update = 1 ORDER BY bc_type, portion;
+
+selectWorkflowStepsByPortion:
+SELECT * FROM MasterWorkflowSteps WHERE portion <= ? ORDER BY bc_type, portion;
+
+selectStepsByBcTypeAndPortion:
+SELECT * FROM MasterWorkflowSteps WHERE bc_type = ? AND portion <= ? ORDER BY portion;
+
+selectNextWorkflowStep:
+SELECT * FROM MasterWorkflowSteps WHERE bc_type = ? AND portion > ? ORDER BY portion LIMIT 1;
+
+selectPreviousWorkflowStep:
+SELECT * FROM MasterWorkflowSteps WHERE bc_type = ? AND portion < ? ORDER BY portion DESC LIMIT 1;
+
+insertWorkflowStep:
+INSERT OR REPLACE INTO MasterWorkflowSteps (
+    step, portion, bc_type, can_update, type_en, type_tc, type_sc,
+    step_desc_en, step_desc_tc, step_desc_sc, allow_field
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateWorkflowStep:
+UPDATE MasterWorkflowSteps SET
+    portion = ?, can_update = ?, type_en = ?, type_tc = ?, type_sc = ?,
+    step_desc_en = ?, step_desc_tc = ?, step_desc_sc = ?, allow_field = ?,
+    sync_status = ?, last_sync_date = ?
+WHERE step = ? AND bc_type = ?;
+
+deleteWorkflowStep:
+DELETE FROM MasterWorkflowSteps WHERE step = ? AND bc_type = ?;
+
+deleteAllWorkflowSteps:
+DELETE FROM MasterWorkflowSteps;
+
+deleteWorkflowStepsByBcType:
+DELETE FROM MasterWorkflowSteps WHERE bc_type = ?;
+
+countWorkflowSteps:
+SELECT COUNT(*) FROM MasterWorkflowSteps;
+
+countWorkflowStepsByBcType:
+SELECT COUNT(*) FROM MasterWorkflowSteps WHERE bc_type = ?;

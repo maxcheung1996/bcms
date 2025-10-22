@@ -32,5 +32,29 @@ insertSetting:
 INSERT INTO AppSettings (setting_key, setting_value, setting_type, description, is_user_configurable, created_at, updated_at)
 VALUES (?, ?, ?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'));
 
+insertOrReplaceSettingByKey:
+INSERT OR REPLACE INTO AppSettings (setting_key, setting_value, setting_type, description, is_user_configurable, created_at, updated_at)
+VALUES (?, ?, 'STRING', 'User preference setting', 1, strftime('%s', 'now'), strftime('%s', 'now'));
+
 deleteSetting:
 DELETE FROM AppSettings WHERE setting_key = ?;
+
+-- Tag counter specific queries
+insertOrReplaceTagCounter:
+INSERT OR REPLACE INTO AppSettings (setting_key, setting_value, setting_type, description, is_user_configurable, created_at, updated_at)
+VALUES ('TAG_COUNTER', ?, 'INTEGER', 'Auto-increment counter for tag number generation', 0, strftime('%s', 'now'), strftime('%s', 'now'));
+
+getTagCounter:
+SELECT setting_value FROM AppSettings WHERE setting_key = 'TAG_COUNTER';
+
+incrementTagCounter:
+UPDATE AppSettings SET 
+    setting_value = CAST(setting_value AS INTEGER) + 1,
+    updated_at = strftime('%s', 'now')
+WHERE setting_key = 'TAG_COUNTER';
+
+resetTagCounter:
+UPDATE AppSettings SET 
+    setting_value = '1',
+    updated_at = strftime('%s', 'now')
+WHERE setting_key = 'TAG_COUNTER';

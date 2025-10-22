@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App name -->
+    <string name="app_name">建筑施工管理系统</string>
+    
+    <!-- Login screen -->
+    <string name="login_title">登录</string>
+    <string name="username_hint">用户名</string>
+    <string name="password_hint">密码</string>
+    <string name="login_button_text">登录</string>
+    <string name="app_logo_description">BCMS 标志</string>
+    <string name="version_placeholder">版本 1.0.0</string>
+    <string name="version_format">版本 %s</string>
+    <string name="environment_dev">开发</string>
+    <string name="environment_prod">正式</string>
+    
+    <!-- Login errors -->
+    <string name="error_username_required">用户名为必填项</string>
+    <string name="error_password_required">密码为必填项</string>
+    
+    <!-- Main screen -->
+    <string name="welcome_message">欢迎使用建筑施工管理系统</string>
+    <string name="user_placeholder">未知用户</string>
+    <string name="welcome_user_format">您好，%s</string>
+    
+    <!-- Module cards -->
+    <string name="tag_activation_title">标签激活</string>
+    <string name="tag_activation_subtitle">激活 RFID 标签</string>
+    <string name="tag_activation_description">标签激活模块</string>
+    
+    <string name="single_scan_title">单次扫描</string>
+    <string name="single_scan_subtitle">扫描单个标签</string>
+    <string name="single_scan_description">单次扫描模块</string>
+    
+    <string name="batch_process_title">批处理</string>
+    <string name="batch_process_subtitle">处理标签批次</string>
+    <string name="batch_process_description">批处理模块</string>
+    
+    <string name="settings_title">设置</string>
+    <string name="settings_subtitle">应用程序配置</string>
+    <string name="settings_description">设置模块</string>
+    
+    <!-- Data synchronization -->
+    <string name="data_synchronization_title">数据同步</string>
+    <string name="sync_status_placeholder">最后同步：从未</string>
+    <string name="sync_status_ready">准备同步</string>
+    <string name="sync_status_syncing">同步数据中…</string>
+    <string name="sync_status_success">最后同步：%s</string>
+    <string name="sync_status_error">同步失败</string>
+    <string name="sync_now_button">立即同步</string>
+    
+    <!-- Statistics -->
+    <string name="total_tags_label">标签总数</string>
+    <string name="active_tags_label">活跃标签</string>
+    <string name="pending_sync_label">待同步</string>
+    
+    <!-- Common -->
+    <string name="back_button_text">返回</string>
+    <string name="module_placeholder_description">此模块正在开发中。\n更多功能即将推出！</string>
+    
+    <!-- Menu -->
+    <string name="action_logout">登出</string>
+    <string name="action_refresh">刷新</string>
+    
+    <!-- Module specific titles for navigation -->
+    <string name="select_module_title">选择模块</string>
+    
+    <!-- Legacy SelectActivity strings (for compatibility) -->
+    <string name="select_module_description">选择一个模块以继续</string>
+    <string name="select_um_module_type">UHF 模块</string>
+    <string name="select_slr_module_type">SLR 模块</string>
+    <string name="select_rm_module_type">RM 模块</string>
+    <string name="select_gx_module_type">GX 模块</string>
+    <string name="module_selection_help">为您的设备选择合适的模块</string>
+    
+    <!-- Settings screen -->
+    <string name="user_details">用户详情</string>
+    <string name="username">用户名</string>
+    <string name="full_name">全名</string>
+    <string name="email">电子邮件</string>
+    <string name="department">部门</string>
+    <string name="role">角色</string>
+    
+    <string name="project_details">项目详情</string>
+    <string name="project_name">项目名称</string>
+    <string name="contract_number">合同编号</string>
+    <string name="project_description">项目描述</string>
+    
+    <string name="app_configuration">应用程序配置</string>
+    <string name="language_setting">语言设置</string>
+    <string name="language_english">EN</string>
+    <string name="language_traditional_chinese">繁</string>
+    <string name="language_simplified_chinese">简</string>
+    
+    <string name="uhf_power_setting">UHF 传输功率</string>
+    <string name="power_value_format">%d dBm</string>
+    <string name="api_endpoint">API 端点</string>
+    <string name="app_version">应用程序版本</string>
+    
+    <string name="account_actions">账户操作</string>
+    <string name="logout">登出</string>
+    <string name="logout_confirmation_title">登出确认</string>
+    <string name="logout_confirmation_message">您确定要登出吗？</string>
+    <string name="cancel">取消</string>
+    <string name="language_changed_success">語言切換成功</string>
+    
+    <string name="loading">加载中…</string>
+    
+    <!-- Single Scan Module -->
+    <string name="scan_ready_message">准备扫描。请按扫描按钮或物理触发键。</string>
+    <string name="selection_mode">选择模式</string>
+    <string name="manual_mode">手动</string>
+    <!-- 手动模式固定为 3 个标签 - 已移除设置功能 -->
+    <string name="start_scan">开始扫描</string>
+    <string name="save_changes">保存</string>
+    <string name="mock_test">模拟测试</string>
+    <string name="tag_details">标签详细信息</string>
+    <string name="workflow_steps">工作流程步骤</string>
+    <string name="tag_information">标签信息</string>
+    <string name="manufacturer_address">制造商地址：（待添加）</string>
+    <string name="select_tag">选择标签</string>
+    <string name="tags_count_format">%d 个标签</string>
+    <string name="tap_tag_instruction">点击下方标签以继续工作流程步骤：</string>
+    
+    <!-- Tag Information Labels -->
+    <string name="tag_id_label">标签 ID：</string>
+    <string name="bc_type_label">BC 类型：</string>
+    <string name="tag_no_label">标签编号：</string>
+    <string name="asn_label">A.S.N.：</string>
+    <string name="epc_label">EPC：</string>
+    <string name="tid_label">TID：</string>
+    <string name="rssi_label">RSSI：</string>
+    <string name="rssi_raw_label">原始值：</string>
+    <string name="rssi_dbm_label">dBm：</string>
+    
+    <!-- Tag Modification Module -->
+    <string name="uhf_power_control">UHF 功率控制</string>
+    <string name="power_level_label">功率等级：</string>
+    <string name="power_range">范围：5-33 dBm</string>
+    <string name="tag_status_filtering">标签状态筛选</string>
+    <string name="filter_description">选择扫描时要显示的标签状态类型：</string>
+    <string name="show_active">显示活跃</string>
+    <string name="show_inactive">显示非活跃</string>
+    <string name="status_explanation">活跃：具有 ACT 状态的标签 • 非活跃：具有 REM 或无状态的标签</string>
+    <string name="scan_mode_selection">扫描模式选择</string>
+    <string name="single_scan_mode">单次扫描</string>
+    <string name="multiple_scan_mode">多重扫描</string>
+    <string name="scan_control">扫描控制</string>
+    <string name="scan_ready_trigger">准备扫描。按住触发键进行扫描。</string>
+    <string name="write_epc_status">写入 EPC 状态</string>
+    <string name="available_when_scanned">扫描标签后可用</string>
+    <string name="scan_results">扫描结果</string>
+    <string name="rssi_signal_strength">RSSI（信号强度）</string>
+    <string name="tid_tag_identifier">TID（标签识别码）</string>
+    <string name="epc_electronic_product_code">EPC（电子产品代码）</string>
+    <string name="epc_status_data">EPC（状态数据）</string>
+    <string name="epc_raw_hex_description">（原始十六进制 EPC 数据含状态后缀）</string>
+    <string name="scanned_tags_realtime">扫描标签（实时）</string>
+    <string name="no_scanned_tags_message">尚未扫描到标签。\n\n按住触发键可同时扫描多个标签。</string>
+    <string name="multiple_scan_ready">准备扫描多个标签。按住触发键进行扫描。</string>
+    
+    <!-- Common Status -->
+    <string name="active_status">活跃</string>
+    <string name="inactive_status">非活跃</string>
+    <string name="placeholder_dash">--</string>
+    
+    <!-- Batch Process -->
+    <string name="component_type_filter">组件类型筛选</string>
+    <string name="select_bc_type_hint">选择 BC 类型</string>
+    <string name="batch_scan_ready">准备扫描。按住触发键进行扫描。</string>
+    <string name="no_workflow_steps">所选 BC 类型没有可用的工作流程步骤</string>
+    <string name="scanned_tags">扫描的标签</string>
+    <string name="clear_list">清除列表</string>
+    <string name="batch_scan_instruction">按住触发键扫描多个 RFID 标签。\n\n只会显示符合所选 BC 类型的已启用标签。</string>
+    <string name="no_tags_scanned">尚未扫描到标签</string>
+    
+    <!-- Menu Items -->
+    <string name="notifications_menu">通知</string>
+    <string name="no_sync_issues">无同步问题</string>
+    <string name="tag_modification_title">标签修改</string>
+    <string name="tag_modification_subtitle">测试 UHF 扫描和功率</string>
+    
+    <!-- Notifications -->
+    <string name="sync_notifications_title">同步通知</string>
+    <string name="sync_notifications_description">数据同步过程中遇到的问题，需要您的注意。</string>
+    <string name="sync_errors_count">发现 0 个同步错误</string>
+    <string name="clear_all">全部清除</string>
+    <string name="loading_sync_notifications">加载同步通知中...</string>
+    <string name="no_sync_issues_description">您的所有数据同步操作都已成功完成。目前没有问题需要报告。</string>
+    
+    <!-- Tag Number Configuration -->
+    <string name="tag_number_configuration">标签编号配置</string>
+    <string name="tag_config_description">配置 RFID 标签编号生成的前缀和保留组件。格式：前缀 + 合同 + 版本 + 保留 + BC类型 + 合同号 + 计数器</string>
+    <string name="tag_preview_label">标签编号预览：</string>
+    <string name="prefix_label">前缀</string>
+    <string name="contract_label">合同</string>
+    <string name="version_label">版本</string>
+    <string name="reserved_label">保留</string>
+    <string name="auto_fields_label">BC类型 + 合同 + 计数器</string>
+    <string name="tag_prefix_hint">前缀（5位数字）</string>
+    <string name="tag_prefix_helper">所有标签编号的可配置前缀</string>
+    <string name="tag_contract_hint">主合同号（2位数字）</string>
+    <string name="tag_contract_helper">固定合同编号 - 无法修改</string>
+    <string name="tag_version_hint">版本号（1位数字）</string>
+    <string name="tag_version_helper">固定版本号 - 无法修改</string>
+    <string name="tag_reserved_hint">保留号（1位数字）</string>
+    <string name="tag_reserved_helper">自定义使用的可配置保留字段</string>
+    <string name="save_tag_configuration">保存标签配置</string>
+    <string name="tag_config_saved">标签配置保存成功</string>
+    <string name="tag_config_error">标签配置保存失败</string>
+    <string name="tag_prefix_required">前缀必须恰好是5位数字</string>
+    <string name="tag_reserved_required">保留号必须恰好是1位数字</string>
+    <string name="tag_prefix_invalid">前缀只能包含数字</string>
+    <string name="tag_reserved_invalid">保留号只能包含数字</string>
+    
+    <!-- Main Dashboard -->
+    <string name="test_uhf_scanning_power">测试 UHF 扫描和功率</string>
+    <string name="sync_issue_singular">个问题</string>
+    <string name="sync_issues_plural">个问题</string>
+    
+    <!-- Tag Activation Module -->
+    <string name="tag_activation_ready_message">准备扫描。按住触发键扫描未激活的标签。</string>
+    <string name="tag_activation_instruction">按住触发键扫描未激活的标签，选择 BC Type 并激活</string>
+    <string name="tag_activation_ready_with_bctype">准备就绪。选择 BC Type 并扫描标签以激活。按住触发键扫描。</string>
+    <string name="activate_tag_button">激活标签</string>
+    <string name="scanning_inactive_tags">正在扫描未激活的标签...（按住触发键）</string>
+    <string name="inactive_tag_found_with_bctype">发现未激活标签！BC Type：%1$s。准备激活。</string>
+    <string name="inactive_tag_found_select_bctype">发现未激活标签！EPC：%1$s。请选择 BC Type 以激活。</string>
+    <string name="tag_already_active">标签已经是激活/移除状态。只能激活未激活的标签。</string>
+    <string name="no_tags_found_scan">未找到标签。按住触发键扫描。</string>
+    <string name="activating_tag_writing">正在激活标签...正在将状态写入 EPC...</string>
+    <string name="tag_activated_successfully">✅ 标签激活成功！编号：%1$s。按住触发键扫描下一个标签。</string>
+    <string name="error_creating_tag_record">创建标签记录时发生错误</string>
+    <string name="database_insert_failed">数据库插入失败</string>
+    
+    <!-- Single Scan Module -->
+    <string name="single_scan_ready_message">准备扫描。按住触发键仅扫描已激活的 RFID 标签。</string>
+    <string name="single_scan_ready_activated_only">准备扫描仅已激活的标签。按住触发键扫描。</string>
+    <string name="scanning_activated_tags">正在扫描已激活的 RFID 标签...（按住触发键）</string>
+    
+    <!-- Data Synchronization Screen -->
+    <string name="choose_dataset_to_sync">选择要同步的数据集</string>
+    <string name="select_sync_instruction">选择您要从服务器同步到本地数据库的数据</string>
+    <string name="master_data">主数据</string>
+    <string name="master_data_description">区域、等级、位置、类别、公司</string>
+    <string name="mic_components">MIC 组件</string>
+    <string name="mic_components_description">模块化集成建筑组件</string>
+    <string name="alw_components">ALW 组件</string>
+    <string name="alw_components_description">铝窗组件</string>
+    <string name="tid_components">TID 组件</string>
+    <string name="tid_components_description">木质内门组件</string>
+    <string name="ready_to_sync">准备同步。点击任何数据集开始同步。</string>
+    <string name="sync_failed_format">同步失败：%1$s</string>
+    <string name="records_count_format">%1$d 条记录</string>
+    <string name="datasets_records_format">5 个数据集（%1$d 条记录）</string>
+    <string name="syncing_regions_progress">正在同步区域...（1/7）</string>
+    <string name="syncing_concrete_grades_progress">正在同步混凝土等级...（2/7）</string>
+    <string name="syncing_locations_progress">正在同步位置...（3/7）</string>
+    <string name="syncing_categories_progress">正在同步类别...（4/7）</string>
+    <string name="syncing_companies_progress">正在同步公司...（5/7）</string>
+    <string name="syncing_workflow_steps_progress">正在同步工作流程步骤...（6/7）</string>
+    <string name="syncing_contracts_progress">正在同步合同...（7/7）</string>
+    <string name="master_data_sync_completed">主数据同步完成！所有 7 个数据集已同步。</string>
+    <string name="master_data_sync_partial_failed">主数据同步部分失败。%1$d/%2$d 个数据集已同步。</string>
+    
+    <!-- Batch Processing Module -->
+    <string name="batch_ready_scan_format">准备扫描 %1$s 标签。按住触发键扫描。</string>
+    
+    <!-- Common RFID Terms -->
+    <string name="rfid_tags">RFID 标签</string>
+    <string name="hold_trigger">按住触发键</string>
+    <string name="press_hold_trigger">按住触发键</string>
+    <string name="datasets">数据集</string>
+    
+    <!-- Error Messages -->
+    <string name="error_format">错误：%1$s</string>
+    <string name="scan_start_error_format">扫描启动错误：%1$s</string>
+    <string name="failed_start_rfid_scanning">RFID 扫描启动失败</string>
+    <string name="error_loading_initial_data_format">加载初始数据时发生错误：%1$s</string>
+    
+    <!-- Status Messages -->
+    <string name="system_ready_for_scanning">系统准备就绪，可进行 RFID 扫描</string>
+    <string name="scanning_status_format">%1$s 同步 %2$s</string>
+</resources>

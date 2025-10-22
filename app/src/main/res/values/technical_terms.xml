@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 
+    CENTRALIZED TECHNICAL TERMS MAPPING
+    This file contains all technical terms used in the BCMS app for easy modification
+    Each term is defined once and referenced in string translations
+    -->
+    
+    <!-- RFID/UHF Technology Terms -->
+    <string name="tech_rfid">RFID</string>
+    <string name="tech_uhf">UHF</string>
+    <string name="tech_epc">EPC</string>
+    <string name="tech_tid">TID</string>
+    <string name="tech_rssi">RSSI</string>
+    <string name="tech_dbm">dBm</string>
+    <string name="tech_tag">Tag</string>
+    <string name="tech_scan">Scan</string>
+    <string name="tech_inventory">Inventory</string>
+    <string name="tech_transmission_power">Transmission Power</string>
+    
+    <!-- Construction Terms -->
+    <string name="tech_mic">MIC</string>
+    <string name="tech_alw">ALW</string>
+    <string name="tech_bc_type">BC Type</string>
+    <string name="tech_workflow">Workflow</string>
+    <string name="tech_batch">Batch</string>
+    <string name="tech_activation">Activation</string>
+    <string name="tech_contractor">Contractor</string>
+    <string name="tech_manufacturer">Manufacturer</string>
+    <string name="tech_asn">A.S.N.</string>
+    
+    <!-- App Functionality Terms -->
+    <string name="tech_sync">Sync</string>
+    <string name="tech_synchronization">Synchronization</string>
+    <string name="tech_api">API</string>
+    <string name="tech_endpoint">Endpoint</string>
+    <string name="tech_configuration">Configuration</string>
+    <string name="tech_settings">Settings</string>
+    <string name="tech_authentication">Authentication</string>
+    <string name="tech_module">Module</string>
+    
+    <!-- Status Terms -->
+    <string name="tech_active">Active</string>
+    <string name="tech_inactive">Inactive</string>
+    <string name="tech_ready">Ready</string>
+    <string name="tech_scanning">Scanning</string>
+    <string name="tech_processing">Processing</string>
+    <string name="tech_success">Success</string>
+    <string name="tech_error">Error</string>
+    <string name="tech_failed">Failed</string>
+    <string name="tech_pending">Pending</string>
+    
+    <!-- Units and Measurements -->
+    <string name="unit_dbm">dBm</string>
+    <string name="unit_count">Count</string>
+    <string name="unit_total">Total</string>
+    
+    <!-- System Terms -->
+    <string name="tech_version">Version</string>
+    <string name="tech_loading">Loading</string>
+    <string name="tech_cancel">Cancel</string>
+    <string name="tech_confirm">Confirm</string>
+    <string name="tech_logout">Logout</string>
+</resources>

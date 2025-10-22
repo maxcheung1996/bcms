@@ -1,0 +1,29 @@
+-- MasterFloors table for Floor data
+CREATE TABLE MasterFloors (
+    key TEXT PRIMARY KEY NOT NULL,
+    value TEXT NOT NULL,
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+-- Queries for MasterFloors
+selectAllFloors:
+SELECT * FROM MasterFloors ORDER BY CAST(key AS INTEGER);
+
+selectFloorByKey:
+SELECT * FROM MasterFloors WHERE key = ?;
+
+insertFloor:
+INSERT OR REPLACE INTO MasterFloors (key, value) VALUES (?, ?);
+
+updateFloor:
+UPDATE MasterFloors SET value = ?, sync_status = ?, last_sync_date = ? WHERE key = ?;
+
+deleteFloor:
+DELETE FROM MasterFloors WHERE key = ?;
+
+deleteAllFloors:
+DELETE FROM MasterFloors;
+
+countFloors:
+SELECT COUNT(*) FROM MasterFloors;

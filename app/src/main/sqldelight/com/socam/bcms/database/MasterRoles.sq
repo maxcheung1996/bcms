@@ -1,0 +1,60 @@
+-- MasterRoles table for role-based workflow step access control
+CREATE TABLE MasterRoles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role_name TEXT NOT NULL,
+    step_code TEXT NOT NULL,
+    bc_type TEXT NOT NULL, -- MIC, ALW, TID (extracted from step_code)
+    step_portion INTEGER, -- Portion value from MasterWorkflowSteps for ordering
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    UNIQUE(role_name, step_code)
+);
+
+-- Initial role-step mappings will be created programmatically by DatabaseManager
+
+-- Queries for MasterRoles
+selectAllRoles:
+SELECT * FROM MasterRoles ORDER BY role_name, bc_type, step_portion;
+
+selectStepsByRole:
+SELECT * FROM MasterRoles WHERE role_name = ? ORDER BY bc_type, step_portion;
+
+selectRolesByStep:
+SELECT * FROM MasterRoles WHERE step_code = ? ORDER BY role_name;
+
+selectStepsByRoleAndBcType:
+SELECT * FROM MasterRoles WHERE role_name = ? AND bc_type = ? ORDER BY step_portion;
+
+selectAvailableRoles:
+SELECT DISTINCT role_name FROM MasterRoles ORDER BY role_name;
+
+selectAvailableBcTypes:
+SELECT DISTINCT bc_type FROM MasterRoles ORDER BY bc_type;
+
+selectStepsByRoleAndPortion:
+SELECT * FROM MasterRoles WHERE role_name = ? AND step_portion <= ? ORDER BY bc_type, step_portion;
+
+insertRoleStep:
+INSERT OR REPLACE INTO MasterRoles (
+    role_name, step_code, bc_type, step_portion
+) VALUES (?, ?, ?, ?);
+
+updateRoleStep:
+UPDATE MasterRoles SET
+    bc_type = ?, step_portion = ?, sync_status = ?, last_sync_date = ?
+WHERE role_name = ? AND step_code = ?;
+
+deleteRoleStep:
+DELETE FROM MasterRoles WHERE role_name = ? AND step_code = ?;
+
+deleteRoleStepsByRole:
+DELETE FROM MasterRoles WHERE role_name = ?;
+
+deleteAllRoleSteps:
+DELETE FROM MasterRoles;
+
+countRoleSteps:
+SELECT COUNT(*) FROM MasterRoles;
+
+countRoleStepsByRole:
+SELECT COUNT(*) FROM MasterRoles WHERE role_name = ?;

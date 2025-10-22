@@ -1,0 +1,60 @@
+-- MasterContracts table for contract information
+CREATE TABLE MasterContracts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    proj_id TEXT NOT NULL,
+    contract_no TEXT NOT NULL,
+    contractor_name_en TEXT,
+    contractor_name_tc TEXT,
+    contractor_name_sc TEXT,
+    contract_desc_en TEXT,
+    contract_desc_tc TEXT,
+    contract_desc_sc TEXT,
+    contract_start_date INTEGER, -- Unix timestamp
+    contract_end_date INTEGER, -- Unix timestamp
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    UNIQUE(proj_id, contract_no)
+);
+
+-- Queries for MasterContracts
+selectAllContracts:
+SELECT * FROM MasterContracts ORDER BY contract_no;
+
+selectContractByNo:
+SELECT * FROM MasterContracts WHERE contract_no = ?;
+
+selectContractsByProjId:
+SELECT * FROM MasterContracts WHERE proj_id = ? ORDER BY contract_no;
+
+selectContractByProjIdAndNo:
+SELECT * FROM MasterContracts WHERE proj_id = ? AND contract_no = ?;
+
+insertContract:
+INSERT OR REPLACE INTO MasterContracts (
+    proj_id, contract_no, contractor_name_en, contractor_name_tc, contractor_name_sc,
+    contract_desc_en, contract_desc_tc, contract_desc_sc,
+    contract_start_date, contract_end_date
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateContract:
+UPDATE MasterContracts SET
+    contractor_name_en = ?, contractor_name_tc = ?, contractor_name_sc = ?,
+    contract_desc_en = ?, contract_desc_tc = ?, contract_desc_sc = ?,
+    contract_start_date = ?, contract_end_date = ?,
+    sync_status = ?, last_sync_date = ?
+WHERE proj_id = ? AND contract_no = ?;
+
+deleteContract:
+DELETE FROM MasterContracts WHERE proj_id = ? AND contract_no = ?;
+
+deleteAllContracts:
+DELETE FROM MasterContracts;
+
+deleteContractsByProjId:
+DELETE FROM MasterContracts WHERE proj_id = ?;
+
+countContracts:
+SELECT COUNT(*) FROM MasterContracts;
+
+countContractsByProjId:
+SELECT COUNT(*) FROM MasterContracts WHERE proj_id = ?;

@@ -1,0 +1,78 @@
+-- Master project information table
+CREATE TABLE MasterProject (
+    proj_id TEXT PRIMARY KEY NOT NULL,
+    proj_code TEXT NOT NULL,
+    proj_name TEXT NOT NULL,
+    contract_no TEXT NOT NULL,
+    contractor_id TEXT,
+    contractor_name_en TEXT,
+    contractor_name_tc TEXT,
+    contractor_name_sc TEXT,
+    contract_desc_en TEXT,
+    contract_desc_tc TEXT,
+    contract_desc_sc TEXT,
+    contract_start_date TEXT,
+    contract_end_date TEXT,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+-- Hardcoded project data will be inserted programmatically by DatabaseManager
+
+-- Queries for MasterProject
+selectAllProjects:
+SELECT * FROM MasterProject ORDER BY proj_name;
+
+selectProjectById:
+SELECT * FROM MasterProject WHERE proj_id = ?;
+
+selectProjectByCode:
+SELECT * FROM MasterProject WHERE proj_code = ?;
+
+selectProjectByContractNo:
+SELECT * FROM MasterProject WHERE contract_no = ?;
+
+insertProject:
+INSERT INTO MasterProject (
+    proj_id, proj_code, proj_name, contract_no, contractor_id,
+    contractor_name_en, contractor_name_tc, contractor_name_sc,
+    contract_desc_en, contract_desc_tc, contract_desc_sc,
+    contract_start_date, contract_end_date,
+    created_at, updated_at
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, strftime('%s', 'now'), strftime('%s', 'now'));
+
+updateProject:
+UPDATE MasterProject SET 
+    proj_code = ?,
+    proj_name = ?,
+    contract_no = ?,
+    contractor_id = ?,
+    contractor_name_en = ?,
+    contractor_name_tc = ?,
+    contractor_name_sc = ?,
+    contract_desc_en = ?,
+    contract_desc_tc = ?,
+    contract_desc_sc = ?,
+    contract_start_date = ?,
+    contract_end_date = ?,
+    updated_at = strftime('%s', 'now')
+WHERE proj_id = ?;
+
+deleteProject:
+DELETE FROM MasterProject WHERE proj_id = ?;
+
+-- Specific query for user's project details
+selectProjectDetailsForUser:
+SELECT 
+    p.proj_id,
+    p.proj_code,
+    p.proj_name,
+    p.contract_no,
+    p.contractor_name_en,
+    p.contractor_name_tc,
+    p.contractor_name_sc,
+    p.contract_desc_en,
+    p.contract_desc_tc,
+    p.contract_desc_sc
+FROM MasterProject p
+WHERE p.proj_id = ?;

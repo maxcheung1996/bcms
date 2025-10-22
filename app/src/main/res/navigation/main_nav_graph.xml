@@ -40,6 +40,10 @@
             app:destination="@id/settingsFragment" />
         
         <action
+            android:id="@+id/action_main_to_sync"
+            app:destination="@id/syncFragment" />
+        
+        <action
             android:id="@+id/action_main_to_login"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/mainFragment"
@@ -90,6 +94,18 @@
         
         <action
             android:id="@+id/action_settings_back"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/syncFragment"
+        android:name="com.socam.bcms.presentation.sync.SyncFragment"
+        android:label="Data Synchronization"
+        tools:layout="@layout/fragment_sync">
+        
+        <action
+            android:id="@+id/action_sync_back"
             app:destination="@id/mainFragment"
             app:popUpTo="@id/mainFragment" />
     </fragment>

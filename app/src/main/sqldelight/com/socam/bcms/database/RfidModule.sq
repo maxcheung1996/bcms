@@ -1,0 +1,368 @@
+-- RfidModule table for RFID component tracking and management
+CREATE TABLE RfidModule (
+    Id TEXT PRIMARY KEY NOT NULL,
+    ProjId TEXT,
+    ContractNo TEXT,
+    ManufacturerId TEXT,
+    TagId TEXT,
+    IsActivated INTEGER NOT NULL DEFAULT 0,
+    ActivatedDate INTEGER,
+    BCType TEXT,
+    RFIDTagNo TEXT,
+    StepCode TEXT,
+    Category TEXT,
+    Subcategory TEXT,
+    SupplierId TEXT,
+    ConcreteGrade TEXT,
+    ASN TEXT, -- A.S.N. field (renamed to avoid special characters)
+    SerialNo TEXT,
+    WorkingNo INTEGER,
+    ManufacturingDate INTEGER,
+    RSCompanyId TEXT,
+    RSInspectionDate INTEGER,
+    CastingDate INTEGER,
+    FirstCastingDate INTEGER,
+    SecondCastingDate INTEGER,
+    WaterproofingInstallationDate INTEGER,
+    InternalFinishDate INTEGER,
+    DeliveryDate INTEGER,
+    BatchNo TEXT,
+    LicensePlateNo TEXT,
+    GpsDeviceId TEXT,
+    SiteArrivalDate INTEGER,
+    SiteInstallationDate INTEGER,
+    RoomInput TEXT,
+    RoomId TEXT,
+    Floor TEXT,
+    Region TEXT,
+    ChipFailureSA INTEGER NOT NULL DEFAULT 0, -- ChipFailure(SA) renamed
+    ChipFailureSI INTEGER NOT NULL DEFAULT 0, -- ChipFailure(SI) renamed
+    IsCompleted10 INTEGER NOT NULL DEFAULT 0,
+    Remark10 TEXT,
+    IsCompleted20 INTEGER NOT NULL DEFAULT 0,
+    Remark20 TEXT,
+    IsCompleted30 INTEGER NOT NULL DEFAULT 0,
+    Remark30 TEXT,
+    IsCompleted40 INTEGER NOT NULL DEFAULT 0,
+    Remark40 TEXT,
+    IsCompleted50 INTEGER NOT NULL DEFAULT 0,
+    Remark50 TEXT,
+    IsCompleted55 INTEGER NOT NULL DEFAULT 0,
+    Remark55 TEXT,
+    IsCompleted60 INTEGER NOT NULL DEFAULT 0,
+    Remark60 TEXT,
+    IsCompleted70 INTEGER NOT NULL DEFAULT 0,
+    Remark70 TEXT,
+    IsCompleted80 INTEGER NOT NULL DEFAULT 0,
+    Remark80 TEXT,
+    Dispose INTEGER NOT NULL DEFAULT 0,
+    CreatedDate INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    CreatedBy TEXT,
+    UpdatedDate INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    UpdatedBy TEXT,
+    ProductNo TEXT,
+    -- Additional sync fields for offline-first architecture
+    sync_status TEXT NOT NULL DEFAULT 'PENDING',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+-- Indexes for better query performance
+CREATE INDEX idx_rfid_module_proj_id ON RfidModule(ProjId);
+CREATE INDEX idx_rfid_module_tag_id ON RfidModule(TagId);
+CREATE INDEX idx_rfid_module_rfid_tag_no ON RfidModule(RFIDTagNo);
+CREATE INDEX idx_rfid_module_contract_no ON RfidModule(ContractNo);
+CREATE INDEX idx_rfid_module_batch_no ON RfidModule(BatchNo);
+CREATE INDEX idx_rfid_module_sync_status ON RfidModule(sync_status);
+
+-- Queries for RfidModule
+selectAllModules:
+SELECT * FROM RfidModule ORDER BY CreatedDate DESC;
+
+selectModuleById:
+SELECT * FROM RfidModule WHERE Id = ?;
+
+selectModulesByProjectId:
+SELECT * FROM RfidModule WHERE ProjId = ? ORDER BY CreatedDate DESC;
+
+selectModulesByContractNo:
+SELECT * FROM RfidModule WHERE ContractNo = ? ORDER BY CreatedDate DESC;
+
+selectModulesByBatchNo:
+SELECT * FROM RfidModule WHERE BatchNo = ? ORDER BY CreatedDate DESC;
+
+selectModulesByTagId:
+SELECT * FROM RfidModule WHERE TagId = ? ORDER BY CreatedDate DESC;
+
+selectModulesByRFIDTagNo:
+SELECT * FROM RfidModule WHERE RFIDTagNo = ? ORDER BY CreatedDate DESC;
+
+selectActivatedModules:
+SELECT * FROM RfidModule WHERE IsActivated = 1 ORDER BY ActivatedDate DESC;
+
+selectModulesByManufacturer:
+SELECT * FROM RfidModule WHERE ManufacturerId = ? ORDER BY CreatedDate DESC;
+
+selectModulesBySupplier:
+SELECT * FROM RfidModule WHERE SupplierId = ? ORDER BY CreatedDate DESC;
+
+selectModulesByBCType:
+SELECT * FROM RfidModule WHERE BCType = ? ORDER BY CreatedDate DESC;
+
+selectModulesByCategory:
+SELECT * FROM RfidModule WHERE Category = ? ORDER BY CreatedDate DESC;
+
+selectModulesByFloor:
+SELECT * FROM RfidModule WHERE Floor = ? ORDER BY CreatedDate DESC;
+
+selectModulesByRegion:
+SELECT * FROM RfidModule WHERE Region = ? ORDER BY CreatedDate DESC;
+
+selectCompletedModules:
+SELECT * FROM RfidModule 
+WHERE IsCompleted80 = 1 
+ORDER BY CreatedDate DESC;
+
+selectPendingModules:
+SELECT * FROM RfidModule 
+WHERE IsCompleted80 = 0 
+ORDER BY CreatedDate DESC;
+
+selectModulesForSync:
+SELECT * FROM RfidModule WHERE sync_status = 'PENDING' ORDER BY CreatedDate ASC;
+
+insertModule:
+INSERT INTO RfidModule (
+    Id, ProjId, ContractNo, ManufacturerId, TagId, IsActivated, ActivatedDate,
+    BCType, RFIDTagNo, StepCode, Category, Subcategory, SupplierId, ConcreteGrade,
+    ASN, SerialNo, WorkingNo, ManufacturingDate, RSCompanyId, RSInspectionDate,
+    CastingDate, FirstCastingDate, SecondCastingDate, WaterproofingInstallationDate,
+    InternalFinishDate, DeliveryDate, BatchNo, LicensePlateNo, GpsDeviceId,
+    SiteArrivalDate, SiteInstallationDate, RoomInput, RoomId, Floor, Region,
+    ChipFailureSA, ChipFailureSI, IsCompleted10, Remark10, IsCompleted20, Remark20,
+    IsCompleted30, Remark30, IsCompleted40, Remark40, IsCompleted50, Remark50,
+    IsCompleted55, Remark55, IsCompleted60, Remark60, IsCompleted70, Remark70,
+    IsCompleted80, Remark80, Dispose, CreatedBy, UpdatedBy, ProductNo,
+    CreatedDate, UpdatedDate, sync_status, last_sync_date
+) VALUES (
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, strftime('%s', 'now')
+);
+
+insertOrReplaceModule:
+INSERT OR REPLACE INTO RfidModule (
+    Id, ProjId, ContractNo, ManufacturerId, TagId, IsActivated, ActivatedDate,
+    BCType, RFIDTagNo, StepCode, Category, Subcategory, SupplierId, ConcreteGrade,
+    ASN, SerialNo, WorkingNo, ManufacturingDate, RSCompanyId, RSInspectionDate,
+    CastingDate, FirstCastingDate, SecondCastingDate, WaterproofingInstallationDate,
+    InternalFinishDate, DeliveryDate, BatchNo, LicensePlateNo, GpsDeviceId,
+    SiteArrivalDate, SiteInstallationDate, RoomInput, RoomId, Floor, Region,
+    ChipFailureSA, ChipFailureSI, IsCompleted10, Remark10, IsCompleted20, Remark20,
+    IsCompleted30, Remark30, IsCompleted40, Remark40, IsCompleted50, Remark50,
+    IsCompleted55, Remark55, IsCompleted60, Remark60, IsCompleted70, Remark70,
+    IsCompleted80, Remark80, Dispose, CreatedBy, UpdatedBy, ProductNo,
+    CreatedDate, UpdatedDate, sync_status, last_sync_date
+) VALUES (
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, strftime('%s', 'now')
+);
+
+updateModule:
+UPDATE RfidModule SET
+    ProjId = ?, ContractNo = ?, ManufacturerId = ?, TagId = ?, IsActivated = ?, ActivatedDate = ?,
+    BCType = ?, RFIDTagNo = ?, StepCode = ?, Category = ?, Subcategory = ?, SupplierId = ?, ConcreteGrade = ?,
+    ASN = ?, SerialNo = ?, WorkingNo = ?, ManufacturingDate = ?, RSCompanyId = ?, RSInspectionDate = ?,
+    CastingDate = ?, FirstCastingDate = ?, SecondCastingDate = ?, WaterproofingInstallationDate = ?,
+    InternalFinishDate = ?, DeliveryDate = ?, BatchNo = ?, LicensePlateNo = ?, GpsDeviceId = ?,
+    SiteArrivalDate = ?, SiteInstallationDate = ?, RoomInput = ?, RoomId = ?, Floor = ?, Region = ?,
+    ChipFailureSA = ?, ChipFailureSI = ?, IsCompleted10 = ?, Remark10 = ?, IsCompleted20 = ?, Remark20 = ?,
+    IsCompleted30 = ?, Remark30 = ?, IsCompleted40 = ?, Remark40 = ?, IsCompleted50 = ?, Remark50 = ?,
+    IsCompleted55 = ?, Remark55 = ?, IsCompleted60 = ?, Remark60 = ?, IsCompleted70 = ?, Remark70 = ?,
+    IsCompleted80 = ?, Remark80 = ?, Dispose = ?, UpdatedBy = ?, ProductNo = ?,
+    UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING'
+WHERE Id = ?;
+
+updateModuleActivation:
+UPDATE RfidModule SET
+    IsActivated = ?, ActivatedDate = ?, UpdatedBy = ?,
+    UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING'
+WHERE Id = ?;
+
+updateModuleCompletion:
+UPDATE RfidModule SET
+    IsCompleted10 = ?, IsCompleted20 = ?, IsCompleted30 = ?, IsCompleted40 = ?, IsCompleted50 = ?,
+    IsCompleted55 = ?, IsCompleted60 = ?, IsCompleted70 = ?, IsCompleted80 = ?, UpdatedBy = ?,
+    UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING'
+WHERE Id = ?;
+
+updateSyncStatus:
+UPDATE RfidModule SET
+    sync_status = ?, last_sync_date = strftime('%s', 'now')
+WHERE Id = ?;
+
+deleteModule:
+DELETE FROM RfidModule WHERE Id = ?;
+
+deleteModulesByProjectId:
+DELETE FROM RfidModule WHERE ProjId = ?;
+
+deleteAllModules:
+DELETE FROM RfidModule;
+
+deleteAllByBCType:
+DELETE FROM RfidModule WHERE BCType = ?;
+
+countAllModules:
+SELECT COUNT(*) FROM RfidModule;
+
+countModulesByProjectId:
+SELECT COUNT(*) FROM RfidModule WHERE ProjId = ?;
+
+countActivatedModules:
+SELECT COUNT(*) FROM RfidModule WHERE IsActivated = 1;
+
+countCompletedModules:
+SELECT COUNT(*) FROM RfidModule WHERE IsCompleted80 = 1;
+
+countPendingModules:
+SELECT COUNT(*) FROM RfidModule WHERE IsCompleted80 = 0;
+
+countModulesForSync:
+SELECT COUNT(*) FROM RfidModule WHERE sync_status = 'PENDING';
+
+countByBCType:
+SELECT COUNT(*) FROM RfidModule WHERE BCType = ?;
+
+selectPendingByBCType:
+SELECT * FROM RfidModule WHERE sync_status = 'PENDING' AND BCType = ? ORDER BY UpdatedDate DESC;
+
+countPendingByBCType:
+SELECT COUNT(*) FROM RfidModule WHERE sync_status = 'PENDING' AND BCType = ?;
+
+updateSyncStatusById:
+UPDATE RfidModule SET sync_status = ? WHERE Id = ?;
+
+selectModulesById:
+SELECT * FROM RfidModule WHERE Id = ?;
+
+-- Individual field update queries for batch processing
+updateCategoryById:
+UPDATE RfidModule SET Category = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateSubcategoryById:
+UPDATE RfidModule SET Subcategory = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateSerialNoById:
+UPDATE RfidModule SET SerialNo = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateManufacturerIdById:
+UPDATE RfidModule SET ManufacturerId = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateSupplierIdById:
+UPDATE RfidModule SET SupplierId = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRegionById:
+UPDATE RfidModule SET Region = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateFloorById:
+UPDATE RfidModule SET Floor = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRoomIdById:
+UPDATE RfidModule SET RoomId = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateASNById:
+UPDATE RfidModule SET ASN = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateBatchNoById:
+UPDATE RfidModule SET BatchNo = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateConcreteGradeById:
+UPDATE RfidModule SET ConcreteGrade = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateCastingDateById:
+UPDATE RfidModule SET CastingDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateFirstCastingDateById:
+UPDATE RfidModule SET FirstCastingDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateSecondCastingDateById:
+UPDATE RfidModule SET SecondCastingDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateDeliveryDateById:
+UPDATE RfidModule SET DeliveryDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateManufacturingDateById:
+UPDATE RfidModule SET ManufacturingDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateSiteInstallationDateById:
+UPDATE RfidModule SET SiteInstallationDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted10ById:
+UPDATE RfidModule SET IsCompleted10 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark10ById:
+UPDATE RfidModule SET Remark10 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted20ById:
+UPDATE RfidModule SET IsCompleted20 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark20ById:
+UPDATE RfidModule SET Remark20 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted30ById:
+UPDATE RfidModule SET IsCompleted30 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark30ById:
+UPDATE RfidModule SET Remark30 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted40ById:
+UPDATE RfidModule SET IsCompleted40 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark40ById:
+UPDATE RfidModule SET Remark40 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted50ById:
+UPDATE RfidModule SET IsCompleted50 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark50ById:
+UPDATE RfidModule SET Remark50 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted55ById:
+UPDATE RfidModule SET IsCompleted55 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark55ById:
+UPDATE RfidModule SET Remark55 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted60ById:
+UPDATE RfidModule SET IsCompleted60 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark60ById:
+UPDATE RfidModule SET Remark60 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted70ById:
+UPDATE RfidModule SET IsCompleted70 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark70ById:
+UPDATE RfidModule SET Remark70 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateIsCompleted80ById:
+UPDATE RfidModule SET IsCompleted80 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRemark80ById:
+UPDATE RfidModule SET Remark80 = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+-- Additional update queries for batch processing support
+updateProductNoById:
+UPDATE RfidModule SET ProductNo = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRSCompanyIdById:
+UPDATE RfidModule SET RSCompanyId = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateRSInspectionDateById:
+UPDATE RfidModule SET RSInspectionDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateInternalFinishDateById:
+UPDATE RfidModule SET InternalFinishDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateSiteArrivalDateById:
+UPDATE RfidModule SET SiteArrivalDate = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;
+
+updateLicensePlateNoById:
+UPDATE RfidModule SET LicensePlateNo = ?, UpdatedDate = strftime('%s', 'now'), sync_status = 'PENDING' WHERE Id = ?;

@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary"
+    tools:context=".presentation.modules.TagModificationFragment">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:title="@string/tag_modification_title"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Main Content -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Power Control Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                            android:text="@string/uhf_power_control"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Power Value Display -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/power_level_label"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:id="@+id/power_value_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20 dBm"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondary" />
+                    </LinearLayout>
+
+                    <!-- Power Slider -->
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/power_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="5"
+                        android:valueTo="33"
+                        android:value="20"
+                        android:stepSize="1"
+                        app:trackColorActive="@color/secondary"
+                        app:trackColorInactive="@color/surface_secondary"
+                        app:thumbColor="@color/secondary"
+                        app:haloColor="@color/secondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Range: 5-33 dBm"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Tag Filtering Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tag_status_filtering"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter_description"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <!-- Active Filter Checkbox -->
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/active_filter_checkbox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Show Active"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:checked="true"
+                            app:buttonTint="@color/success" />
+
+                        <!-- Inactive Filter Checkbox -->
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/inactive_filter_checkbox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Show Inactive"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:checked="true"
+                            app:buttonTint="@color/error" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Active: Tags with ACT status • Inactive: Tags with REM or no status"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="8dp"
+                        android:fontStyle="italic"
+                        android:gravity="center" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Scan Mode Selection Tabs -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scan Mode Selection"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Tab Layout -->
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/scan_mode_tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabMode="fixed"
+                        app:tabGravity="fill"
+                        app:tabSelectedTextColor="@color/primary"
+                        app:tabTextColor="@color/text_secondary"
+                        app:tabIndicatorColor="@color/primary"
+                        app:tabIndicatorHeight="2dp">
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Single Scan" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Multiple Scan" />
+
+                    </com.google.android.material.tabs.TabLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Single Scan Mode Content -->
+            <LinearLayout
+                android:id="@+id/single_scan_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!-- Scan Status Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scan Control"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:id="@+id/status_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ready to scan. Press and hold trigger to scan."
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/surface_secondary"
+                        android:padding="12dp"
+                        android:gravity="center"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Write Controls -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Write EPC Status"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/status_input_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/status_dropdown"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Select status"
+                                android:inputType="none"
+                                android:textSize="14sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/write_button"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:enabled="false"
+                            app:icon="@drawable/ic_edit"
+                            app:iconSize="20dp"
+                            app:iconPadding="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            app:cornerRadius="24dp"
+                            style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Available when tag is scanned"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="4dp"
+                        android:fontStyle="italic" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Scan Results Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/scan_results_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/surface_primary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Scan Results Header with Status Badge -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Scan Results"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary" />
+
+                        <!-- Status Badge -->
+                        <TextView
+                            android:id="@+id/status_badge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ACTIVE"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/white"
+                            android:background="@drawable/rounded_background"
+                            android:backgroundTint="@color/success"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <!-- RSSI Section -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/surface_secondary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RSSI (Signal Strength)"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginBottom="4dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Raw: "
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary" />
+
+                            <TextView
+                                android:id="@+id/rssi_raw_text"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="--"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_primary"
+                                android:fontFamily="monospace" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="dBm: "
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                android:layout_marginStart="16dp" />
+
+                            <TextView
+                                android:id="@+id/rssi_dbm_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/secondary"
+                                android:fontFamily="monospace" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- TID Section -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/surface_secondary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TID (Tag Identifier)"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/tid_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="monospace"
+                            android:textIsSelectable="true" />
+                    </LinearLayout>
+
+                    <!-- EPC Section -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/surface_secondary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="EPC (Electronic Product Code)"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/epc_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="monospace"
+                            android:textIsSelectable="true" />
+                    </LinearLayout>
+
+                    <!-- USER Section -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/surface_secondary"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="EPC (Status Data)"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/user_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="monospace"
+                            android:textIsSelectable="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(Raw hexadecimal EPC data with status suffix)"
+                            android:textSize="10sp"
+                            android:textColor="@color/text_secondary"
+                            android:layout_marginTop="4dp"
+                            android:fontStyle="italic" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+            <!-- End Single Scan Mode Content -->
+
+            <!-- Multiple Scan Mode Content -->
+            <LinearLayout
+                android:id="@+id/multiple_scan_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Multiple Scan Results List -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/surface_primary">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Multiple Scan Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="12dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Scanned Tags (Real-time)"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/text_primary" />
+
+                            <!-- Tag Count -->
+                            <TextView
+                                android:id="@+id/tag_count_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0 tags"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/secondary"
+                                android:background="@drawable/rounded_background"
+                                android:backgroundTint="@color/surface_secondary"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="4dp" />
+
+                        </LinearLayout>
+
+                        <!-- Status Message for Multiple Scan -->
+                        <TextView
+                            android:id="@+id/multiple_scan_status_message"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ready to scan multiple tags. Press and hold trigger to scan."
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:background="@drawable/rounded_background"
+                            android:backgroundTint="@color/surface_secondary"
+                            android:padding="12dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="16dp" />
+
+                        <!-- RecyclerView for Multiple Scan Results -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/multiple_scan_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="200dp"
+                            android:scrollbars="vertical" />
+
+                        <!-- Empty State for Multiple Scan -->
+                        <TextView
+                            android:id="@+id/empty_state_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:text="No tags scanned yet.\n\nPress and hold the trigger button to scan multiple tags simultaneously."
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"
+                            android:gravity="center"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+            <!-- End Multiple Scan Mode Content -->
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

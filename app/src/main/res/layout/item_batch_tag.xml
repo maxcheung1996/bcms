@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@android:color/darker_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Header Row with BC Type and Remove Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- BC Type Badge -->
+            <TextView
+                android:id="@+id/bcTypeBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/design_default_color_primary"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="MIC"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"
+                tools:text="MIC" />
+
+            <!-- RSSI Value -->
+            <TextView
+                android:id="@+id/rssiValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-25 dBm"
+                android:textSize="12sp"
+                android:textColor="@color/design_default_color_secondary"
+                tools:text="-25 dBm" />
+
+            <!-- Remove Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/removeTagButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="16dp"
+                app:iconTint="@android:color/holo_red_dark"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:contentDescription="Remove tag" />
+
+        </LinearLayout>
+
+        <!-- Tag Number Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tag Number:"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tagNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="34180033010120210573000001"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/design_default_color_on_surface"
+                tools:text="34180033010120210573000001" />
+
+        </LinearLayout>
+
+        <!-- EPC Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EPC:"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/epcValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="E280110C2000200612345678"
+                android:textSize="11sp"
+                android:textColor="@color/design_default_color_on_surface"
+                android:fontFamily="monospace"
+                android:maxLines="2"
+                android:ellipsize="end"
+                tools:text="E280110C2000200612345678" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

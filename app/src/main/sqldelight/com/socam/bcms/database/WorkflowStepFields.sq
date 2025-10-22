@@ -1,0 +1,62 @@
+-- WorkflowStepFields table for storing dynamic field configurations for each workflow step
+CREATE TABLE WorkflowStepFields (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    step_code TEXT NOT NULL,        -- ALW10, ALW20, MIC10, TID10, etc.
+    field_name TEXT NOT NULL,       -- Category, Serial No., etc.
+    field_type TEXT NOT NULL,       -- dropdown, text, integer, datetime, date, checkbox
+    field_order INTEGER NOT NULL,   -- display order in UI
+    is_required INTEGER DEFAULT 0,  -- 0 = optional, 1 = required
+    dropdown_source TEXT,           -- for dropdowns: table/source to get options (to be implemented later)
+    field_label TEXT,               -- display label (may differ from field_name)
+    default_value TEXT,             -- default field value
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    created_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    UNIQUE(step_code, field_name)
+);
+
+-- Queries for WorkflowStepFields
+selectAllStepFields:
+SELECT * FROM WorkflowStepFields ORDER BY step_code, field_order;
+
+selectFieldsByStep:
+SELECT * FROM WorkflowStepFields WHERE step_code = ? ORDER BY field_order;
+
+selectStepsByFieldType:
+SELECT * FROM WorkflowStepFields WHERE field_type = ? ORDER BY step_code, field_order;
+
+selectFieldByStepAndName:
+SELECT * FROM WorkflowStepFields WHERE step_code = ? AND field_name = ?;
+
+selectAvailableSteps:
+SELECT DISTINCT step_code FROM WorkflowStepFields ORDER BY step_code;
+
+selectAvailableFieldTypes:
+SELECT DISTINCT field_type FROM WorkflowStepFields ORDER BY field_type;
+
+insertStepField:
+INSERT OR REPLACE INTO WorkflowStepFields (
+    step_code, field_name, field_type, field_order, is_required, 
+    dropdown_source, field_label, default_value
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+updateStepField:
+UPDATE WorkflowStepFields SET
+    field_type = ?, field_order = ?, is_required = ?, dropdown_source = ?,
+    field_label = ?, default_value = ?, sync_status = ?, last_sync_date = ?
+WHERE step_code = ? AND field_name = ?;
+
+deleteStepField:
+DELETE FROM WorkflowStepFields WHERE step_code = ? AND field_name = ?;
+
+deleteStepFieldsByStep:
+DELETE FROM WorkflowStepFields WHERE step_code = ?;
+
+deleteAllStepFields:
+DELETE FROM WorkflowStepFields;
+
+countStepFields:
+SELECT COUNT(*) FROM WorkflowStepFields;
+
+countStepFieldsByStep:
+SELECT COUNT(*) FROM WorkflowStepFields WHERE step_code = ?;

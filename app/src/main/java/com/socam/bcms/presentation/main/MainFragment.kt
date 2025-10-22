@@ -1,16 +1,21 @@
 package com.socam.bcms.presentation.main
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.socam.bcms.R
 import com.socam.bcms.databinding.FragmentMainBinding
 import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * Main fragment displaying dashboard, stats, and sync status
@@ -58,58 +63,84 @@ class MainFragment : Fragment() {
     }
     
     /**
-     * Set up the MaterialToolbar with built-in menu handling
+     * Setup toolbar - SIMPLE and SAFE
      */
     private fun setupToolbar(): Unit {
-        try {
-            println("MainFragment: Setting up basic menu")
-            
-            binding.toolbar.inflateMenu(R.menu.main_menu)
-            binding.toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Light
-            
-            binding.toolbar.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.action_logout -> {
-                        println("MainFragment: Logout clicked")
-                        performLogout()
-                        true
-                    }
-                    R.id.action_refresh -> {
-                        println("MainFragment: Refresh clicked - skipped to prevent loops")
-                        // DISABLED: Don't reload data on refresh to prevent loops
-                        showRefreshMessage()
-                        true
-                    }
-                    else -> false
-                }
-            }
-            
-            binding.manualLogoutButton.visibility = android.view.View.GONE
-            
-        } catch (e: Exception) {
-            println("MainFragment: Error in menu setup: ${e.message}")
-            binding.manualLogoutButton.visibility = android.view.View.VISIBLE
-        }
+        // Manual logout button hidden since logout now available in Settings
+        binding.manualLogoutButton.visibility = android.view.View.GONE
     }
     
     private fun setupUI(): Unit {
         binding.syncNowButton.setOnClickListener {
-            println("MainFragment: Sync button clicked - simplified for stability")
-            showSyncMessage()
+            println("MainFragment: Sync button clicked - navigating to sync screen")
+            navigateToSyncScreen()
         }
+        
+        // Module card click listeners
+        binding.tagActivationCard.setOnClickListener {
+            println("MainFragment: Tag Activation card clicked")
+            findNavController().navigate(R.id.action_main_to_tag_activation)
+        }
+        
+        binding.singleScanCard.setOnClickListener {
+            println("MainFragment: Single Scan card clicked")
+            findNavController().navigate(R.id.action_main_to_single_scan)
+        }
+        
+        binding.batchProcessCard.setOnClickListener {
+            println("MainFragment: Batch Process card clicked")
+            findNavController().navigate(R.id.action_main_to_batch_process)
+        }
+        
+        binding.settingsCard.setOnClickListener {
+            println("MainFragment: Settings card clicked")
+            findNavController().navigate(R.id.action_main_to_settings)
+        }
+        
+        
+        // Hidden modules - no click listeners
+        // binding.tagModificationCard.setOnClickListener { ... } - REMOVED
+        // binding.notificationCard.setOnClickListener { ... } - REMOVED
     }
     
     private fun setupObservers(): Unit {
         // User info observer
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            binding.userNameText.text = "${userInfo.fullName} (${userInfo.role})"
-        }
+        // viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+        //    binding.userNameText.text = "${userInfo.fullName} (${userInfo.role})"
+        //}
         
-        // Stats observer  
+        // Stats observer - legacy fallback
         viewModel.statsInfo.observe(viewLifecycleOwner) { stats ->
             binding.totalTagsCount.text = stats.totalTags.toString()
             binding.activeTagsCount.text = stats.activeTags.toString()
             binding.pendingSyncCount.text = stats.pendingSync.toString()
+            
+            // Update notification badge
+            updateNotificationBadge(stats.notificationCount)
+        }
+        
+        // Real-time stats observer - primary source for live updates
+        viewModel.realTimeStats.observe(viewLifecycleOwner) { stats ->
+            try {
+                println("MainFragment: Real-time stats update - Total: ${stats.totalTags}, Active: ${stats.activeTags}, Pending: ${stats.pendingSync}")
+                
+                binding.totalTagsCount.text = stats.totalTags.toString()
+                binding.activeTagsCount.text = stats.activeTags.toString()
+                binding.pendingSyncCount.text = stats.pendingSync.toString()
+                
+                // Update notification badge
+                updateNotificationBadge(stats.notificationCount)
+                
+                // Visual feedback for real-time updates
+                animateStatsUpdate()
+                
+            } catch (e: Exception) {
+                println("MainFragment: Error updating real-time stats: ${e.message}")
+                // Fall back to safe defaults
+                binding.totalTagsCount.text = "0"
+                binding.activeTagsCount.text = "0"
+                binding.pendingSyncCount.text = "0"
+            }
         }
         
         // Sync state observer - FIXED: No more infinite loop!
@@ -181,6 +212,43 @@ class MainFragment : Fragment() {
         }
     }
     
+    private fun navigateToSyncScreen(): Unit {
+        try {
+            findNavController().navigate(R.id.action_main_to_sync)
+        } catch (e: Exception) {
+            println("MainFragment: Error navigating to sync screen: ${e.message}")
+            showSyncMessage()
+        }
+    }
+    
+    /**
+     * Animate stats cards when values update for visual feedback
+     */
+     private fun animateStatsUpdate(): Unit {
+        try {
+            // Simple fade animation to show updates
+            listOf(
+                binding.totalTagsCount,
+                binding.activeTagsCount, 
+                binding.pendingSyncCount
+            ).forEach { textView ->
+                textView.animate()
+                    .alpha(0.7f)
+                    .setDuration(200)
+                    .withEndAction {
+                        textView.animate()
+                            .alpha(1.0f)
+                            .setDuration(200)
+                            .start()
+                    }
+                    .start()
+            }
+        } catch (e: Exception) {
+            // Don't break app if animation fails
+            println("MainFragment: Animation error: ${e.message}")
+        }
+    }
+    
     private fun performLogout(): Unit {
         viewModel.logout()
         
@@ -209,9 +277,107 @@ class MainFragment : Fragment() {
     }
     
     private fun showSyncError(error: String): Unit {
-        Snackbar.make(binding.root, "Error: $error", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(binding.root, getString(R.string.error_format, error), Snackbar.LENGTH_LONG).show()
     }
     
+    /**
+     * Update notification badge based on sync error count
+     */
+    private fun updateNotificationBadge(count: Int): Unit {
+        if (count > 0) {
+            binding.notificationBadge.visibility = View.VISIBLE
+            binding.notificationBadge.text = if (count > 99) "99+" else count.toString()
+            val issueText = if (count == 1) getString(R.string.sync_issue_singular) else getString(R.string.sync_issues_plural)
+            binding.notificationSubtitle.text = getString(R.string.scanning_status_format, count.toString(), issueText)
+            
+            // Update card styling for attention
+            binding.notificationCard.strokeColor = android.graphics.Color.RED
+            binding.notificationCard.strokeWidth = 2
+        } else {
+            binding.notificationBadge.visibility = View.GONE
+            binding.notificationSubtitle.text = getString(R.string.no_sync_issues)
+            
+            // Reset card styling
+            binding.notificationCard.strokeColor = android.graphics.Color.TRANSPARENT
+            binding.notificationCard.strokeWidth = 0
+        }
+    }
+
+    /**
+     * Handle configuration changes (including language changes)
+     */
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        println("MainFragment: Configuration changed - refreshing UI text elements")
+        refreshUITextElementsForLanguageChange()
+    }
+
+    /**
+     * Refresh all UI text elements for language changes
+     * Uses similar approach to SettingsFragment tri-directional system
+     */
+    private fun refreshUITextElementsForLanguageChange() {
+        try {
+            println("MainFragment: Starting UI text refresh for language change")
+            
+            // Update notification badge text
+            val currentCount = binding.notificationBadge.text.toString().toIntOrNull() ?: 0
+            updateNotificationBadge(currentCount)
+            
+            // Refresh all card titles and descriptions if they use string resources
+            refreshAllCardTexts()
+            
+            // Trigger layout refresh
+            binding.root.post {
+                binding.root.requestLayout()
+                binding.root.invalidate()
+            }
+            
+            println("MainFragment: ✅ UI text refresh completed for language change")
+            
+        } catch (e: Exception) {
+            println("MainFragment: ❌ Error in UI text refresh: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * Refresh all card texts that may contain translatable strings
+     */
+    private fun refreshAllCardTexts() {
+        try {
+            // Update all TextViews in the view hierarchy
+            updateAllTextViewsWithLocalizedContext(binding.root, requireContext())
+            
+        } catch (e: Exception) {
+            println("MainFragment: Error refreshing card texts: ${e.message}")
+        }
+    }
+
+    /**
+     * Recursively update all TextViews with localized context
+     * Similar to SettingsFragment approach
+     */
+    private fun updateAllTextViewsWithLocalizedContext(view: View, localizedContext: Context) {
+        try {
+            when (view) {
+                is ViewGroup -> {
+                    for (i in 0 until view.childCount) {
+                        updateAllTextViewsWithLocalizedContext(view.getChildAt(i), localizedContext)
+                    }
+                }
+                is TextView -> {
+                    // Force TextView to re-resolve any string resources it might be using
+                    view.invalidate()
+                    view.requestLayout()
+                }
+            }
+        } catch (e: Exception) {
+            println("MainFragment: Error updating TextViews: ${e.message}")
+        }
+    }
+    
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

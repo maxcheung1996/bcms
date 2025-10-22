@@ -1,0 +1,258 @@
+Block: GET https://micservice.shuion.com.hk/api/Masters/629F9E29-0B36-4A9E-A2C4-C28969285583/Locations/Regions
+[
+    {
+        "Key": "A",
+        "Value": "A"
+    },
+    {
+        "Key": "B",
+        "Value": "B"
+    },
+    {
+        "Key": "C",
+        "Value": "C"
+    }
+]
+
+Floor: GET https://micservice.shuion.com.hk/api/Masters/629F9E29-0B36-4A9E-A2C4-C28969285583/Locations/Floors
+[
+    {
+        "Key": "1",
+        "Value": "1"
+    },
+    {
+        "Key": "2",
+        "Value": "2"
+    },
+    {
+        "Key": "3",
+        "Value": "3"
+    },
+    {
+        "Key": "4",
+        "Value": "4"
+    },
+    {
+        "Key": "5",
+        "Value": "5"
+    },
+    {
+        "Key": "6",
+        "Value": "6"
+    }
+]
+
+Concretes Grades: GET https://micservice.shuion.com.hk/api/Masters/629F9E29-0B36-4A9E-A2C4-C28969285583/Concretes/Grades
+[
+    {
+        "Id": 18,
+        "Grade": "45/20D+GGBS",
+        "IsDefault": 0
+    },
+    {
+        "Id": 19,
+        "Grade": "45/20D",
+        "IsDefault": 0
+    },
+    {
+        "Id": 20,
+        "Grade": "60/20D",
+        "IsDefault": 0
+    },
+    {
+        "Id": 21,
+        "Grade": "45/10D",
+        "IsDefault": 0
+    },
+    {
+        "Id": 22,
+        "Grade": "60/10D",
+        "IsDefault": 0
+    },
+    {
+        "Id": 23,
+        "Grade": "其他",
+        "IsDefault": 0
+    }
+]
+
+Unit: GET https://micservice.shuion.com.hk/api/Masters/629F9E29-0B36-4A9E-A2C4-C28969285583/Locations/List
+[
+    {
+        "RoomId": "2dea29f1-7065-11ed-bf6f-005056acb348",
+        "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+        "RegionFloorCode": "BKA-1F",
+        "Region": "A",
+        "Floor": "1",
+        "RegionFloorSort": 1,
+        "AreaLocationCode": "RA-I",
+        "AreaGroup": "Residential Area",
+        "LocationType": "Indoor",
+        "AreaLocationSort": 1,
+        "Room": "1",
+        "Remarks": null,
+        "RoomSort": 1,
+        "RoomRfid": 0,
+        "FloorPlanFileGuid": null
+    },
+    {
+        "RoomId": "425125f5-7065-11ed-bf6f-005056acb348",
+        "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+        "RegionFloorCode": "BKA-1F",
+        "Region": "A",
+        "Floor": "1",
+        "RegionFloorSort": 1,
+        "AreaLocationCode": "RA-I",
+        "AreaGroup": "Residential Area",
+        "LocationType": "Indoor",
+        "AreaLocationSort": 1,
+        "Room": "2",
+        "Remarks": null,
+        "RoomSort": 2,
+        "RoomRfid": 0,
+        "FloorPlanFileGuid": null
+    },
+    {
+        "RoomId": "42558231-7065-11ed-bf6f-005056acb348",
+        "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+        "RegionFloorCode": "BKA-1F",
+        "Region": "A",
+        "Floor": "1",
+        "RegionFloorSort": 1,
+        "AreaLocationCode": "RA-I",
+        "AreaGroup": "Residential Area",
+        "LocationType": "Indoor",
+        "AreaLocationSort": 1,
+        "Room": "3",
+        "Remarks": null,
+        "RoomSort": 3,
+        "RoomRfid": 0,
+        "FloorPlanFileGuid": null
+    },
+    {
+        "RoomId": "4257dd0d-7065-11ed-bf6f-005056acb348",
+        "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+        "RegionFloorCode": "BKA-1F",
+        "Region": "A",
+        "Floor": "1",
+        "RegionFloorSort": 1,
+        "AreaLocationCode": "RA-I",
+        "AreaGroup": "Residential Area",
+        "LocationType": "Indoor",
+        "AreaLocationSort": 1,
+        "Room": "4",
+        "Remarks": null,
+        "RoomSort": 4,
+        "RoomRfid": 0,
+        "FloorPlanFileGuid": null
+    }
+]
+
+Category & Subcategory: 
+GET https://micservice.shuion.com.hk/api/Masters/FCC5D974-3513-4F2E-8979-13E2867B42EE/Bcs/Categories
+[
+    {
+        "Bctype": "ALW",
+        "IsSubcategory": 0,
+        "Category": "W0001",
+        "DescEN": "W0001",
+        "DescTC": "T1a",
+        "DescSC": "T1b",
+        "IsDefault": 0
+    },
+    {
+        "Bctype": "ALW",
+        "IsSubcategory": 0,
+        "Category": "FAWIND",
+        "DescEN": "Facade Window",
+        "DescTC": "佛沙窗",
+        "DescSC": "佛沙窗",
+        "IsDefault": 0
+    },
+    {
+        "Bctype": "ALW",
+        "IsSubcategory": 0,
+        "Category": "TESTING",
+        "DescEN": "Testing ALW",
+        "DescTC": "Testing佛沙窗XXX",
+        "DescSC": "Testing佛沙窗",
+        "IsDefault": 0
+    },
+    {
+        "Bctype": "ALW",
+        "IsSubcategory": 0,
+        "Category": "TESTING2",
+        "DescEN": "Testing ALW3",
+        "DescTC": "Testing佛沙窗321",
+        "DescSC": "Testing佛沙窗22",
+        "IsDefault": 0
+    },
+    {
+        "Bctype": "ALW",
+        "IsSubcategory": 0,
+        "Category": "ISWIND",
+        "DescEN": "In-Situ Window",
+        "DescTC": "現裝窗",
+        "DescSC": "現裝窗1",
+        "IsDefault": 0
+    },
+    {
+        "Bctype": "ALW",
+        "IsSubcategory": 1,
+        "Category": "MPWX3",
+        "DescEN": "MPWX3",
+        "DescTC": "MPWX3",
+        "DescSC": "MPWX3",
+        "IsDefault": 0
+    }
+]
+
+RSCompany & Hinge Supplier:
+GET https://micservice.shuion.com.hk/api/Masters/629F9E29-0B36-4A9E-A2C4-C28969285583/Companies/List
+[
+    {
+        "Id": "0869e013-6965-4260-b20b-12a7f4825d73",
+        "Type": "Manufacturer",
+        "BCType": "TID",
+        "RefCode": "KHDE",
+        "NameEN": "Kin Hing Door Engineering Limited",
+        "NameTC": "建興門業工程有限公司",
+        "NameSC": "建兴门业工程有限公司",
+        "AddressEN": "No. 80 Weixing Road, Taigongling Village, Dalingshan Town, Dongguan, Guangdong Province",
+        "AddressTC": "廣東省東莞市大嶺山鎮太公嶺村渭東路80號",
+        "AddressSC": "广东省东莞市大岭山镇太公岭村渭东路80号",
+        "GpsLat": null,
+        "GpsLong": null,
+        "IsDefault": 0
+    },
+    {
+        "Id": "8a60ee4e-6560-11ed-b67a-005056acb348",
+        "Type": "HingeSupplier",
+        "BCType": "ALW",
+        "RefCode": "TS",
+        "NameEN": "東成",
+        "NameTC": "東成",
+        "NameSC": "東成",
+        "AddressEN": null,
+        "AddressTC": null,
+        "AddressSC": null,
+        "GpsLat": null,
+        "GpsLong": null,
+        "IsDefault": 1
+    },
+    {
+        "Id": "46c4202d-9788-4b94-9561-ce8c6156cafc",
+        "Type": "RSCompany",
+        "BCType": "MIC",
+        "RefCode": "AECOM",
+        "NameEN": "AECOM",
+        "NameTC": "AECOM",
+        "NameSC": "AECOM",
+        "AddressEN": null,
+        "AddressTC": null,
+        "AddressSC": null,
+        "GpsLat": null,
+        "GpsLong": null,
+        "IsDefault": 1
+    }
+]

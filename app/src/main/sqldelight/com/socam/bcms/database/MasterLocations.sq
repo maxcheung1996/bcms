@@ -1,0 +1,64 @@
+-- MasterLocations table for Unit/Location data
+CREATE TABLE MasterLocations (
+    room_id TEXT PRIMARY KEY NOT NULL,
+    proj_id TEXT NOT NULL,
+    region_floor_code TEXT,
+    region TEXT,
+    floor TEXT,
+    region_floor_sort INTEGER,
+    area_location_code TEXT,
+    area_group TEXT,
+    location_type TEXT,
+    area_location_sort INTEGER,
+    room TEXT,
+    remarks TEXT,
+    room_sort INTEGER,
+    room_rfid INTEGER NOT NULL DEFAULT 0,
+    floor_plan_file_guid TEXT,
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+-- Queries for MasterLocations
+selectAllLocations:
+SELECT * FROM MasterLocations ORDER BY region_floor_sort, area_location_sort, room_sort;
+
+selectLocationById:
+SELECT * FROM MasterLocations WHERE room_id = ?;
+
+selectLocationsByRegion:
+SELECT * FROM MasterLocations WHERE region = ? ORDER BY floor, room_sort;
+
+selectLocationsByFloor:
+SELECT * FROM MasterLocations WHERE floor = ? ORDER BY region, room_sort;
+
+selectLocationsByAreaGroup:
+SELECT * FROM MasterLocations WHERE area_group = ? ORDER BY region_floor_sort, room_sort;
+
+
+selectLocationsByRegionAndFloor:
+SELECT * FROM MasterLocations WHERE region = ? AND floor = ? ORDER BY room_sort;
+
+insertLocation:
+INSERT OR REPLACE INTO MasterLocations (
+    room_id, proj_id, region_floor_code, region, floor, region_floor_sort,
+    area_location_code, area_group, location_type, area_location_sort, room,
+    remarks, room_sort, room_rfid, floor_plan_file_guid
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateLocation:
+UPDATE MasterLocations SET
+    proj_id = ?, region_floor_code = ?, region = ?, floor = ?, region_floor_sort = ?,
+    area_location_code = ?, area_group = ?, location_type = ?, area_location_sort = ?,
+    room = ?, remarks = ?, room_sort = ?, room_rfid = ?, floor_plan_file_guid = ?,
+    sync_status = ?, last_sync_date = ?
+WHERE room_id = ?;
+
+deleteLocation:
+DELETE FROM MasterLocations WHERE room_id = ?;
+
+deleteAllLocations:
+DELETE FROM MasterLocations;
+
+countLocations:
+SELECT COUNT(*) FROM MasterLocations;

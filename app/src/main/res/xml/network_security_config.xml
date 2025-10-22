@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- For development/testing: Allow connection to specific domain -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">micservice.shuion.com.hk</domain>
+        <!-- Trust all certificates for this domain (development only) -->
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </domain-config>
+    
+    <!-- For development: Allow all certificates (REMOVE IN PRODUCTION) -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </base-config>
+    
+    <!-- Debug builds: Accept all certificates (DEVELOPMENT ONLY) -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

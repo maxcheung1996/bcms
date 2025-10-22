@@ -1,0 +1,47 @@
+-- BCTypeMapping table for BC Type to numeric code mapping
+CREATE TABLE BCTypeMapping (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bc_type TEXT UNIQUE NOT NULL,
+    numeric_code TEXT NOT NULL,
+    description TEXT,
+    is_active INTEGER NOT NULL DEFAULT 1,
+    created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+-- Insert default mappings
+INSERT OR REPLACE INTO BCTypeMapping (bc_type, numeric_code, description) VALUES
+('MIC', '107', 'MIC Component Type'),
+('ALW', '102', 'ALW Component Type'), 
+('TID', '103', 'TID Component Type');
+
+-- Queries for BCTypeMapping
+selectAllMappings:
+SELECT * FROM BCTypeMapping WHERE is_active = 1 ORDER BY bc_type;
+
+selectMappingByBcType:
+SELECT * FROM BCTypeMapping WHERE bc_type = ? AND is_active = 1;
+
+selectNumericCodeByBcType:
+SELECT numeric_code FROM BCTypeMapping WHERE bc_type = ? AND is_active = 1;
+
+insertMapping:
+INSERT INTO BCTypeMapping (bc_type, numeric_code, description) 
+VALUES (?, ?, ?);
+
+insertOrReplaceMapping:
+INSERT OR REPLACE INTO BCTypeMapping (bc_type, numeric_code, description, is_active) 
+VALUES (?, ?, ?, 1);
+
+updateMapping:
+UPDATE BCTypeMapping SET
+    numeric_code = ?, description = ?, updated_at = strftime('%s', 'now')
+WHERE bc_type = ?;
+
+deleteMapping:
+UPDATE BCTypeMapping SET 
+    is_active = 0, updated_at = strftime('%s', 'now')
+WHERE bc_type = ?;
+
+countActiveMappings:
+SELECT COUNT(*) FROM BCTypeMapping WHERE is_active = 1;

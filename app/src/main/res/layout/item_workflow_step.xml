@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:gravity="center"
+        android:minHeight="80dp">
+
+        <!-- Icon -->
+        <TextView
+            android:id="@+id/step_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginBottom="4dp"
+            tools:text="🔧" />
+
+        <!-- Step Code -->
+        <TextView
+            android:id="@+id/step_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="2dp"
+            tools:text="ALW10" />
+
+        <!-- Step Description -->
+        <TextView
+            android:id="@+id/step_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#E0E0E0"
+            android:gravity="center"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="安裝標籤" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,72 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_primary"
-    tools:context=".presentation.modules.BatchProcessFragment">
+    android:orientation="vertical"
+    android:background="@color/design_default_color_background">
 
-    <!-- Top bar with back button -->
+    <!-- Top App Bar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
         app:title="@string/batch_process_title"
         app:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:navigationIconTint="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:navigationIconTint="@android:color/white" />
 
-    <!-- Content placeholder -->
-    <LinearLayout
-        android:layout_width="0dp"
+    <!-- Content Area -->
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/ic_batch_process"
-            android:contentDescription="@string/batch_process_description"
-            app:tint="@color/tertiary" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/batch_process_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:gravity="center" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/module_placeholder_description"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"
-            android:gravity="center" />
+            <!-- Section 1: BC Type Filter -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/back_button_text"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/component_type_filter"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/design_default_color_on_surface"
+                        android:layout_marginBottom="12dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/bcTypeInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/select_bc_type_hint">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/bcTypeDropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:text="MIC" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Section 2: Workflow Steps -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/workflow_steps"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/design_default_color_on_surface"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Workflow Steps RecyclerView (Horizontal like Single Scan) -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/workflowStepsRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/item_workflow_step"
+                        tools:itemCount="3" />
+
+                    <TextView
+                        android:id="@+id/workflowStepsEmptyMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_workflow_steps"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/darker_gray"
+                        android:gravity="center"
+                        android:padding="20dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Section 3: Scanned Tags List -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Tag List Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/scanned_tags"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/design_default_color_on_surface" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/clearListButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="@string/clear_list"
+                            android:textSize="12sp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:minWidth="0dp"
+                            android:paddingHorizontal="12dp" />
+
+                    </LinearLayout>
+
+                    <!-- Status Message -->
+                    <TextView
+                        android:id="@+id/statusMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/batch_scan_ready"
+                        android:textSize="14sp"
+                        android:textColor="@color/design_default_color_primary"
+                        android:layout_marginBottom="12dp"
+                        tools:text="Scanning... 3 MIC tags found" />
+
+                    <!-- Tags RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/scannedTagsRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:paddingBottom="8dp"
+                        tools:listitem="@layout/item_batch_tag"
+                        tools:itemCount="5" />
+
+                    <!-- Empty State -->
+                    <LinearLayout
+                        android:id="@+id/emptyStateLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@android:drawable/ic_search_category_default"
+                            android:alpha="0.5"
+                            android:layout_marginBottom="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_tags_scanned"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/darker_gray"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/batch_scan_instruction"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/darker_gray"
+                            android:gravity="center"
+                            android:lineSpacingExtra="4dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

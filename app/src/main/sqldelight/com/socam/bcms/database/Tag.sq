@@ -66,5 +66,16 @@ WHERE id = ?;
 deleteTag:
 DELETE FROM Tag WHERE id = ?;
 
--- COUNT queries removed for stability - no longer needed
+-- Count queries for dashboard statistics
+countAllTags:
+SELECT COUNT(*) FROM Tag;
+
+countActiveTags:
+SELECT COUNT(*) FROM Tag WHERE is_activated = 1;
+
+countPendingSync:
+SELECT COUNT(*) FROM Tag WHERE sync_status != 'SYNCED';
+
+countTagsForSync:
+SELECT COUNT(*) FROM Tag WHERE sync_status = 'PENDING';
 

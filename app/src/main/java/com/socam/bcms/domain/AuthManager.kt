@@ -14,8 +14,9 @@ import javax.crypto.spec.PBEKeySpec
 /**
  * Authentication manager for local user validation and session management
  * Handles password hashing, user authentication, and session tracking
+ * SINGLETON PATTERN to prevent multiple concurrent instances
  */
-class AuthManager(private val context: Context) {
+class AuthManager private constructor(private val context: Context) {
     
     private val databaseManager = DatabaseManager.getInstance(context)
     private var currentUser: User? = null
@@ -27,6 +28,15 @@ class AuthManager(private val context: Context) {
     companion object {
         private const val KEY_CURRENT_USER_ID = "current_user_id"
         private const val KEY_IS_AUTHENTICATED = "is_authenticated"
+        
+        @Volatile
+        private var INSTANCE: AuthManager? = null
+        
+        fun getInstance(context: Context): AuthManager {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: AuthManager(context.applicationContext).also { INSTANCE = it }
+            }
+        }
     }
     
     /**
@@ -97,8 +107,15 @@ class AuthManager(private val context: Context) {
     
     /**
      * Get current authenticated user
+     * Automatically loads authentication state if currentUser is null
      */
-    fun getCurrentUser(): User? = currentUser
+    fun getCurrentUser(): User? {
+        if (currentUser == null) {
+            // Try to load authentication state from persistent storage
+            loadAuthenticationState()
+        }
+        return currentUser
+    }
     
     /**
      * Check if user is currently authenticated
@@ -167,9 +184,12 @@ class AuthManager(private val context: Context) {
                 salt = "",
                 token = token,
                 role = role,
+                project_id = "629F9E29-0B36-4A9E-A2C4-C28969285583", // Default project ID
                 full_name = fullName,
                 email = email,
-                department = department
+                department = department,
+                contract_no = "20210573",
+                tag_contract_no = "210573"  // Default 6-digit tag contract for 24-char EPC
             )
             
             CreateUserResult.Success("User created successfully")
@@ -254,16 +274,18 @@ class AuthManager(private val context: Context) {
         
         try {
             // Ensure database is initialized first
+            println("AuthManager: Ensuring database is initialized...")
             ensureDatabaseInitialized()
             
             // Load specific user by ID from database
+            println("AuthManager: Querying user by ID: $userId")
             val user = databaseManager.database.userQueries
                 .selectById(userId)
                 .executeAsOneOrNull()
             
             if (user != null) {
                 currentUser = user
-                println("AuthManager: User loaded successfully: ${user.username}")
+                println("AuthManager: User loaded successfully: ${user.username} (ID: ${user.id})")
                 return true
             } else {
                 println("AuthManager: User with ID $userId not found in database")
@@ -273,6 +295,26 @@ class AuthManager(private val context: Context) {
         } catch (e: Exception) {
             println("AuthManager: Error loading authentication state: ${e.message}")
             e.printStackTrace()
+            
+            // Try to re-initialize database if it failed
+            try {
+                println("AuthManager: Attempting to re-initialize database...")
+                databaseManager.initializeDatabase()
+                
+                // Try loading user again after re-initialization
+                val user = databaseManager.database.userQueries
+                    .selectById(userId)
+                    .executeAsOneOrNull()
+                
+                if (user != null) {
+                    currentUser = user
+                    println("AuthManager: User loaded successfully after database re-init: ${user.username}")
+                    return true
+                }
+            } catch (reinitError: Exception) {
+                println("AuthManager: Database re-initialization also failed: ${reinitError.message}")
+            }
+            
             clearInvalidAuthState()
             return false
         }

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/surface_primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Section Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_rfid_tag"
+                android:tint="@color/primary"
+                app:tint="@color/primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tag_number_configuration"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+        </LinearLayout>
+
+        <!-- Configuration Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/tag_config_description"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:lineSpacingMultiplier="1.2"
+            android:gravity="start" />
+
+        <!-- Tag Number Preview -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/surface_primary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/tag_preview_label"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tag_preview_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="34180330XXX20210573000001"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:fontFamily="monospace" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <!-- Prefix -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/prefix_label"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_secondary"
+                        android:gravity="center" />
+
+                    <!-- Main Contract -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/contract_label"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_secondary"
+                        android:gravity="center" />
+
+                    <!-- Version -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/version_label"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_secondary"
+                        android:gravity="center" />
+
+                    <!-- Reserved -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/reserved_label"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_secondary"
+                        android:gravity="center" />
+
+                    <!-- Auto Fields -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/auto_fields_label"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_secondary"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Configuration Fields -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <!-- Prefix Field (Configurable) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/prefix_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="@string/tag_prefix_hint"
+                app:helperText="@string/tag_prefix_helper"
+                app:counterEnabled="true"
+                app:counterMaxLength="5"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/prefix_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="34180"
+                    android:inputType="number"
+                    android:maxLength="5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Main Contract No. Field (Read-only) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="@string/tag_contract_hint"
+                app:helperText="@string/tag_contract_helper"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contract_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="03"
+                    android:enabled="false"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Version No. Field (Read-only) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="@string/tag_version_hint"
+                app:helperText="@string/tag_version_helper"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/version_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:enabled="false"
+                    android:inputType="number"
+                    android:maxLength="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Tag Contract No. Field (Configurable) - NEW: 6-digit tag contract for EPC -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tag_contract_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="@string/tag_contract_no_hint"
+                app:helperText="@string/tag_contract_no_helper"
+                app:counterEnabled="true"
+                app:counterMaxLength="6"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tag_contract_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="210573"
+                    android:inputType="number"
+                    android:maxLength="6" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Reserved No. Field (Configurable) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reserved_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="@string/tag_reserved_hint"
+                app:helperText="@string/tag_reserved_helper"
+                app:counterEnabled="true"
+                app:counterMaxLength="1"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reserved_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:inputType="number"
+                    android:maxLength="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_tag_config_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/save_tag_configuration"
+            android:textStyle="bold"
+            style="@style/Widget.MaterialComponents.Button" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

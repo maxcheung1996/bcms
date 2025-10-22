@@ -1,0 +1,62 @@
+-- MasterCategories table for Category & Subcategory data
+CREATE TABLE MasterCategories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bc_type TEXT NOT NULL,
+    is_subcategory INTEGER NOT NULL DEFAULT 0,
+    category TEXT NOT NULL,
+    desc_en TEXT,
+    desc_tc TEXT,
+    desc_sc TEXT,
+    is_default INTEGER NOT NULL DEFAULT 0,
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    UNIQUE(bc_type, category)
+);
+
+-- Queries for MasterCategories
+selectAllCategories:
+SELECT * FROM MasterCategories ORDER BY bc_type, is_subcategory, category;
+
+selectCategoriesByBcType:
+SELECT * FROM MasterCategories WHERE bc_type = ? ORDER BY is_subcategory, category;
+
+selectMainCategories:
+SELECT * FROM MasterCategories WHERE is_subcategory = 0 ORDER BY bc_type, category;
+
+selectSubcategories:
+SELECT * FROM MasterCategories WHERE is_subcategory = 1 ORDER BY bc_type, category;
+
+selectCategoryByKey:
+SELECT * FROM MasterCategories WHERE bc_type = ? AND category = ?;
+
+selectDefaultCategories:
+SELECT * FROM MasterCategories WHERE is_default = 1 ORDER BY bc_type;
+
+selectCategoriesByTypeAndFlag:
+SELECT * FROM MasterCategories WHERE bc_type = ? AND is_subcategory = ? ORDER BY category;
+
+insertCategory:
+INSERT OR REPLACE INTO MasterCategories (
+    bc_type, is_subcategory, category, desc_en, desc_tc, desc_sc, is_default
+) VALUES (?, ?, ?, ?, ?, ?, ?);
+
+updateCategory:
+UPDATE MasterCategories SET
+    is_subcategory = ?, desc_en = ?, desc_tc = ?, desc_sc = ?, is_default = ?,
+    sync_status = ?, last_sync_date = ?
+WHERE bc_type = ? AND category = ?;
+
+deleteCategory:
+DELETE FROM MasterCategories WHERE bc_type = ? AND category = ?;
+
+deleteAllCategories:
+DELETE FROM MasterCategories;
+
+deleteCategoriesByBcType:
+DELETE FROM MasterCategories WHERE bc_type = ?;
+
+countCategories:
+SELECT COUNT(*) FROM MasterCategories;
+
+countCategoriesByBcType:
+SELECT COUNT(*) FROM MasterCategories WHERE bc_type = ?;

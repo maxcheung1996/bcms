@@ -1,6 +1,7 @@
 package com.socam.bcms.data.api
 
 import android.content.Context
+import com.socam.bcms.data.auth.TokenManager
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.domain.AuthManager
 import okhttp3.Interceptor
@@ -9,12 +10,13 @@ import java.io.IOException
 
 /**
  * OkHttp interceptor for adding authentication headers to API requests
- * Automatically adds Bearer token from current authenticated user
+ * Automatically adds Bearer token from TokenManager for authenticated users
  */
 class AuthInterceptor(private val context: Context) : Interceptor {
     
     private val databaseManager = DatabaseManager.getInstance(context)
-    private val authManager = AuthManager(context)
+    private val authManager = AuthManager.getInstance(context)
+    private val tokenManager = TokenManager.getInstance(context)
     
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -30,15 +32,19 @@ class AuthInterceptor(private val context: Context) : Interceptor {
             return chain.proceed(originalRequest)
         }
         
-        // Get current user token
-        val currentUser = authManager.getCurrentUser()
-        if (currentUser == null) {
-            throw IOException("No authenticated user found")
+        // Check if user is authenticated and get API token
+        if (!authManager.isAuthenticated()) {
+            throw IOException("User not authenticated")
+        }
+        
+        val apiToken = tokenManager.getBearerToken()
+        if (apiToken == null) {
+            throw IOException("No API token available")
         }
         
         // Add authorization header
         val authenticatedRequest = originalRequest.newBuilder()
-            .addHeader("Authorization", "Bearer ${currentUser.token}")
+            .addHeader("Authorization", apiToken)
             .addHeader("Content-Type", "application/json")
             .addHeader("Accept", "application/json")
             .build()

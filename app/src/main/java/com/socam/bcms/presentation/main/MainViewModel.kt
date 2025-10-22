@@ -4,40 +4,71 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import com.socam.bcms.data.database.DatabaseManager
+import com.socam.bcms.data.repository.StatsRepository
 import com.socam.bcms.domain.AuthManager
+import com.socam.bcms.presentation.sync.SyncViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * MainViewModel - SIMPLIFIED for maximum stability
+ * MainViewModel - Enhanced with real-time dashboard statistics
  * 
- * PRIORITY: Stability first, no complex operations
- * - No COUNT database queries
- * - No memory monitoring
- * - No heavy operations
- * - Static values until RFID scanning is implemented
+ * Features:
+ * - Real-time statistics from RfidModule table  
+ * - Flow-based updates for live data
+ * - Stable error handling with fallbacks
+ * - Total Tags, Active Tags, Pending Sync counts
  */
 class MainViewModel(
     private val authManager: AuthManager,
-    private val databaseManager: DatabaseManager
+    private val databaseManager: DatabaseManager,
+    private val syncViewModel: SyncViewModel
 ) : ViewModel() {
+
+    // Initialize stats repository
+    private val statsRepository = StatsRepository(databaseManager)
 
     // User information
     private val _userInfo = MutableLiveData<UserInfo>()
     val userInfo: LiveData<UserInfo> = _userInfo
 
-    // Statistics information - simplified 
+    // Statistics information - real-time from database
     private val _statsInfo = MutableLiveData<StatsInfo>()
     val statsInfo: LiveData<StatsInfo> = _statsInfo
+
+    // Real-time stats flow - automatically updates UI
+    val realTimeStats: LiveData<StatsInfo> = statsRepository.getDashboardStats()
+        .map { dashboardStats ->
+            val notificationCount = try {
+                syncViewModel.getSyncErrors().size
+            } catch (e: Exception) {
+                0
+            }
+            
+            StatsInfo(
+                totalTags = dashboardStats.totalTags,
+                activeTags = dashboardStats.activeTags,
+                pendingSync = dashboardStats.pendingSync,
+                notificationCount = notificationCount
+            )
+        }
+        .catch { e ->
+            println("MainViewModel: Error in real-time stats flow: ${e.message}")
+            emit(StatsInfo(0, 0, 0, 0)) // Safe fallback
+        }
+        .asLiveData(viewModelScope.coroutineContext)
 
     // Sync state - simplified
     private val _syncState = MutableLiveData<SyncState>()
     val syncState: LiveData<SyncState> = _syncState
 
     init {
-        println("MainViewModel: Initialized with simplified stable configuration")
+        println("MainViewModel: Initialized with real-time RfidModule statistics")
     }
 
     /**
@@ -73,22 +104,59 @@ class MainViewModel(
     }
 
     /**
-     * Load stats - SIMPLIFIED for maximum stability
-     * No database COUNT queries - just return static values
+     * Load stats - Enhanced with real RfidModule database queries
+     * Uses StatsRepository for accurate counts
      */
     fun loadStats(): Unit {
         viewModelScope.launch {
             try {
-                // Return static values for stability - focus on RFID scanning
+                println("MainViewModel: Loading real-time stats from RfidModule table...")
+                
+                // Get dashboard statistics from repository
+                val dashboardStats = statsRepository.getDashboardStatsSnapshot()
+                
+                // Get notification count from SyncViewModel
+                val notificationCount = try {
+                    syncViewModel.getSyncErrors().size
+                } catch (e: Exception) {
+                    println("MainViewModel: Could not get notification count: ${e.message}")
+                    0
+                }
+                
+                // Update UI with real database values
                 _statsInfo.value = StatsInfo(
-                    totalTags = 0,      // Will be updated when RFID scanning is implemented
-                    activeTags = 0,     // Will be updated when RFID scanning is implemented
-                    pendingSync = 0     // Will be updated when sync is implemented
+                    totalTags = dashboardStats.totalTags,
+                    activeTags = dashboardStats.activeTags,
+                    pendingSync = dashboardStats.pendingSync,
+                    notificationCount = notificationCount
                 )
-                println("MainViewModel: Stats loaded with static values for stability")
+                
+                println("MainViewModel: Stats loaded - Total: ${dashboardStats.totalTags}, Active: ${dashboardStats.activeTags}, Pending: ${dashboardStats.pendingSync}")
             } catch (e: Exception) {
                 println("MainViewModel: Error loading stats: ${e.message}")
-                _statsInfo.value = StatsInfo(0, 0, 0)
+                // Fallback to safe default values
+                _statsInfo.value = StatsInfo(0, 0, 0, 0)
+            }
+        }
+    }
+    
+    /**
+     * Get comprehensive statistics including BC type breakdown
+     * Useful for detailed analysis and reporting
+     */
+    fun loadComprehensiveStats(): Unit {
+        viewModelScope.launch {
+            try {
+                val comprehensiveStats = statsRepository.getComprehensiveStats()
+                
+                println("MainViewModel: Comprehensive Stats Loaded:")
+                println("  - Dashboard: Total ${comprehensiveStats.dashboard.totalTags}, Active ${comprehensiveStats.dashboard.activeTags}, Pending ${comprehensiveStats.dashboard.pendingSync}")
+                println("  - MIC: Total ${comprehensiveStats.micStats.totalCount}, Pending ${comprehensiveStats.micStats.pendingSync}")
+                println("  - ALW: Total ${comprehensiveStats.alwStats.totalCount}, Pending ${comprehensiveStats.alwStats.pendingSync}")
+                println("  - TID: Total ${comprehensiveStats.tidStats.totalCount}, Pending ${comprehensiveStats.tidStats.pendingSync}")
+                
+            } catch (e: Exception) {
+                println("MainViewModel: Error loading comprehensive stats: ${e.message}")
             }
         }
     }
@@ -153,7 +221,8 @@ data class UserInfo(
 data class StatsInfo(
     val totalTags: Int,
     val activeTags: Int,
-    val pendingSync: Int
+    val pendingSync: Int,
+    val notificationCount: Int = 0
 )
 
 sealed class SyncState {

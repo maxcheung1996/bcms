@@ -1,0 +1,29 @@
+-- MasterRegions table for Block/Region data
+CREATE TABLE MasterRegions (
+    key TEXT PRIMARY KEY NOT NULL,
+    value TEXT NOT NULL,
+    sync_status TEXT NOT NULL DEFAULT 'SYNCED',
+    last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+);
+
+-- Queries for MasterRegions
+selectAllRegions:
+SELECT * FROM MasterRegions ORDER BY key;
+
+selectRegionByKey:
+SELECT * FROM MasterRegions WHERE key = ?;
+
+insertRegion:
+INSERT OR REPLACE INTO MasterRegions (key, value) VALUES (?, ?);
+
+updateRegion:
+UPDATE MasterRegions SET value = ?, sync_status = ?, last_sync_date = ? WHERE key = ?;
+
+deleteRegion:
+DELETE FROM MasterRegions WHERE key = ?;
+
+deleteAllRegions:
+DELETE FROM MasterRegions;
+
+countRegions:
+SELECT COUNT(*) FROM MasterRegions;

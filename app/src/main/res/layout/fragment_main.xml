@@ -30,7 +30,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
-                android:text="Logout"
+                android:text="@string/action_logout"
                 android:textSize="12sp"
                 android:textColor="@android:color/white"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -43,8 +43,10 @@
 
     <!-- Main Content -->
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/main_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -54,7 +56,7 @@
             android:padding="16dp">
 
             <!-- Welcome Header -->
-            <LinearLayout
+            <!-- <LinearLayout
                 android:id="@+id/welcome_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,7 +81,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/text_secondary" />
 
-            </LinearLayout>
+            </LinearLayout> -->
 
             <!-- Module Cards Grid -->
             <GridLayout
@@ -88,11 +90,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:columnCount="2"
-                android:rowCount="2"
+                android:rowCount="4"
                 android:alignmentMode="alignBounds"
                 android:useDefaultMargins="true">
 
-                <!-- Tag Activation Card -->
+                <!-- Tag Activation Card (1st position) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/tag_activation_card"
                     android:layout_width="0dp"
@@ -143,7 +145,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Tag Single Scan Card -->
+                <!-- Tag Single Scan Card (2nd position) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/single_scan_card"
                     android:layout_width="0dp"
@@ -194,7 +196,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Batch Process Card -->
+                <!-- Batch Process Card (3rd position) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/batch_process_card"
                     android:layout_width="0dp"
@@ -245,7 +247,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Settings Card -->
+                <!-- Settings Card (4th position) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/settings_card"
                     android:layout_width="0dp"
@@ -296,6 +298,131 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Notification Card (5th position) - HIDDEN -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/notification_card"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/surface_primary"
+                    app:rippleColor="@color/primary_variant">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="12dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@android:drawable/ic_dialog_alert"
+                                android:contentDescription="Sync Notifications"
+                                app:tint="@color/primary" />
+
+                            <!-- Notification Badge -->
+                            <TextView
+                                android:id="@+id/notification_badge"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="top|end"
+                                android:background="@drawable/notification_badge_bg"
+                                android:text="0"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@android:color/white"
+                                android:gravity="center"
+                                android:visibility="gone" />
+
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="@string/notifications_menu"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/notification_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_sync_issues"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_secondary"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Tag Modification Card (6th position) - HIDDEN -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/tag_modification_card"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/surface_primary"
+                    app:rippleColor="@color/primary_variant">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginBottom="12dp"
+                            android:src="@drawable/ic_edit"
+                            android:contentDescription="Tag Modification"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="Tag Modification"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/test_uhf_scanning_power"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_secondary"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
             </GridLayout>
 
             <!-- Data Synchronization Section -->
@@ -314,14 +441,14 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <TextView
+                    <!-- <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="@string/data_synchronization_title"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="@color/text_primary" /> -->
 
                     <TextView
                         android:id="@+id/sync_status_text"
