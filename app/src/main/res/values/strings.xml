@@ -97,12 +97,24 @@
     <string name="api_endpoint">API Endpoint</string>
     <string name="app_version">App Version</string>
     
+    <string name="actions_section">Actions</string>
     <string name="account_actions">Account Actions</string>
     <string name="logout">Logout</string>
     <string name="logout_confirmation_title">Logout Confirmation</string>
     <string name="logout_confirmation_message">Are you sure you want to logout?</string>
     <string name="cancel">Cancel</string>
     <string name="language_changed_success">Language changed successfully</string>
+    
+    <!-- App Update -->
+    <string name="update_app">Update App</string>
+    <string name="update_app_title">App Update</string>
+    <string name="update_app_message">A new version is available. Would you like to download and install it now?</string>
+    <string name="update_app_downloading">Downloading update…</string>
+    <string name="update_app_download_complete">Download complete! Tap to install.</string>
+    <string name="update_app_download_failed">Download failed: %s</string>
+    <string name="update_app_install_prompt">Install update</string>
+    <string name="update_app_checking">Checking for updates…</string>
+    <string name="download">Download</string>
     
     <string name="loading">Loading…</string>
     

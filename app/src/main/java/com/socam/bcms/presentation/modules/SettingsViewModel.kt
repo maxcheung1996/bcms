@@ -64,6 +64,10 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
     
     private val _tagReserved = MutableLiveData<String>("0")
     val tagReserved: LiveData<String> = _tagReserved
+    
+    // App Update State
+    private val _updateDownloadProgress = MutableLiveData<UpdateDownloadState>()
+    val updateDownloadProgress: LiveData<UpdateDownloadState> = _updateDownloadProgress
 
     // Initialize flag to prevent multiple loads
     private var isDataLoaded = false
@@ -801,6 +805,39 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
     }
 
     /**
+     * Start app update download
+     */
+    fun startAppUpdate(downloadUrl: String = "https://example.com/bcms_update.apk"): Unit {
+        println("SettingsViewModel: Starting app update download from: $downloadUrl")
+        _updateDownloadProgress.value = UpdateDownloadState.Downloading
+        
+        viewModelScope.launch(Dispatchers.Main) {
+            try {
+                val apkDownloader = com.socam.bcms.utils.ApkDownloader(context)
+                apkDownloader.downloadApk(downloadUrl, "bcms_update.apk") { success, errorMessage ->
+                    if (success) {
+                        println("SettingsViewModel: App update download completed successfully")
+                        _updateDownloadProgress.value = UpdateDownloadState.Completed
+                    } else {
+                        println("SettingsViewModel: App update download failed: $errorMessage")
+                        _updateDownloadProgress.value = UpdateDownloadState.Failed(errorMessage ?: "Unknown error")
+                    }
+                }
+            } catch (e: Exception) {
+                println("SettingsViewModel: Error starting app update: ${e.message}")
+                _updateDownloadProgress.value = UpdateDownloadState.Failed(e.message ?: "Unknown error")
+            }
+        }
+    }
+    
+    /**
+     * Reset update download state
+     */
+    fun resetUpdateState(): Unit {
+        _updateDownloadProgress.value = UpdateDownloadState.Idle
+    }
+
+    /**
      * Data classes for UI state
      */
     data class UserDetails(
@@ -822,4 +859,14 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
         val apiEndpoint: String,
         val environmentName: String
     )
+    
+    /**
+     * App update download states
+     */
+    sealed class UpdateDownloadState {
+        object Idle : UpdateDownloadState()
+        object Downloading : UpdateDownloadState()
+        object Completed : UpdateDownloadState()
+        data class Failed(val error: String) : UpdateDownloadState()
+    }
 }

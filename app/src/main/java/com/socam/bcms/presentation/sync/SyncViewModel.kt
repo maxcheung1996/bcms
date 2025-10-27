@@ -65,15 +65,15 @@ class SyncViewModel(
                 println("SyncViewModel: Using project ID from user: $projectId")
                 return@withContext projectId
             } else {
-                // Fallback to default project ID
-                val defaultProjectId = SyncApiService.PROJECT_ID
-                println("SyncViewModel: No project ID found for user, using default: $defaultProjectId")
+                // Use hardcoded project ID from BuildConfig
+                val defaultProjectId = com.socam.bcms.BuildConfig.PROJECT_ID
+                println("SyncViewModel: No project ID found for user, using BuildConfig: $defaultProjectId")
                 return@withContext defaultProjectId
             }
         } catch (e: Exception) {
-            // Fallback to default project ID
-            val defaultProjectId = SyncApiService.PROJECT_ID
-            println("SyncViewModel: Error getting project ID, using default: $defaultProjectId - ${e.message}")
+            // Use hardcoded project ID from BuildConfig
+            val defaultProjectId = com.socam.bcms.BuildConfig.PROJECT_ID
+            println("SyncViewModel: Error getting project ID, using BuildConfig: $defaultProjectId - ${e.message}")
             return@withContext defaultProjectId
         }
     }

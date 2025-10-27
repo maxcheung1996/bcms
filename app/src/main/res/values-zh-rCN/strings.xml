@@ -97,12 +97,24 @@
     <string name="api_endpoint">API 端点</string>
     <string name="app_version">应用程序版本</string>
     
+    <string name="actions_section">操作</string>
     <string name="account_actions">账户操作</string>
     <string name="logout">登出</string>
     <string name="logout_confirmation_title">登出确认</string>
     <string name="logout_confirmation_message">您确定要登出吗？</string>
     <string name="cancel">取消</string>
-    <string name="language_changed_success">語言切換成功</string>
+    <string name="language_changed_success">语言切换成功</string>
+    
+    <!-- App Update -->
+    <string name="update_app">更新应用</string>
+    <string name="update_app_title">应用更新</string>
+    <string name="update_app_message">有新版本可用。您要现在下载并安装吗？</string>
+    <string name="update_app_downloading">下载更新中…</string>
+    <string name="update_app_download_complete">下载完成！点击安装。</string>
+    <string name="update_app_download_failed">下载失败：%s</string>
+    <string name="update_app_install_prompt">安装更新</string>
+    <string name="update_app_checking">检查更新中…</string>
+    <string name="download">下载</string>
     
     <string name="loading">加载中…</string>
     

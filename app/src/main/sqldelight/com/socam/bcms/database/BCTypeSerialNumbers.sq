@@ -1,0 +1,68 @@
+-- BCTypeSerialNumbers table
+-- Stores the latest serial number (4-digit suffix) for each BC type
+-- This allows each BC type to have independent serial number counters
+
+CREATE TABLE IF NOT EXISTS BCTypeSerialNumbers (
+    bc_type TEXT PRIMARY KEY NOT NULL,
+    bc_type_code TEXT NOT NULL,
+    serial_number TEXT NOT NULL,
+    updated_date INTEGER NOT NULL
+);
+
+-- Select all BC type serial numbers
+selectAll:
+SELECT *
+FROM BCTypeSerialNumbers
+ORDER BY bc_type;
+
+-- Select serial number by BC type
+selectSerialNumberByBcType:
+SELECT serial_number
+FROM BCTypeSerialNumbers
+WHERE bc_type = ?;
+
+-- Select full record by BC type
+selectByBcType:
+SELECT *
+FROM BCTypeSerialNumbers
+WHERE bc_type = ?;
+
+-- Insert or replace BC type serial number
+insertOrReplace:
+INSERT OR REPLACE INTO BCTypeSerialNumbers (bc_type, bc_type_code, serial_number, updated_date)
+VALUES (?, ?, ?, ?);
+
+-- Update serial number for a specific BC type
+updateSerialNumber:
+UPDATE BCTypeSerialNumbers
+SET serial_number = ?, updated_date = ?
+WHERE bc_type = ?;
+
+-- Increment serial number for a specific BC type
+incrementSerialNumber:
+UPDATE BCTypeSerialNumbers
+SET serial_number = printf('%04d', CAST(serial_number AS INTEGER) + 1),
+    updated_date = ?
+WHERE bc_type = ?;
+
+-- Delete all records (for testing/reset)
+deleteAll:
+DELETE FROM BCTypeSerialNumbers;
+
+-- Delete specific BC type
+deleteByBcType:
+DELETE FROM BCTypeSerialNumbers
+WHERE bc_type = ?;
+
+-- Check if BC type exists
+exists:
+SELECT COUNT(*) > 0
+FROM BCTypeSerialNumbers
+WHERE bc_type = ?;
+
+-- Get current serial number as integer
+selectSerialNumberAsInt:
+SELECT CAST(serial_number AS INTEGER)
+FROM BCTypeSerialNumbers
+WHERE bc_type = ?;
+

@@ -176,14 +176,8 @@ class BatchStepFormDialogFragment : DialogFragment() {
             textInput.inputType = android.text.InputType.TYPE_CLASS_NUMBER
         }
         
-        // License Plate No. is always read-only (disable edit button)
-        if (field.fieldName == "License Plate No.") {
-            textInput.isEnabled = false
-            textInputLayout.isEnabled = false
-            editButton.isEnabled = false
-            editButton.alpha = 0.5f
-            Log.d(TAG, "License Plate No. field set to read-only in batch form")
-        }
+        // Note: Unique fields (Serial No., Edit Serial No., License Plate No.) are filtered out 
+        // at the ViewModel level and won't appear in the batch form
         
         // Pen button toggles field editing
         editButton.setOnClickListener {
@@ -388,21 +382,22 @@ class BatchStepFormDialogFragment : DialogFragment() {
     }
 
     /**
-     * Capture all enabled text field values from the batch form before saving
+     * Capture all enabled field values from the batch form before saving
      * This ensures that fields with focus have their values captured
+     * Handles: text, integer, date, dropdown, and checkbox fields
      */
     private fun captureAllEnabledTextFieldValues() {
         val stepFields = viewModel.uiState.value.stepFields
         
-        Log.d(TAG, "captureAllEnabledTextFieldValues() called")
+        Log.d(TAG, "captureAllEnabledFieldValues() called")
         Log.d(TAG, "Form has ${binding.formFieldsContainer.childCount} child views")
         Log.d(TAG, "Enabled fields: $enabledFields")
         
-        // Iterate through all child views and capture enabled text field values
+        // Iterate through all child views and capture enabled field values
         for (i in 0 until binding.formFieldsContainer.childCount) {
             val fieldView = binding.formFieldsContainer.getChildAt(i)
             
-            // Try to find TextInputLayout (for text, integer, and date fields)
+            // 1. Try to find TextInputLayout (for text, integer, and date fields)
             val textInputLayout = fieldView.findViewById<TextInputLayout>(R.id.textInputLayout)
                 ?: fieldView.findViewById<TextInputLayout>(R.id.dateInputLayout)
             
@@ -414,7 +409,7 @@ class BatchStepFormDialogFragment : DialogFragment() {
                     val currentText = textInput.text?.toString() ?: ""
                     val hint = textInputLayout.hint?.toString() ?: ""
                     
-                    Log.d(TAG, "View $i - hint='$hint', text='$currentText', enabled=${textInput.isEnabled}")
+                    Log.d(TAG, "View $i - TEXT/DATE field: hint='$hint', text='$currentText', enabled=${textInput.isEnabled}")
                     
                     // Find the field by matching the hint/label
                     val matchingField = stepFields.find { field ->
@@ -424,20 +419,68 @@ class BatchStepFormDialogFragment : DialogFragment() {
                     if (matchingField != null && enabledFields.contains(matchingField.fieldName)) {
                         Log.d(TAG, "Matched enabled field '${matchingField.fieldName}' (type=${matchingField.fieldType})")
                         
-                        // Skip read-only fields like License Plate No.
-                        if (matchingField.fieldName == "License Plate No.") {
-                            Log.d(TAG, "Skipping read-only field 'License Plate No.' in batch form")
-                        } else {
-                            // Update the ViewModel with the current text value
-                            viewModel.updateFieldValue(matchingField.fieldName, currentText)
-                            Log.d(TAG, "✓ Captured enabled text field '${matchingField.fieldName}' = '$currentText'")
-                        }
+                        // Update the ViewModel with the current text value
+                        viewModel.updateFieldValue(matchingField.fieldName, currentText)
+                        Log.d(TAG, "✓ Captured enabled text field '${matchingField.fieldName}' = '$currentText'")
+                    }
+                }
+                continue
+            }
+            
+            // 2. Try to find dropdown (AutoCompleteTextView)
+            val dropdownInputLayout = fieldView.findViewById<TextInputLayout>(R.id.dropdownInputLayout)
+            if (dropdownInputLayout != null) {
+                val dropdown = fieldView.findViewById<AutoCompleteTextView>(R.id.field_dropdown)
+                
+                if (dropdown != null && dropdown.isEnabled) {
+                    val currentValue = dropdown.text?.toString() ?: ""
+                    val hint = dropdownInputLayout.hint?.toString() ?: ""
+                    
+                    Log.d(TAG, "View $i - DROPDOWN field: hint='$hint', value='$currentValue', enabled=${dropdown.isEnabled}")
+                    
+                    // Find the field by matching the hint/label
+                    val matchingField = stepFields.find { field ->
+                        field.fieldLabel == hint || field.fieldName == hint
+                    }
+                    
+                    if (matchingField != null && enabledFields.contains(matchingField.fieldName)) {
+                        // For dropdown, we need to find the actual value from the label
+                        val selectedOption = matchingField.dropdownOptions.find { it.label == currentValue }
+                        val valueToSave = selectedOption?.value ?: currentValue
+                        
+                        viewModel.updateFieldValue(matchingField.fieldName, valueToSave)
+                        Log.d(TAG, "✓ Captured enabled dropdown field '${matchingField.fieldName}' = '$valueToSave' (label='$currentValue')")
+                    }
+                }
+                continue
+            }
+            
+            // 3. Try to find checkbox (MaterialCheckBox)
+            val checkbox = fieldView.findViewById<MaterialCheckBox>(R.id.field_checkbox)
+            if (checkbox != null) {
+                val fieldLabel = fieldView.findViewById<TextView>(R.id.fieldLabel)
+                
+                if (checkbox.isEnabled && fieldLabel != null) {
+                    val isChecked = checkbox.isChecked
+                    val label = fieldLabel.text?.toString() ?: ""
+                    val value = if (isChecked) "1" else "0"
+                    
+                    Log.d(TAG, "View $i - CHECKBOX field: label='$label', checked=$isChecked, enabled=${checkbox.isEnabled}")
+                    
+                    // Find the field by matching the label
+                    val matchingField = stepFields.find { field ->
+                        field.fieldLabel == label || field.fieldName == label
+                    }
+                    
+                    if (matchingField != null && enabledFields.contains(matchingField.fieldName)) {
+                        viewModel.updateFieldValue(matchingField.fieldName, value)
+                        Log.d(TAG, "✓ Captured enabled checkbox field '${matchingField.fieldName}' = '$value'")
                     }
                 }
             }
         }
         
-        Log.d(TAG, "captureAllEnabledTextFieldValues() completed")
+        Log.d(TAG, "captureAllEnabledFieldValues() completed")
     }
 
     override fun onStart() {

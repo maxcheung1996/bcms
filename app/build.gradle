@@ -14,6 +14,10 @@ android {
         targetSdk 30  // Keep same as original
         versionCode 2
         versionName "1.0.1-no-proguard"
+        
+        // Device-specific configuration for tag generation
+        buildConfigField "String", "DEVICE_ID", "\"01\""  // Device ID (01-99) - Change per device
+        buildConfigField "String", "PROJECT_ID", "\"629F9E29-0B36-4A9E-A2C4-C28969285583\""  // Hardcoded project ID
     }
 
     buildTypes {

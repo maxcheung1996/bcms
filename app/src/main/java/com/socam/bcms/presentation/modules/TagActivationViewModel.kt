@@ -599,7 +599,7 @@ class TagActivationViewModel(
 
                         databaseManager.database.rfidModuleQueries.insertModule(
                             Id = uuid,
-                            ProjId = currentUser.project_id, // FIXED: Use current user's project_id
+                            ProjId = com.socam.bcms.BuildConfig.PROJECT_ID, // Use hardcoded project ID from BuildConfig
                             ContractNo = currentUser.contract_no,
                             ManufacturerId = null,
                             TagId = originalEpc, // CRITICAL: Store original EPC (unchanged, starts with "E")
@@ -722,6 +722,7 @@ class TagActivationViewModel(
 
     /**
      * Generate tag number based on configurable format: Prefix + Contract + Version + Reserved + BCTypeCode + ContractNo + AutoIncrement
+     * UPDATED: Uses BC type-specific serial numbers instead of global serial number
      */
     private suspend fun generateTagNumber(bcType: String): String? {
         return try {
@@ -750,21 +751,20 @@ class TagActivationViewModel(
                 val currentUser = authManager.getCurrentUser()
                 val contractNo = currentUser?.tag_contract_no ?: "210573"
 
-                // Get and increment counter
-                val currentCounterStr = databaseManager.database.appSettingsQueries
-                    .getTagCounter().executeAsOneOrNull()
-                val currentCounter = currentCounterStr?.toIntOrNull() ?: 1
+                // UPDATED: Get device ID (XX) from BuildConfig and BC type-specific serial number (YYYY) from database
+                val deviceId = com.socam.bcms.BuildConfig.DEVICE_ID // XX (01-99)
+                val serialNumber = databaseManager.getSerialNumberByBcType(bcType) ?: "0001" // YYYY (0001-9999) per BC type
+                
+                // UPDATED: Format XXYYYY suffix using BC type-specific serial number
+                val autoIncrement = "$deviceId$serialNumber"
 
-                // Format auto-increment to 6 digits
-                val autoIncrement = String.format("%06d", currentCounter)
+                // UPDATED: Increment BC type-specific serial number for next use
+                databaseManager.incrementBcTypeSerialNumber(bcType)
 
-                // Increment counter for next use
-                databaseManager.database.appSettingsQueries.incrementTagCounter()
-
-                // Build tag number: Prefix + MainContract + Version + Reserved + BCTypeCode + ContractNo + AutoIncrement
+                // Build tag number: Prefix + MainContract + Version + Reserved + BCTypeCode + ContractNo + XXYYYY
                 val tagNumber = "$prefix$mainContract$version$reserved$bcTypeCode$contractNo$autoIncrement"
                 
-                println("TagActivationViewModel: Generated tag number: $tagNumber (Prefix: $prefix, MainContract: $mainContract, Version: $version, Reserved: $reserved, BCType: $bcType -> $bcTypeCode, Contract: $contractNo, Counter: $autoIncrement)")
+                println("TagActivationViewModel: Generated tag number: $tagNumber (Prefix: $prefix, MainContract: $mainContract, Version: $version, Reserved: $reserved, BCType: $bcType -> $bcTypeCode, Contract: $contractNo, DeviceID: $deviceId, BCType-SerialNo: $serialNumber -> XXYYYY: $autoIncrement)")
                 tagNumber
             }
         } catch (e: Exception) {

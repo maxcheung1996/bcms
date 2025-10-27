@@ -622,4 +622,199 @@ class DatabaseManager private constructor(context: Context) {
             println("DatabaseManager: Error seeding workflow step fields: ${e.message}")
         }
     }
+    
+    /**
+     * Initialize serial number for tag generation (YYYY part of XXYYYY)
+     * Default: "0000" - means need to fetch from server
+     */
+    fun initializeSerialNumber() {
+        try {
+            val existingSerialNumber = database.appSettingsQueries
+                .getSerialNumber()
+                .executeAsOneOrNull()
+            
+            if (existingSerialNumber == null) {
+                // Initialize with "0000" - this signals need to fetch from server
+                database.appSettingsQueries.insertOrReplaceSerialNumber("0000")
+                println("DatabaseManager: Serial number initialized to 0000 (needs server fetch)")
+            } else {
+                println("DatabaseManager: Serial number already exists: $existingSerialNumber")
+            }
+        } catch (e: Exception) {
+            println("DatabaseManager: Error initializing serial number: ${e.message}")
+        }
+    }
+    
+    /**
+     * Get current serial number from database
+     * @return Serial number as 4-digit string (e.g., "0001", "0123") or null if not found
+     */
+    fun getSerialNumber(): String? {
+        return try {
+            database.appSettingsQueries
+                .getSerialNumber()
+                .executeAsOneOrNull()
+        } catch (e: Exception) {
+            println("DatabaseManager: Error getting serial number: ${e.message}")
+            null
+        }
+    }
+    
+    /**
+     * Update serial number from server
+     * @param serialNumber 4-digit serial number from server (e.g., "0001")
+     */
+    fun updateSerialNumber(serialNumber: String) {
+        try {
+            // Ensure it's 4 digits
+            val formattedSerialNumber = serialNumber.padStart(4, '0').take(4)
+            database.appSettingsQueries.updateSerialNumber(formattedSerialNumber)
+            println("DatabaseManager: Serial number updated to: $formattedSerialNumber")
+        } catch (e: Exception) {
+            println("DatabaseManager: Error updating serial number: ${e.message}")
+        }
+    }
+    
+    /**
+     * Increment serial number after tag activation
+     * @return New serial number after increment
+     */
+    fun incrementSerialNumber(): String? {
+        return try {
+            database.appSettingsQueries.incrementSerialNumber()
+            val newSerialNumber = database.appSettingsQueries.getSerialNumber().executeAsOneOrNull()
+            println("DatabaseManager: Serial number incremented to: $newSerialNumber")
+            newSerialNumber
+        } catch (e: Exception) {
+            println("DatabaseManager: Error incrementing serial number: ${e.message}")
+            null
+        }
+    }
+    
+    // ========================================
+    // BC Type Serial Number Methods
+    // ========================================
+    
+    /**
+     * Get serial number for a specific BC type
+     * @param bcType BC type code (e.g., "MIC", "ALW", "TID")
+     * @return Serial number as 4-digit string (e.g., "0001", "0123") or null if not found
+     */
+    fun getSerialNumberByBcType(bcType: String): String? {
+        return try {
+            database.bCTypeSerialNumbersQueries
+                .selectSerialNumberByBcType(bcType)
+                .executeAsOneOrNull()
+        } catch (e: Exception) {
+            println("DatabaseManager: Error getting serial number for BC type $bcType: ${e.message}")
+            null
+        }
+    }
+    
+    /**
+     * Update or insert BC type serial number from server
+     * @param bcType BC type code (e.g., "MIC", "ALW", "TID")
+     * @param bcTypeCode Numeric BC type code (e.g., "107", "102", "103")
+     * @param serialNumber 4-digit serial number from server (e.g., "0001")
+     */
+    fun updateBcTypeSerialNumber(bcType: String, bcTypeCode: String, serialNumber: String): Unit {
+        try {
+            val formattedSerialNumber = serialNumber.padStart(4, '0').take(4)
+            val currentTime = System.currentTimeMillis() / 1000
+            
+            database.bCTypeSerialNumbersQueries.insertOrReplace(
+                bc_type = bcType,
+                bc_type_code = bcTypeCode,
+                serial_number = formattedSerialNumber,
+                updated_date = currentTime
+            )
+            
+            println("DatabaseManager: BC type $bcType serial number updated to: $formattedSerialNumber")
+        } catch (e: Exception) {
+            println("DatabaseManager: Error updating BC type $bcType serial number: ${e.message}")
+        }
+    }
+    
+    /**
+     * Increment serial number for a specific BC type after tag activation
+     * @param bcType BC type code (e.g., "MIC", "ALW", "TID")
+     * @return New serial number after increment or null if error
+     */
+    fun incrementBcTypeSerialNumber(bcType: String): String? {
+        return try {
+            val currentTime = System.currentTimeMillis() / 1000
+            database.bCTypeSerialNumbersQueries.incrementSerialNumber(currentTime, bcType)
+            
+            val newSerialNumber = database.bCTypeSerialNumbersQueries
+                .selectSerialNumberByBcType(bcType)
+                .executeAsOneOrNull()
+            
+            println("DatabaseManager: BC type $bcType serial number incremented to: $newSerialNumber")
+            newSerialNumber
+        } catch (e: Exception) {
+            println("DatabaseManager: Error incrementing BC type $bcType serial number: ${e.message}")
+            null
+        }
+    }
+    
+    /**
+     * Get all BC type serial numbers
+     * @return List of all BC type serial number records
+     */
+    fun getAllBcTypeSerialNumbers(): List<com.socam.bcms.database.BCTypeSerialNumbers> {
+        return try {
+            database.bCTypeSerialNumbersQueries.selectAll().executeAsList()
+        } catch (e: Exception) {
+            println("DatabaseManager: Error getting all BC type serial numbers: ${e.message}")
+            emptyList()
+        }
+    }
+    
+    /**
+     * Check if BC type serial number exists
+     * @param bcType BC type code (e.g., "MIC", "ALW", "TID")
+     * @return True if exists, false otherwise
+     */
+    fun bcTypeSerialNumberExists(bcType: String): Boolean {
+        return try {
+            database.bCTypeSerialNumbersQueries.exists(bcType).executeAsOne()
+        } catch (e: Exception) {
+            println("DatabaseManager: Error checking BC type $bcType existence: ${e.message}")
+            false
+        }
+    }
+    
+    /**
+     * Initialize BC type serial numbers with default values if they don't exist
+     * This should be called after master categories are synced
+     */
+    fun initializeBcTypeSerialNumbers(): Unit {
+        try {
+            val categories = database.masterCategoriesQueries.selectAllCategories().executeAsList()
+            val distinctBcTypes = categories.map { it.bc_type }.distinct()
+            
+            val currentTime = System.currentTimeMillis() / 1000
+            
+            distinctBcTypes.forEach { bcType ->
+                if (!bcTypeSerialNumberExists(bcType)) {
+                    // Get BC type code from mapping table
+                    val bcTypeCode = database.bCTypeMappingQueries
+                        .selectNumericCodeByBcType(bcType)
+                        .executeAsOneOrNull() ?: "404"
+                    
+                    // Initialize with "0000" - signals need to fetch from server
+                    database.bCTypeSerialNumbersQueries.insertOrReplace(
+                        bc_type = bcType,
+                        bc_type_code = bcTypeCode,
+                        serial_number = "0000",
+                        updated_date = currentTime
+                    )
+                    
+                    println("DatabaseManager: Initialized BC type $bcType with serial number 0000")
+                }
+            }
+        } catch (e: Exception) {
+            println("DatabaseManager: Error initializing BC type serial numbers: ${e.message}")
+        }
+    }
 }

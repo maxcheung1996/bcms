@@ -32,6 +32,7 @@ class BatchStepFormViewModel(
     private lateinit var currentStepCode: String
     private lateinit var currentBcType: String
     private lateinit var currentTagEpcs: List<String>
+    private var currentStepPortion: Int? = null
     private val fieldValues = mutableMapOf<String, String>()
 
     /**
@@ -47,6 +48,18 @@ class BatchStepFormViewModel(
                 _uiState.value = _uiState.value.copy(isLoading = true, error = null)
                 
                 Log.d(TAG, "Loading step fields for: $stepCode, BC type: $bcType, tags: ${tagEpcs.size}")
+                
+                // Get portion from MasterWorkflowSteps
+                val portion = getStepPortion(stepCode, bcType)
+                if (portion == null) {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = "Step $stepCode not found in workflow for BC type $bcType"
+                    )
+                    return@launch
+                }
+                currentStepPortion = portion
+                Log.d(TAG, "Step portion from MasterWorkflowSteps: $portion")
                 
                 val stepFields = loadStepFieldsFromDatabase(stepCode, bcType)
                 
@@ -90,6 +103,16 @@ class BatchStepFormViewModel(
             val result = mutableListOf<BatchStepFieldData>()
             
             for (field in stepFields) {
+                // Skip unique fields that cannot be batch edited (Serial No., Edit Serial No., License Plate No.)
+                val isUniqueField = field.field_name == "Serial No." || 
+                                    field.field_name == "Edit Serial No." || 
+                                    field.field_name == "License Plate No."
+                
+                if (isUniqueField) {
+                    Log.d(TAG, "Skipping unique field '${field.field_name}' in batch mode (cannot be batch edited)")
+                    continue
+                }
+                
                 val batchField = BatchStepFieldData(
                     fieldName = field.field_name,
                     fieldType = field.field_type ?: "text",
@@ -316,6 +339,11 @@ class BatchStepFormViewModel(
         try {
             var updatedCount = 0
             
+            // Get step portion for generic field mapping
+            val stepPortion = currentStepPortion ?: throw Exception("Step portion not loaded for step: $currentStepCode")
+            
+            Log.d(TAG, "Updating batch tags using portion: $stepPortion")
+            
             for (epc in currentTagEpcs) {
                 // Query RfidModule record by RFIDTagNo (now contains scanned EPC)
                 val rfidRecords = databaseManager.database.rfidModuleQueries
@@ -337,9 +365,11 @@ class BatchStepFormViewModel(
                 for (fieldName in enabledFieldNames) {
                     val fieldValue = fieldValues[fieldName]
                     if (fieldValue != null) {
-                        updateRfidModuleField(rfidModuleId, fieldName, fieldValue)
+                        // Map generic field names to step-specific fields
+                        val mappedFieldName = mapGenericFieldName(fieldName, stepPortion)
+                        updateRfidModuleField(rfidModuleId, mappedFieldName, fieldValue)
                         hasUpdates = true
-                        Log.d(TAG, "Updated field $fieldName = $fieldValue for tag $rfidModuleId")
+                        Log.d(TAG, "Updated field $fieldName (mapped to $mappedFieldName) = $fieldValue for tag $rfidModuleId")
                     }
                 }
                 
@@ -359,6 +389,36 @@ class BatchStepFormViewModel(
     }
 
     /**
+     * Map generic field names to step-specific field names based on step portion
+     * E.g., "Remark" -> "Remark60" for step with portion 60
+     */
+    private fun mapGenericFieldName(fieldName: String, stepPortion: Int): String {
+        return when (fieldName) {
+            "Remark" -> "Remark$stepPortion"
+            "Is Completed" -> "IsCompleted$stepPortion"
+            else -> fieldName
+        }
+    }
+
+    /**
+     * Get step portion from MasterWorkflowSteps table
+     */
+    private suspend fun getStepPortion(stepCode: String, bcType: String): Int? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val workflowStep = databaseManager.database.masterWorkflowStepsQueries
+                    .selectWorkflowStepByKey(stepCode, bcType)
+                    .executeAsOneOrNull()
+                
+                workflowStep?.portion?.toInt()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error getting step portion: ${e.message}", e)
+                null
+            }
+        }
+    }
+
+    /**
      * Update a specific field in RfidModule table
      */
     private suspend fun updateRfidModuleField(rfidModuleId: String, fieldName: String, fieldValue: String) = withContext(Dispatchers.IO) {
@@ -371,7 +431,8 @@ class BatchStepFormViewModel(
                     databaseManager.database.rfidModuleQueries.updateSubcategoryById(fieldValue, rfidModuleId)
                 }
                 "serialno", "serial_no", "serial no.", "serial no", "edit serial no.", "edit serial no" -> {
-                    databaseManager.database.rfidModuleQueries.updateSerialNoById(fieldValue, rfidModuleId)
+                    // Serial No. is a unique field - skip update in batch mode to prevent duplicates
+                    Log.d(TAG, "Serial No. is a unique field, skipping batch update to prevent duplicates")
                 }
                 "manufacturerid", "manufacturer_id" -> {
                     databaseManager.database.rfidModuleQueries.updateManufacturerIdById(fieldValue, rfidModuleId)

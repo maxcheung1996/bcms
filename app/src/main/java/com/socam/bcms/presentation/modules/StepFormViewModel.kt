@@ -23,6 +23,7 @@ class StepFormViewModel(
 
     private var currentTagBcType: String = ""
     private var currentRfidModule: com.socam.bcms.database.RfidModule? = null
+    private var currentStepPortion: Int? = null
 
     /**
      * Load step fields for the given step code and auto-fill with tag data
@@ -32,11 +33,23 @@ class StepFormViewModel(
         currentRfidModule = tagData
         viewModelScope.launch {
             try {
-                println("StepFormViewModel: Loading fields for step: $stepCode")
+                println("StepFormViewModel: Loading fields for step: $stepCode, BC type: $tagBcType")
                 _uiState.value = _uiState.value.copy(
                     isLoading = true,
                     error = null
                 )
+                
+                // Get portion from MasterWorkflowSteps
+                val portion = getStepPortion(stepCode, tagBcType)
+                if (portion == null) {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = "Step $stepCode not found in workflow for BC type $tagBcType"
+                    )
+                    return@launch
+                }
+                currentStepPortion = portion
+                println("StepFormViewModel: Step portion from MasterWorkflowSteps: $portion")
 
                 val stepFields = withContext(Dispatchers.IO) {
                     databaseManager.database.workflowStepFieldsQueries
@@ -50,8 +63,8 @@ class StepFormViewModel(
                 }
 
                 val fieldData = stepFields.map { field ->
-                    val autoFilledValue = if (tagData != null) {
-                        getAutoFilledValue(field.field_name, stepCode, tagData)
+                    val autoFilledValue = if (tagData != null && currentStepPortion != null) {
+                        getAutoFilledValue(field.field_name, currentStepPortion!!, tagData)
                     } else {
                         field.default_value ?: ""
                     }
@@ -343,7 +356,9 @@ class StepFormViewModel(
         
         // Create a mutable copy of the original module
         var updatedModule = originalModule.copy()
-        val stepNumber = extractStepNumber(stepCode)
+        val stepPortion = currentStepPortion ?: throw Exception("Step portion not loaded for step: $stepCode")
+        
+        println("StepFormViewModel: Updating module fields using portion: $stepPortion")
         
         // Update fields based on form input
         stepFields.forEach { field ->
@@ -383,13 +398,13 @@ class StepFormViewModel(
                 
                 // Step-specific fields
                 "Remark" -> {
-                    println("StepFormViewModel: Updating Remark field - stepNumber='$stepNumber', value='${field.currentValue}'")
-                    updatedModule = updateRemarkField(updatedModule, stepNumber, field.currentValue)
+                    println("StepFormViewModel: Updating Remark field - stepPortion='$stepPortion', value='${field.currentValue}'")
+                    updatedModule = updateRemarkField(updatedModule, stepPortion, field.currentValue)
                 }
                 "Is Completed" -> {
                     val isCompleted = if (field.currentValue.toBoolean()) 1L else 0L
-                    println("StepFormViewModel: Updating IsCompleted field - stepNumber='$stepNumber', value=$isCompleted")
-                    updatedModule = updateIsCompletedField(updatedModule, stepNumber, isCompleted)
+                    println("StepFormViewModel: Updating IsCompleted field - stepPortion='$stepPortion', value=$isCompleted")
+                    updatedModule = updateIsCompletedField(updatedModule, stepPortion, isCompleted)
                 }
                 
                 else -> {
@@ -402,38 +417,38 @@ class StepFormViewModel(
     }
     
     /**
-     * Update remark field based on step number
+     * Update remark field based on step portion from MasterWorkflowSteps
      */
-    private fun updateRemarkField(module: com.socam.bcms.database.RfidModule, stepNumber: String, value: String): com.socam.bcms.database.RfidModule {
-        return when (stepNumber) {
-            "10" -> module.copy(Remark10 = value)
-            "20" -> module.copy(Remark20 = value)
-            "30" -> module.copy(Remark30 = value)
-            "35" -> module.copy(Remark55 = value) // MIC35 maps to Remark55
-            "40" -> module.copy(Remark40 = value)
-            "50" -> module.copy(Remark50 = value)
-            "60" -> module.copy(Remark60 = value)
-            "70" -> module.copy(Remark70 = value)
-            "80" -> module.copy(Remark80 = value)
-            else -> module
+    private fun updateRemarkField(module: com.socam.bcms.database.RfidModule, stepPortion: Int, value: String): com.socam.bcms.database.RfidModule {
+        return when (stepPortion) {
+            10 -> module.copy(Remark10 = value)
+            20 -> module.copy(Remark20 = value)
+            30 -> module.copy(Remark30 = value)
+            40 -> module.copy(Remark40 = value)
+            50 -> module.copy(Remark50 = value)
+            55 -> module.copy(Remark55 = value)
+            60 -> module.copy(Remark60 = value)
+            70 -> module.copy(Remark70 = value)
+            80 -> module.copy(Remark80 = value)
+            else -> throw Exception("Invalid step portion: $stepPortion. No matching Remark field found.")
         }
     }
     
     /**
-     * Update IsCompleted field based on step number
+     * Update IsCompleted field based on step portion from MasterWorkflowSteps
      */
-    private fun updateIsCompletedField(module: com.socam.bcms.database.RfidModule, stepNumber: String, value: Long): com.socam.bcms.database.RfidModule {
-        return when (stepNumber) {
-            "10" -> module.copy(IsCompleted10 = value)
-            "20" -> module.copy(IsCompleted20 = value)
-            "30" -> module.copy(IsCompleted30 = value)
-            "35" -> module.copy(IsCompleted55 = value) // MIC35 maps to IsCompleted55
-            "40" -> module.copy(IsCompleted40 = value)
-            "50" -> module.copy(IsCompleted50 = value)
-            "60" -> module.copy(IsCompleted60 = value)
-            "70" -> module.copy(IsCompleted70 = value)
-            "80" -> module.copy(IsCompleted80 = value)
-            else -> module
+    private fun updateIsCompletedField(module: com.socam.bcms.database.RfidModule, stepPortion: Int, value: Long): com.socam.bcms.database.RfidModule {
+        return when (stepPortion) {
+            10 -> module.copy(IsCompleted10 = value)
+            20 -> module.copy(IsCompleted20 = value)
+            30 -> module.copy(IsCompleted30 = value)
+            40 -> module.copy(IsCompleted40 = value)
+            50 -> module.copy(IsCompleted50 = value)
+            55 -> module.copy(IsCompleted55 = value)
+            60 -> module.copy(IsCompleted60 = value)
+            70 -> module.copy(IsCompleted70 = value)
+            80 -> module.copy(IsCompleted80 = value)
+            else -> throw Exception("Invalid step portion: $stepPortion. No matching IsCompleted field found.")
         }
     }
     
@@ -691,17 +706,15 @@ class StepFormViewModel(
     /**
      * Get auto-filled value for a field based on RfidModule data
      */
-    private fun getAutoFilledValue(fieldName: String, stepCode: String, tagData: com.socam.bcms.database.RfidModule): String {
+    private fun getAutoFilledValue(fieldName: String, stepPortion: Int, tagData: com.socam.bcms.database.RfidModule): String {
         return try {
             when (fieldName) {
-                // Step-specific fields (numbered based on step code)
+                // Step-specific fields (based on step portion from MasterWorkflowSteps)
                 "Remark" -> {
-                    val stepNumber = extractStepNumber(stepCode)
-                    getRemarkField(tagData, stepNumber) ?: ""
+                    getRemarkField(tagData, stepPortion) ?: ""
                 }
                 "Is Completed" -> {
-                    val stepNumber = extractStepNumber(stepCode)
-                    val isCompleted = getIsCompletedField(tagData, stepNumber) ?: 0
+                    val isCompleted = getIsCompletedField(tagData, stepPortion) ?: 0
                     (isCompleted == 1L).toString()
                 }
                 
@@ -747,44 +760,55 @@ class StepFormViewModel(
     }
 
     /**
-     * Extract step number from step code (e.g., ALW10 -> 10, MIC35 -> 35)
+     * Get step portion from MasterWorkflowSteps table
      */
-    private fun extractStepNumber(stepCode: String): String {
-        return stepCode.filter { it.isDigit() }
+    private suspend fun getStepPortion(stepCode: String, bcType: String): Int? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val workflowStep = databaseManager.database.masterWorkflowStepsQueries
+                    .selectWorkflowStepByKey(stepCode, bcType)
+                    .executeAsOneOrNull()
+                
+                workflowStep?.portion?.toInt()
+            } catch (e: Exception) {
+                println("StepFormViewModel: Error getting step portion: ${e.message}")
+                null
+            }
+        }
     }
 
     /**
-     * Get remark field based on step number
+     * Get remark field based on step portion from MasterWorkflowSteps
      */
-    private fun getRemarkField(tagData: com.socam.bcms.database.RfidModule, stepNumber: String): String? {
-        return when (stepNumber) {
-            "10" -> tagData.Remark10
-            "20" -> tagData.Remark20
-            "30" -> tagData.Remark30
-            "35" -> tagData.Remark55 // Note: MIC35 maps to Remark55 based on table structure
-            "40" -> tagData.Remark40
-            "50" -> tagData.Remark50
-            "60" -> tagData.Remark60
-            "70" -> tagData.Remark70
-            "80" -> tagData.Remark80
+    private fun getRemarkField(tagData: com.socam.bcms.database.RfidModule, stepPortion: Int): String? {
+        return when (stepPortion) {
+            10 -> tagData.Remark10
+            20 -> tagData.Remark20
+            30 -> tagData.Remark30
+            40 -> tagData.Remark40
+            50 -> tagData.Remark50
+            55 -> tagData.Remark55
+            60 -> tagData.Remark60
+            70 -> tagData.Remark70
+            80 -> tagData.Remark80
             else -> null
         }
     }
 
     /**
-     * Get IsCompleted field based on step number
+     * Get IsCompleted field based on step portion from MasterWorkflowSteps
      */
-    private fun getIsCompletedField(tagData: com.socam.bcms.database.RfidModule, stepNumber: String): Long? {
-        return when (stepNumber) {
-            "10" -> tagData.IsCompleted10
-            "20" -> tagData.IsCompleted20
-            "30" -> tagData.IsCompleted30
-            "35" -> tagData.IsCompleted55 // Note: MIC35 maps to IsCompleted55
-            "40" -> tagData.IsCompleted40
-            "50" -> tagData.IsCompleted50
-            "60" -> tagData.IsCompleted60
-            "70" -> tagData.IsCompleted70
-            "80" -> tagData.IsCompleted80
+    private fun getIsCompletedField(tagData: com.socam.bcms.database.RfidModule, stepPortion: Int): Long? {
+        return when (stepPortion) {
+            10 -> tagData.IsCompleted10
+            20 -> tagData.IsCompleted20
+            30 -> tagData.IsCompleted30
+            40 -> tagData.IsCompleted40
+            50 -> tagData.IsCompleted50
+            55 -> tagData.IsCompleted55
+            60 -> tagData.IsCompleted60
+            70 -> tagData.IsCompleted70
+            80 -> tagData.IsCompleted80
             else -> null
         }
     }

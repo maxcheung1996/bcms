@@ -58,3 +58,23 @@ UPDATE AppSettings SET
     setting_value = '1',
     updated_at = strftime('%s', 'now')
 WHERE setting_key = 'TAG_COUNTER';
+
+-- Serial Number (YYYY) specific queries for new tag generation system
+insertOrReplaceSerialNumber:
+INSERT OR REPLACE INTO AppSettings (setting_key, setting_value, setting_type, description, is_user_configurable, created_at, updated_at)
+VALUES ('SERIAL_NUMBER', ?, 'STRING', 'Device serial number (YYYY) for tag number generation', 0, strftime('%s', 'now'), strftime('%s', 'now'));
+
+getSerialNumber:
+SELECT setting_value FROM AppSettings WHERE setting_key = 'SERIAL_NUMBER';
+
+incrementSerialNumber:
+UPDATE AppSettings SET 
+    setting_value = printf('%04d', CAST(setting_value AS INTEGER) + 1),
+    updated_at = strftime('%s', 'now')
+WHERE setting_key = 'SERIAL_NUMBER';
+
+updateSerialNumber:
+UPDATE AppSettings SET 
+    setting_value = ?,
+    updated_at = strftime('%s', 'now')
+WHERE setting_key = 'SERIAL_NUMBER';

@@ -131,6 +131,7 @@ class SettingsFragment : Fragment() {
             
             val appVersionField = binding.root.findViewById<TextView>(R.id.app_version_value)
             val apiEndpointField = binding.root.findViewById<TextView>(R.id.api_endpoint_value)
+            val updateAppButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.update_app_button)
             val logoutButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.logout_button)
             
             println("SettingsFragment: UI elements found - ${System.currentTimeMillis()}")
@@ -234,6 +235,34 @@ class SettingsFragment : Fragment() {
                 }
             }
             
+            // App update download progress observer
+            vm.updateDownloadProgress.observe(viewLifecycleOwner) { state ->
+                println("SettingsFragment: Update download state: $state")
+                when (state) {
+                    is SettingsViewModel.UpdateDownloadState.Idle -> {
+                        updateAppButton?.isEnabled = true
+                        updateAppButton?.text = getString(R.string.update_app)
+                    }
+                    is SettingsViewModel.UpdateDownloadState.Downloading -> {
+                        updateAppButton?.isEnabled = false
+                        updateAppButton?.text = getString(R.string.update_app_downloading)
+                        Snackbar.make(binding.root, getString(R.string.update_app_downloading), Snackbar.LENGTH_SHORT).show()
+                    }
+                    is SettingsViewModel.UpdateDownloadState.Completed -> {
+                        updateAppButton?.isEnabled = true
+                        updateAppButton?.text = getString(R.string.update_app)
+                        Snackbar.make(binding.root, getString(R.string.update_app_download_complete), Snackbar.LENGTH_LONG).show()
+                        vm.resetUpdateState()
+                    }
+                    is SettingsViewModel.UpdateDownloadState.Failed -> {
+                        updateAppButton?.isEnabled = true
+                        updateAppButton?.text = getString(R.string.update_app)
+                        Snackbar.make(binding.root, getString(R.string.update_app_download_failed, state.error), Snackbar.LENGTH_LONG).show()
+                        vm.resetUpdateState()
+                    }
+                }
+            }
+            
             // Language change request observer - FIXED: Prevent infinite loops
             vm.languageChangeRequested.observe(viewLifecycleOwner) { requestedLanguage ->
                 requestedLanguage?.let { language ->
@@ -328,6 +357,11 @@ class SettingsFragment : Fragment() {
                 saveTagConfiguration(vm, prefixInput, prefixInputLayout, tagContractInput, tagContractInputLayout, reservedInput, reservedInputLayout)
             }
             
+            // Update app button listener
+            updateAppButton?.setOnClickListener {
+                showUpdateAppConfirmation()
+            }
+            
             // Logout button listener
             logoutButton?.setOnClickListener {
                 showLogoutConfirmation()
@@ -388,6 +422,24 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    /**
+     * Show update app confirmation dialog
+     */
+    private fun showUpdateAppConfirmation(): Unit {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.update_app_title))
+        builder.setMessage(getString(R.string.update_app_message))
+        builder.setPositiveButton(getString(R.string.download)) { _, _ ->
+            // TODO: Replace with actual update URL when available
+            val updateUrl = "https://example.com/bcms_update.apk" // Sample URL - replace with real URL
+            viewModel.startAppUpdate(updateUrl)
+        }
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+    
     /**
      * Show logout confirmation dialog
      */

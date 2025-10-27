@@ -6,12 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.socam.bcms.BuildConfig
+import com.socam.bcms.data.api.ApiClient
 import com.socam.bcms.data.auth.TokenManager
 import com.socam.bcms.data.database.DatabaseManager
+import com.socam.bcms.data.dto.SerialNumberRequest
 import com.socam.bcms.domain.AuthManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.os.Build
+import android.provider.Settings
 
 /**
  * ViewModel for login screen
@@ -32,6 +37,7 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     private val authManager = AuthManager.getInstance(context)
     private val databaseManager = DatabaseManager.getInstance(context)
     private val tokenManager = TokenManager.getInstance(context)
+    private val apiClient = ApiClient.getInstance(context)
     
     private val _loginState = MutableLiveData<LoginState>(LoginState.Idle)
     val loginState: LiveData<LoginState> = _loginState
@@ -54,6 +60,8 @@ class LoginViewModel(private val context: Context) : ViewModel() {
                     is AuthManager.AuthResult.Success -> {
                         // Local authentication successful, save hardcoded API token
                         saveHardcodedToken(result.user)
+                        // Initialize and fetch serial number if needed
+                        initializeSerialNumber(result.user)
                     }
                     is AuthManager.AuthResult.Failure -> {
                         _loginState.value = LoginState.Error(result.message)
@@ -145,6 +153,152 @@ class LoginViewModel(private val context: Context) : ViewModel() {
                 println("LoginViewModel: Error loading app info: ${e.message}")
                 _environmentInfo.value = EnvironmentInfo("1.0.0", "dev", "")
             }
+        }
+    }
+    
+    /**
+     * Initialize serial number for tag generation
+     * Step 1: Check if BC type serial numbers exist in local database
+     * Step 2: If any BC type serial number is "0000" or missing, fetch from API
+     */
+    private suspend fun initializeSerialNumber(user: com.socam.bcms.database.User) = withContext(Dispatchers.IO) {
+        try {
+            println("LoginViewModel: Initializing BC type serial numbers...")
+            
+            // Initialize BC type serial numbers with "0000" if they don't exist
+            databaseManager.initializeBcTypeSerialNumbers()
+            
+            // Get all BC type serial numbers
+            val bcTypeSerialNumbers = databaseManager.getAllBcTypeSerialNumbers()
+            println("LoginViewModel: Found ${bcTypeSerialNumbers.size} BC type serial numbers")
+            
+            // Check if any BC type needs fetching from server (serial number is "0000")
+            val needsServerFetch = bcTypeSerialNumbers.isEmpty() || 
+                bcTypeSerialNumbers.any { it.serial_number == "0000" }
+            
+            if (needsServerFetch) {
+                println("LoginViewModel: BC type serial numbers need initialization, fetching from server...")
+                fetchBcTypeSerialNumbersFromServer(user)
+            } else {
+                println("LoginViewModel: All BC type serial numbers already initialized")
+                bcTypeSerialNumbers.forEach { 
+                    println("LoginViewModel:   - ${it.bc_type}: ${it.serial_number}")
+                }
+            }
+        } catch (e: Exception) {
+            println("LoginViewModel: Error initializing BC type serial numbers: ${e.message}")
+            e.printStackTrace()
+            // Don't fail login if serial number initialization fails
+            // It can be retried later
+        }
+    }
+    
+    /**
+     * Fetch serial number from backend API
+     */
+    private suspend fun fetchSerialNumberFromServer(user: com.socam.bcms.database.User) = withContext(Dispatchers.IO) {
+        try {
+            println("LoginViewModel: Fetching serial number from API...")
+            
+            // Get device serial number (unique identifier)
+            val deviceSerialNumber = getDeviceSerialNumber()
+            println("LoginViewModel: Device serial number: $deviceSerialNumber")
+            
+            // Prepare API request
+            val request = SerialNumberRequest(
+                device_mac_address = deviceSerialNumber,
+                user_id = user.id.toString(), // Convert Long to String
+                project_id = BuildConfig.PROJECT_ID
+            )
+            
+            // Call API
+            val apiService = apiClient.getSyncApiService()
+            val response = apiService.getDeviceSerialNumber(request)
+            
+            if (response.isSuccessful && response.body() != null) {
+                val serialNumberResponse = response.body()!!
+                
+                if (serialNumberResponse.success) {
+                    // Update local database with fetched serial number
+                    databaseManager.updateSerialNumber(serialNumberResponse.serial_number)
+                    println("LoginViewModel: Serial number fetched and saved: ${serialNumberResponse.serial_number}")
+                } else {
+                    println("LoginViewModel: API returned failure: ${serialNumberResponse.message}")
+                }
+            } else {
+                println("LoginViewModel: Failed to fetch serial number from API: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: Exception) {
+            println("LoginViewModel: Error fetching serial number from API: ${e.message}")
+            // Don't fail login - serial number can be fetched later
+            // For now, we'll use local increment starting from "0001" if API fails
+            e.printStackTrace()
+        }
+    }
+    
+    /**
+     * Fetch BC type serial numbers from backend API
+     * Fetches latest serial numbers for all BC types in the current project
+     */
+    private suspend fun fetchBcTypeSerialNumbersFromServer(user: com.socam.bcms.database.User) = withContext(Dispatchers.IO) {
+        try {
+            println("LoginViewModel: Fetching BC type serial numbers from API...")
+            
+            // Call API to get BC type serial numbers
+            val apiService = apiClient.getSyncApiService()
+            val response = apiService.getBCTypeSerialNumbers(BuildConfig.PROJECT_ID)
+            
+            if (response.isSuccessful && response.body() != null) {
+                val bcTypeSerialNumbers = response.body()!!.tagNumbers
+                
+                println("LoginViewModel: Received ${bcTypeSerialNumbers.size} BC type serial numbers from server")
+                
+                // Update local database with fetched serial numbers
+                bcTypeSerialNumbers.forEach { bcTypeDto ->
+                    databaseManager.updateBcTypeSerialNumber(
+                        bcType = bcTypeDto.bcType,
+                        bcTypeCode = bcTypeDto.bcTypeCode,
+                        serialNumber = bcTypeDto.latestSerialNumber
+                    )
+                    println("LoginViewModel: Updated ${bcTypeDto.bcType} serial number to ${bcTypeDto.latestSerialNumber}")
+                }
+                
+                println("LoginViewModel: BC type serial numbers successfully updated")
+                
+            } else {
+                println("LoginViewModel: Failed to fetch BC type serial numbers from API: ${response.code()} - ${response.message()}")
+                // Don't fail login - can use local counters starting from "0001"
+            }
+        } catch (e: Exception) {
+            println("LoginViewModel: Error fetching BC type serial numbers from API: ${e.message}")
+            e.printStackTrace()
+            // Don't fail login - BC type serial numbers can be fetched later
+            // For now, we'll use local increment starting from "0001" if API fails
+        }
+    }
+    
+    /**
+     * Get device unique identifier (serial number)
+     * Note: Android 10+ restricts access to device identifiers for privacy
+     */
+    private fun getDeviceSerialNumber(): String {
+        return try {
+            // Try to get Android ID (most reliable on modern Android)
+            val androidId = Settings.Secure.getString(
+                context.contentResolver,
+                Settings.Secure.ANDROID_ID
+            )
+            
+            if (androidId != null && androidId.isNotEmpty() && androidId != "9774d56d682e549c") {
+                androidId
+            } else {
+                // Fallback to Build.SERIAL (deprecated but works on older devices)
+                Build.SERIAL
+            }
+        } catch (e: Exception) {
+            println("LoginViewModel: Error getting device serial number: ${e.message}")
+            // Ultimate fallback - use a generated ID
+            "UNKNOWN_DEVICE"
         }
     }
     
