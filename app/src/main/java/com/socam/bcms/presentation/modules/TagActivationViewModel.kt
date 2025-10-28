@@ -197,15 +197,32 @@ class TagActivationViewModel(
     /**
      * Start RFID scanning (hold-to-scan pattern)
      * CRITICAL: Following vendor demo pattern with high-performance scanning
+     * 
+     * Supports multiple scan scenarios:
+     * 1. Fresh scan - first time scanning
+     * 2. Rescan after activation - scan new tags after activating one
+     * 3. Rescan from tag list - user wants to rescan without selecting from current list
      */
     fun startScanning(): Unit {
-        // CRITICAL: Allow scanning even after activation (multi-tag workflow)
-        if (_uiState.value.isScanning) return
+        // CRITICAL: Only block if actively scanning right now
+        if (_uiState.value.isScanning) {
+            Log.d(TAG, "⏸️ Cannot start scan - already scanning (wait for trigger release)")
+            return
+        }
         
         viewModelScope.launch {
             try {
-                val wasActivated = _uiState.value.isActivated
-                Log.d(TAG, "Starting scan with vendor demo pattern${if (wasActivated) " (resetting for new tag)" else ""}")
+                val currentState = _uiState.value
+                val wasActivated = currentState.isActivated
+                val hasTagList = currentState.showTagSelection && currentState.candidateTags.isNotEmpty()
+                
+                // Log the scanning context for better debugging
+                val scanContext = when {
+                    wasActivated -> "rescan after activation"
+                    hasTagList -> "rescan from tag list (${currentState.candidateTags.size} tags discarded)"
+                    else -> "fresh scan"
+                }
+                Log.d(TAG, "Starting scan: $scanContext")
                 
                 // CRITICAL: Ensure clean UHF state before starting
                 uhfManager.stopInventory()
@@ -214,16 +231,22 @@ class TagActivationViewModel(
                 // Clear previous scan results and reset activation state for new scan
                 scannedTags.clear()
                 
-                _uiState.value = _uiState.value.copy(
+                // CRITICAL: Complete state reset for multi-tag workflow
+                // This allows rescanning at any time: after activation, from tag list, or fresh
+                _uiState.value = currentState.copy(
                     isScanning = true,
                     isTriggerPressed = true,
                     scanningStatus = ScanningStatus.SCANNING,
-                    scannedTag = null,           // Clear previous tag
-                    isActivated = false,         // Reset activation state
-                    fieldsEnabled = true,        // Re-enable fields
-                    activatedTagNumber = null,   // Clear previous tag number
+                    scannedTag = null,              // Clear selected tag
+                    isActivated = false,            // Reset activation state
+                    fieldsEnabled = true,           // Re-enable fields
+                    activatedTagNumber = null,      // Clear previous tag number
+                    candidateTags = emptyList(),    // Clear candidate list (allows rescan from list)
+                    showTagSelection = false,       // Hide tag selection UI (allows rescan from list)
+                    canActivate = false,            // Reset activate button state
+                    isProcessing = false,           // Reset processing flag
                     statusMessage = context.getString(R.string.scanning_inactive_tags),
-                    errorMessage = null
+                    errorMessage = null             // Clear previous errors
                 )
 
                 // Start inventory using vendor demo pattern
@@ -259,10 +282,19 @@ class TagActivationViewModel(
                 // Stop inventory
                 uhfManager.stopInventory()
                 
+                // Log all scanned tags for debugging
+                Log.d(TAG, "Total tags scanned: ${scannedTags.size}")
+                scannedTags.values.forEachIndexed { index, tag ->
+                    val status = if (tag.epc.startsWith("34", ignoreCase = true)) "ACTIVE" else "INACTIVE"
+                    Log.d(TAG, "  Tag ${index + 1}: EPC=${tag.epc}, Status=$status, RSSI=${tag.rssiDbm} dBm")
+                }
+                
                 // Filter for INACTIVE tags only (tags that don't start with "34")
                 val filteredTags = scannedTags.values.filter { tagData ->
                     !tagData.epc.startsWith("34", ignoreCase = true)
                 }.toList()
+                
+                Log.d(TAG, "Filtered to ${filteredTags.size} INACTIVE tags for activation")
                 
                 if (filteredTags.isEmpty()) {
                     _uiState.value = _uiState.value.copy(
@@ -357,6 +389,7 @@ class TagActivationViewModel(
         _uiState.value = _uiState.value.copy(
             bcType = bcType,
             needsFocusRestore = true, // CRITICAL: Restore focus after dropdown
+            errorMessage = null, // Clear previous errors when user makes selection
             statusMessage = if (_uiState.value.scannedTag != null) {
                 "BC Type selected: $bcType. Ready to activate tag."
             } else {
@@ -404,13 +437,17 @@ class TagActivationViewModel(
                 }
                 
                 _uiState.value = _uiState.value.copy(
+                    isScanning = false,              // CRITICAL: Mark scanning as complete
+                    isTriggerPressed = false,        // CRITICAL: Reset trigger state
+                    scanningStatus = ScanningStatus.READY,
                     candidateTags = candidateTags,
                     showTagSelection = true,
                     statusMessage = if (candidateTags.isNotEmpty()) {
                         "Found ${candidateTags.size} inactive tags. Select one to activate."
                     } else {
                         "No inactive tags found during scan"
-                    }
+                    },
+                    needsFocusRestore = true         // Restore focus for trigger
                 )
                 
                 Log.d(TAG, "Manual mode - Candidate selection UI ready with ${candidateTags.size} tags")
@@ -418,7 +455,11 @@ class TagActivationViewModel(
             } catch (e: Exception) {
                 Log.e(TAG, "Error building candidate tags for manual selection: ${e.message}", e)
                 _uiState.value = _uiState.value.copy(
-                    statusMessage = "Error showing candidate tags: ${e.message}"
+                    isScanning = false,              // CRITICAL: Mark scanning as complete even on error
+                    isTriggerPressed = false,        // CRITICAL: Reset trigger state
+                    scanningStatus = ScanningStatus.ERROR,
+                    statusMessage = "Error showing candidate tags: ${e.message}",
+                    needsFocusRestore = true
                 )
             }
         }
@@ -439,12 +480,13 @@ class TagActivationViewModel(
             epcData = candidateTag.epc
         )
         
-        // Set the selected tag as the scanned tag
+        // Set the selected tag as the scanned tag and clear any previous errors
         _uiState.value = _uiState.value.copy(
             scannedTag = selectedTagData,
             candidateTags = emptyList(),
             showTagSelection = false,
             statusMessage = "Selected tag: ${candidateTag.epc}. Choose BC Type to activate.",
+            errorMessage = null, // Clear previous errors
             needsFocusRestore = true
         )
         
@@ -514,14 +556,16 @@ class TagActivationViewModel(
         scanningJob?.cancel()
         scanningJob = null
         
+        val errorMsg = "❌ $message"
         _uiState.value = _uiState.value.copy(
             isScanning = false,
             isTriggerPressed = false,
             scanningStatus = ScanningStatus.ERROR,
-            statusMessage = message,
-            errorMessage = message,
+            statusMessage = errorMsg,
+            errorMessage = errorMsg,
             needsFocusRestore = true
         )
+        Log.e(TAG, "❌ Scan error: $message")
     }
 
     /**
@@ -549,9 +593,11 @@ class TagActivationViewModel(
                 if (tagNumber == null) {
                     _uiState.value = _uiState.value.copy(
                         isProcessing = false,
-                        statusMessage = "Error generating tag number",
+                        statusMessage = "❌ Error generating tag number",
+                        errorMessage = "❌ Failed to generate tag number. Please check system settings and try again.",
                         needsFocusRestore = true
                     )
+                    Log.e(TAG, "❌ Tag number generation failed")
                     return@launch
                 }
                 
@@ -565,10 +611,11 @@ class TagActivationViewModel(
                 if (!writeSuccess) {
                     _uiState.value = _uiState.value.copy(
                         isProcessing = false,
-                        statusMessage = "Failed to write activation status to tag",
-                        errorMessage = "EPC write failed",
+                        statusMessage = "❌ Failed to write activation status to tag",
+                        errorMessage = "❌ Failed to write activation status to tag. Please ensure the tag is in range and try again.",
                         needsFocusRestore = true
                     )
+                    Log.e(TAG, "❌ EPC write operation failed for tag: $originalEpc")
                     return@launch
                 }
 
@@ -577,9 +624,11 @@ class TagActivationViewModel(
                 if (currentUser == null) {
                     _uiState.value = _uiState.value.copy(
                         isProcessing = false,
-                        statusMessage = "Error: No authenticated user. Please login again.",
+                        statusMessage = "❌ Error: No authenticated user",
+                        errorMessage = "❌ No authenticated user found. Please login again to continue.",
                         needsFocusRestore = true
                     )
+                    Log.e(TAG, "❌ Authentication error: No current user")
                     return@launch
                 }
 
@@ -671,6 +720,14 @@ class TagActivationViewModel(
                 }
 
                 if (success) {
+                    // CRITICAL: Clear UHF buffer to prevent stale data in next scan
+                    try {
+                        uhfManager.stopInventory()
+                        delay(300) // Give tag time to commit write and clear buffer
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Buffer clear warning: ${e.message}")
+                    }
+                    
                     // Update UI to show success with tag number instead of EPC
                     _uiState.value = _uiState.value.copy(
                         isProcessing = false,
@@ -678,23 +735,28 @@ class TagActivationViewModel(
                         fieldsEnabled = false,
                         activatedTagNumber = tagNumber, // Show tag number instead of EPC
                         statusMessage = context.getString(R.string.tag_activated_successfully, tagNumber),
+                        errorMessage = null, // Clear any previous errors
                         needsFocusRestore = true
                     )
+                    
+                    Log.d(TAG, "✅ Tag activation complete - ready for next scan")
                 } else {
                     _uiState.value = _uiState.value.copy(
                         isProcessing = false,
-                        statusMessage = context.getString(R.string.error_creating_tag_record),
-                        errorMessage = context.getString(R.string.database_insert_failed),
+                        statusMessage = "❌ " + context.getString(R.string.error_creating_tag_record),
+                        errorMessage = "❌ " + context.getString(R.string.database_insert_failed) + " Please try again.",
                         needsFocusRestore = true
                     )
+                    Log.e(TAG, "❌ Database insert failed for tag")
                 }
 
             } catch (e: Exception) {
                 Log.e(TAG, "Error in activateTag: ${e.message}", e)
+                val errorMsg = e.message ?: "Unknown error"
                 _uiState.value = _uiState.value.copy(
                     isProcessing = false,
-                    statusMessage = context.getString(R.string.error_format, e.message ?: "Unknown error"),
-                    errorMessage = e.message,
+                    statusMessage = "❌ " + context.getString(R.string.error_format, errorMsg),
+                    errorMessage = "❌ Activation failed: $errorMsg. Please try again.",
                     needsFocusRestore = true
                 )
             }
@@ -751,9 +813,23 @@ class TagActivationViewModel(
                 val currentUser = authManager.getCurrentUser()
                 val contractNo = currentUser?.tag_contract_no ?: "210573"
 
-                // UPDATED: Get device ID (XX) from BuildConfig and BC type-specific serial number (YYYY) from database
+                // CRITICAL FIX: Ensure BC type serial number row exists before using it
+                // If no serial number exists for this BC type, initialize it with "0001"
+                var serialNumber = databaseManager.getSerialNumberByBcType(bcType)
+                if (serialNumber == null) {
+                    Log.d(TAG, "⚠️ No serial number found for BC type $bcType, initializing with 0001")
+                    val currentTime = System.currentTimeMillis() / 1000
+                    databaseManager.database.bCTypeSerialNumbersQueries.insertOrReplace(
+                        bc_type = bcType,
+                        bc_type_code = bcTypeCode,
+                        serial_number = "0001",
+                        updated_date = currentTime
+                    )
+                    serialNumber = "0001"
+                }
+                
+                // UPDATED: Get device ID (XX) from BuildConfig
                 val deviceId = com.socam.bcms.BuildConfig.DEVICE_ID // XX (01-99)
-                val serialNumber = databaseManager.getSerialNumberByBcType(bcType) ?: "0001" // YYYY (0001-9999) per BC type
                 
                 // UPDATED: Format XXYYYY suffix using BC type-specific serial number
                 val autoIncrement = "$deviceId$serialNumber"
@@ -764,11 +840,11 @@ class TagActivationViewModel(
                 // Build tag number: Prefix + MainContract + Version + Reserved + BCTypeCode + ContractNo + XXYYYY
                 val tagNumber = "$prefix$mainContract$version$reserved$bcTypeCode$contractNo$autoIncrement"
                 
-                println("TagActivationViewModel: Generated tag number: $tagNumber (Prefix: $prefix, MainContract: $mainContract, Version: $version, Reserved: $reserved, BCType: $bcType -> $bcTypeCode, Contract: $contractNo, DeviceID: $deviceId, BCType-SerialNo: $serialNumber -> XXYYYY: $autoIncrement)")
+                Log.d(TAG, "Generated tag number: $tagNumber (Prefix: $prefix, MainContract: $mainContract, Version: $version, Reserved: $reserved, BCType: $bcType -> $bcTypeCode, Contract: $contractNo, DeviceID: $deviceId, BCType-SerialNo: $serialNumber -> XXYYYY: $autoIncrement)")
                 tagNumber
             }
         } catch (e: Exception) {
-            println("TagActivationViewModel: Error generating tag number: ${e.message}")
+            Log.e(TAG, "Error generating tag number: ${e.message}", e)
             null
         }
     }

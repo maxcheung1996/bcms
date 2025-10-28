@@ -2,6 +2,7 @@ package com.socam.bcms.domain
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.database.User
 import kotlinx.coroutines.Dispatchers
@@ -184,7 +185,7 @@ class AuthManager private constructor(private val context: Context) {
                 salt = "",
                 token = token,
                 role = role,
-                project_id = "629F9E29-0B36-4A9E-A2C4-C28969285583", // Default project ID
+                project_id = BuildConfig.PROJECT_ID, // Use centralized project ID from BuildConfig
                 full_name = fullName,
                 email = email,
                 department = department,

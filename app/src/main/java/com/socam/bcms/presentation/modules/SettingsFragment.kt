@@ -126,6 +126,8 @@ class SettingsFragment : Fragment() {
             val tagContractInputLayout = binding.root.findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.tag_contract_input_layout)
             val reservedInput = binding.root.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.reserved_input)
             val reservedInputLayout = binding.root.findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.reserved_input_layout)
+            val deviceIdInput = binding.root.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.device_id_input)
+            val serialNumbersInput = binding.root.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.serial_numbers_input)
             val tagPreviewText = binding.root.findViewById<TextView>(R.id.tag_preview_text)
             val saveTagConfigButton = binding.root.findViewById<com.google.android.material.button.MaterialButton>(R.id.save_tag_config_button)
             
@@ -232,6 +234,21 @@ class SettingsFragment : Fragment() {
                 reserved?.let { 
                     reservedInput?.setText(it)
                     updateTagPreview(vm, prefixInput, tagContractInput, reservedInput, tagPreviewText)
+                }
+            }
+            
+            vm.deviceId.observe(viewLifecycleOwner) { deviceId ->
+                println("SettingsFragment: Device ID received: $deviceId - ${System.currentTimeMillis()}")
+                deviceId?.let { 
+                    deviceIdInput?.setText(it)
+                    updateTagPreview(vm, prefixInput, tagContractInput, reservedInput, tagPreviewText)
+                }
+            }
+            
+            vm.serialNumbers.observe(viewLifecycleOwner) { serialNumbers ->
+                println("SettingsFragment: Serial numbers received: $serialNumbers - ${System.currentTimeMillis()}")
+                serialNumbers?.let { 
+                    serialNumbersInput?.setText(it)
                 }
             }
             

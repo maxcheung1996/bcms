@@ -223,6 +223,14 @@
     <string name="tag_reserved_required">Reserved number must be exactly 1 digit</string>
     <string name="tag_prefix_invalid">Prefix can only contain digits</string>
     <string name="tag_reserved_invalid">Reserved number can only contain digits</string>
+    <string name="device_id_hint">Device ID (2 digits)</string>
+    <string name="device_id_helper">Device identifier from BuildConfig - XX in tag number</string>
+    <string name="serial_numbers_hint">BC Type Serial Numbers</string>
+    <string name="serial_numbers_helper">Current serial numbers for each BC type (YYYY in tag number)</string>
+    <string name="bc_type_code_label">BCType</string>
+    <string name="contract_no_label">Contract</string>
+    <string name="device_id_short_label">ID</string>
+    <string name="serial_no_short_label">Serial</string>
     
     <!-- Main Dashboard -->
     <string name="test_uhf_scanning_power">Test UHF scanning &amp; power</string>

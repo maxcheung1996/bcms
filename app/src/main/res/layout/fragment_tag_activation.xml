@@ -125,6 +125,60 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Error Message Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/errorMessageCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="@color/error_light"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/error">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="start|center_vertical">
+
+                    <!-- Red Dot Indicator -->
+                    <ImageView
+                        android:id="@+id/errorIndicatorDot"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_circle_primary"
+                        app:tint="@color/error" />
+
+                    <!-- Error Icon -->
+                    <ImageView
+                        android:id="@+id/errorIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_error"
+                        app:tint="@color/error" />
+
+                    <!-- Error Message Text -->
+                    <TextView
+                        android:id="@+id/errorMessageText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Error message will appear here"
+                        android:textColor="@color/error"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- Tag Selection Card (Manual Mode) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/tagSelectionCard"

@@ -239,28 +239,48 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     /**
      * Fetch BC type serial numbers from backend API
      * Fetches latest serial numbers for all BC types in the current project
+     * 
+     * API: POST SerialNo/Latest/
+     * Request: { ProjId, DeviceId, Username }
+     * Response: [ { BCType, ProjId, GunNum, SerialNo } ]
      */
     private suspend fun fetchBcTypeSerialNumbersFromServer(user: com.socam.bcms.database.User) = withContext(Dispatchers.IO) {
         try {
             println("LoginViewModel: Fetching BC type serial numbers from API...")
             
+            // Prepare API request
+            val request = com.socam.bcms.data.dto.BCTypeSerialNumberRequest(
+                projId = BuildConfig.PROJECT_ID,
+                deviceId = BuildConfig.DEVICE_ID,
+                username = user.username
+            )
+            
+            println("LoginViewModel: Request - ProjId: ${request.projId}, DeviceId: ${request.deviceId}, Username: ${request.username}")
+            
             // Call API to get BC type serial numbers
             val apiService = apiClient.getSyncApiService()
-            val response = apiService.getBCTypeSerialNumbers(BuildConfig.PROJECT_ID)
+            val response = apiService.getBCTypeSerialNumbers(request)
             
             if (response.isSuccessful && response.body() != null) {
-                val bcTypeSerialNumbers = response.body()!!.tagNumbers
+                val bcTypeSerialNumbers = response.body()!!
                 
                 println("LoginViewModel: Received ${bcTypeSerialNumbers.size} BC type serial numbers from server")
                 
                 // Update local database with fetched serial numbers
                 bcTypeSerialNumbers.forEach { bcTypeDto ->
-                    databaseManager.updateBcTypeSerialNumber(
-                        bcType = bcTypeDto.bcType,
-                        bcTypeCode = bcTypeDto.bcTypeCode,
-                        serialNumber = bcTypeDto.latestSerialNumber
-                    )
-                    println("LoginViewModel: Updated ${bcTypeDto.bcType} serial number to ${bcTypeDto.latestSerialNumber}")
+                    // Get numeric code from BCTypeMapping table
+                    val bcTypeCode = databaseManager.getNumericCodeByBcType(bcTypeDto.bcType)
+                    
+                    if (bcTypeCode != null) {
+                        databaseManager.updateBcTypeSerialNumber(
+                            bcType = bcTypeDto.bcType,
+                            bcTypeCode = bcTypeCode,
+                            serialNumber = bcTypeDto.serialNo
+                        )
+                        println("LoginViewModel: Updated ${bcTypeDto.bcType} (${bcTypeCode}) serial number to ${bcTypeDto.serialNo}")
+                    } else {
+                        println("LoginViewModel: WARNING - BC type ${bcTypeDto.bcType} not found in BCTypeMapping table, skipping")
+                    }
                 }
                 
                 println("LoginViewModel: BC type serial numbers successfully updated")

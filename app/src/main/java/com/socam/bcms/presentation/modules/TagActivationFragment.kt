@@ -158,6 +158,12 @@ class TagActivationFragment : Fragment() {
         binding.tagSelectionRecycler.apply {
             adapter = candidateTagAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            
+            // CRITICAL: Don't steal focus from Fragment - allow trigger events to pass through
+            isFocusable = false
+            isFocusableInTouchMode = false
+            
+            Log.d(TAG, "RecyclerView configured to allow trigger events")
         }
     }
     
@@ -207,6 +213,13 @@ class TagActivationFragment : Fragment() {
         if (state.showTagSelection && state.candidateTags.isNotEmpty()) {
             binding.tagSelectionCard.visibility = View.VISIBLE
             updateTagSelectionUI(state.candidateTags)
+            
+            // CRITICAL: Restore focus to Fragment after showing tag list
+            // This ensures trigger button still works for rescanning
+            view?.post {
+                view?.requestFocus()
+                Log.d(TAG, "🔧 Focus restored after showing tag list - trigger ready for rescan")
+            }
         } else {
             binding.tagSelectionCard.visibility = View.GONE
         }
@@ -216,6 +229,9 @@ class TagActivationFragment : Fragment() {
         
         // Update scanning status
         updateScanningStatus(state)
+        
+        // Update error display with prominent red styling
+        updateErrorDisplay(state)
         
         // Update activate button
         binding.activateButton.isEnabled = state.canActivate && !state.isProcessing
@@ -242,10 +258,22 @@ class TagActivationFragment : Fragment() {
         } else {
             binding.activateButton.text = "Activate Tag"
         }
-        
-        // Show error messages
-        state.errorMessage?.let { error ->
-            Snackbar.make(binding.root, error, Snackbar.LENGTH_LONG).show()
+    }
+    
+    /**
+     * Update error display with prominent red styling
+     * Shows error message card with red background, red dot, and red text
+     */
+    private fun updateErrorDisplay(state: TagActivationUiState): Unit {
+        if (state.errorMessage != null && state.errorMessage.isNotBlank()) {
+            // Show error card with prominent styling
+            binding.errorMessageCard.visibility = View.VISIBLE
+            binding.errorMessageText.text = state.errorMessage
+            
+            Log.d(TAG, "⚠️ Error displayed: ${state.errorMessage}")
+        } else {
+            // Hide error card when no error
+            binding.errorMessageCard.visibility = View.GONE
         }
     }
     
@@ -285,8 +313,15 @@ class TagActivationFragment : Fragment() {
     }
     
     private fun updateScanningStatus(state: TagActivationUiState): Unit {
-        // Update status text
-        binding.scanningStatusText.text = state.statusMessage
+        // Don't show error messages in status text - they're shown in the error card
+        val displayMessage = if (state.errorMessage != null && state.errorMessage.isNotBlank()) {
+            // If there's an error, just show a generic scanning status
+            "Ready to scan"
+        } else {
+            state.statusMessage
+        }
+        
+        binding.scanningStatusText.text = displayMessage
         
         // Update status icon based on scanning state
         when (state.scanningStatus) {
@@ -303,15 +338,16 @@ class TagActivationFragment : Fragment() {
                 )
             }
             ScanningStatus.ERROR -> {
-                binding.scanningStatusIcon.setImageResource(R.drawable.ic_error)
+                // Don't change to error icon - keep showing normal status since error card handles it
+                binding.scanningStatusIcon.setImageResource(R.drawable.ic_circle_primary)
                 binding.scanningStatusIcon.setColorFilter(
-                    requireContext().getColor(R.color.error)
+                    requireContext().getColor(R.color.text_secondary)
                 )
             }
         }
         
-        // Show snackbar for important status changes
-        if (state.statusMessage.contains("successfully") || state.statusMessage.contains("Error")) {
+        // Show snackbar only for success messages, not errors (error card handles errors)
+        if (state.statusMessage.contains("successfully")) {
             Snackbar.make(binding.root, state.statusMessage, Snackbar.LENGTH_SHORT).show()
         }
     }

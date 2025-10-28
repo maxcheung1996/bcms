@@ -65,6 +65,12 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
     private val _tagReserved = MutableLiveData<String>("0")
     val tagReserved: LiveData<String> = _tagReserved
     
+    private val _deviceId = MutableLiveData<String>("XX")
+    val deviceId: LiveData<String> = _deviceId
+    
+    private val _serialNumbers = MutableLiveData<String>("Loading...")
+    val serialNumbers: LiveData<String> = _serialNumbers
+    
     // App Update State
     private val _updateDownloadProgress = MutableLiveData<UpdateDownloadState>()
     val updateDownloadProgress: LiveData<UpdateDownloadState> = _updateDownloadProgress
@@ -123,6 +129,9 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
                 println("SettingsViewModel: Loading tag configuration settings - ${System.currentTimeMillis()}")
                 val tagConfigJob = launch { loadTagConfigurationSettings() }
                 
+                println("SettingsViewModel: Loading device ID and serial numbers - ${System.currentTimeMillis()}")
+                val deviceSerialJob = launch { loadDeviceIdAndSerialNumbers() }
+                
                 println("SettingsViewModel: Waiting for all jobs to complete - ${System.currentTimeMillis()}")
                 userDetailsJob.join()
                 projectJob.join()
@@ -130,6 +139,7 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
                 languageJob.join()
                 powerJob.join()
                 tagConfigJob.join()
+                deviceSerialJob.join()
                 println("SettingsViewModel: All data loading jobs complete - ${System.currentTimeMillis()}")
                 
             } catch (e: Exception) {
@@ -762,11 +772,128 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
 
     /**
      * Generate tag number preview for UI (24-character format)
+     * Format: Prefix + MainContract + Version + Reserved + BCTypeCode + ContractNo + DeviceID + SerialNumber
+     * Example: 34180 + 03 + 3 + 9 + XXX + 210573 + 01 + 0001 = 341800339XXX210573010001
      */
     fun generateTagPreview(prefix: String, tagContract: String, reserved: String): String {
-        // Format: prefix + contract + version + reserved + BCTypeCode + tagContract + counter
-        // Total: 5 + 2 + 1 + 1 + 3 + 6 + 6 = 24 characters (exactly fits EPC requirement)
-        return "${prefix}03${reserved}XXX${tagContract}000001"
+        val mainContract = "03"  // Fixed: 2 digits
+        val version = "3"         // Fixed: 1 digit
+        val bcTypeCode = "XXX"    // Placeholder: 3 digits
+        val deviceIdVal = _deviceId.value ?: "XX"  // Device ID: 2 digits
+        val serialNo = "0001"     // Placeholder: 4 digits
+        
+        // Total: 5 + 2 + 1 + 1 + 3 + 6 + 2 + 4 = 24 characters
+        return "$prefix$mainContract$version$reserved$bcTypeCode$tagContract$deviceIdVal$serialNo"
+    }
+
+    /**
+     * Load device ID from BuildConfig and serial numbers from BC Type database
+     */
+    private suspend fun loadDeviceIdAndSerialNumbers(): Unit = withContext(Dispatchers.IO) {
+        try {
+            // Load Device ID from BuildConfig
+            val deviceIdValue = try {
+                com.socam.bcms.BuildConfig.DEVICE_ID
+            } catch (e: Exception) {
+                "DEVICE_ID_NOT_FOUND"
+            }
+            
+            // Format device ID for display and preview
+            val displayDeviceId = if (deviceIdValue == "DEVICE_ID_NOT_FOUND" || deviceIdValue.isBlank()) {
+                "DEVICE_ID_NOT_FOUND"
+            } else {
+                deviceIdValue
+            }
+            
+            val previewDeviceId = if (deviceIdValue == "DEVICE_ID_NOT_FOUND" || deviceIdValue.isBlank()) {
+                "XX"
+            } else {
+                deviceIdValue.padStart(2, '0').take(2)
+            }
+            
+            // CRITICAL: Ensure BC type serial numbers are initialized
+            // Initialize from MasterCategories if available, or use common defaults
+            initializeBcTypeSerialNumbersIfNeeded()
+            
+            // Load all BC type serial numbers
+            val bcTypeSerialNumbers = databaseManager.getAllBcTypeSerialNumbers()
+            
+            // Format serial numbers with line breaks: "MIC: 0001\nALW: 0001\nTID: 0001"
+            val serialNumbersText = if (bcTypeSerialNumbers.isEmpty()) {
+                "No BC types configured"
+            } else {
+                bcTypeSerialNumbers
+                    .sortedBy { it.bc_type } // Sort alphabetically for consistent display
+                    .joinToString("\n") { bcType ->
+                        "${bcType.bc_type}: ${bcType.serial_number}"
+                    }
+            }
+            
+            withContext(Dispatchers.Main) {
+                _deviceId.value = displayDeviceId
+                _serialNumbers.value = serialNumbersText
+                println("SettingsViewModel: Device ID loaded: $displayDeviceId (preview: $previewDeviceId)")
+                println("SettingsViewModel: Serial numbers loaded: $serialNumbersText")
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                _deviceId.value = "DEVICE_ID_NOT_FOUND"
+                _serialNumbers.value = "Failed to load serial numbers"
+                println("SettingsViewModel: Failed to load device ID/serial numbers: ${e.message}")
+            }
+        }
+    }
+    
+    /**
+     * Initialize BC type serial numbers if they don't exist
+     * First tries to use MasterCategories, then falls back to common BC types
+     */
+    private suspend fun initializeBcTypeSerialNumbersIfNeeded(): Unit = withContext(Dispatchers.IO) {
+        try {
+            println("SettingsViewModel: Checking if BC type serial numbers need initialization...")
+            
+            // Try to initialize from MasterCategories first
+            databaseManager.initializeBcTypeSerialNumbers()
+            
+            // Check if we have any records now
+            val existingRecords = databaseManager.getAllBcTypeSerialNumbers()
+            
+            // If still empty, initialize common BC types manually
+            if (existingRecords.isEmpty()) {
+                println("SettingsViewModel: No BC types in MasterCategories, initializing common types...")
+                val commonBcTypes = listOf("MIC", "ALW", "TID")
+                val currentTime = System.currentTimeMillis() / 1000
+                
+                commonBcTypes.forEach { bcType ->
+                    // Get BC type code from mapping table
+                    val bcTypeCode = try {
+                        databaseManager.database.bCTypeMappingQueries
+                            .selectNumericCodeByBcType(bcType)
+                            .executeAsOneOrNull() ?: "404"
+                    } catch (e: Exception) {
+                        "404"
+                    }
+                    
+                    // Initialize with "0001" for new installations
+                    databaseManager.database.bCTypeSerialNumbersQueries.insertOrReplace(
+                        bc_type = bcType,
+                        bc_type_code = bcTypeCode,
+                        serial_number = "0001",
+                        updated_date = currentTime
+                    )
+                    
+                    println("SettingsViewModel: Initialized $bcType with serial number 0001")
+                }
+            } else {
+                println("SettingsViewModel: Found ${existingRecords.size} existing BC type records")
+                existingRecords.forEach { 
+                    println("SettingsViewModel:   - ${it.bc_type}: ${it.serial_number}")
+                }
+            }
+        } catch (e: Exception) {
+            println("SettingsViewModel: Error initializing BC type serial numbers: ${e.message}")
+            e.printStackTrace()
+        }
     }
 
     /**

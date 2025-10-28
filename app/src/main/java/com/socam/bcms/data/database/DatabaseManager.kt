@@ -1,6 +1,7 @@
 package com.socam.bcms.data.database
 
 import android.content.Context
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.database.Database
 import com.socam.bcms.config.EnvironmentConfig
 import com.squareup.sqldelight.android.AndroidSqliteDriver
@@ -106,6 +107,24 @@ class DatabaseManager private constructor(context: Context) {
                 }
             }
             
+            // CRITICAL: Check if BCTypeSerialNumbers table exists
+            val needsBCTypeSerialNumbersTable = try {
+                database.bCTypeSerialNumbersQueries.selectAll().executeAsList()
+                false // Table exists
+            } catch (e: Exception) {
+                if (e.message?.contains("no such table: BCTypeSerialNumbers") == true) {
+                    println("DatabaseManager: BCTypeSerialNumbers table not found, will create it")
+                    true
+                } else {
+                    false
+                }
+            }
+            
+            // Create BCTypeSerialNumbers table if missing
+            if (needsBCTypeSerialNumbersTable) {
+                createBCTypeSerialNumbersTable()
+            }
+            
             if (needsUserTableRecreation || needsMasterProjectTable) {
                 if (needsMasterProjectTable) {
                     println("DatabaseManager: New table detected, forcing database recreation")
@@ -117,6 +136,36 @@ class DatabaseManager private constructor(context: Context) {
             println("DatabaseManager: Database migrations completed")
         } catch (e: Exception) {
             println("DatabaseManager: Migration failed: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+    
+    /**
+     * Create BCTypeSerialNumbers table (migration)
+     */
+    private fun createBCTypeSerialNumbersTable(): Unit {
+        try {
+            println("DatabaseManager: Creating BCTypeSerialNumbers table...")
+            
+            // Execute the CREATE TABLE SQL directly
+            driver.execute(
+                identifier = null,
+                sql = """
+                    CREATE TABLE IF NOT EXISTS BCTypeSerialNumbers (
+                        bc_type TEXT PRIMARY KEY NOT NULL,
+                        bc_type_code TEXT NOT NULL,
+                        serial_number TEXT NOT NULL,
+                        updated_date INTEGER NOT NULL
+                    )
+                """.trimIndent(),
+                parameters = 0,
+                binders = null
+            )
+            
+            println("DatabaseManager: BCTypeSerialNumbers table created successfully")
+            
+        } catch (e: Exception) {
+            println("DatabaseManager: Failed to create BCTypeSerialNumbers table: ${e.message}")
             e.printStackTrace()
         }
     }
@@ -164,8 +213,8 @@ class DatabaseManager private constructor(context: Context) {
                 createInitialUser("admin", "admin123", "Client", "System Administrator", "admin@socam.com", "IT")
                 createInitialUser("operator", "operator123", "Client", "System Operator", "operator@socam.com", "Warehouse")
                 
-                // New role-based users
-                val projectId = "629F9E29-0B36-4A9E-A2C4-C28969285583"
+                // New role-based users - use centralized project ID
+                val projectId = BuildConfig.PROJECT_ID
                 createInitialUser("client_user", "Abcd.1234", "Client", "Client User", "client@bcms.com", "Client Services", projectId)
                 createInitialUser("mic_factory_user", "Abcd.1234", "Factory (MIC)", "MIC Factory User", "mic.factory@bcms.com", "MIC Production", projectId)
                 createInitialUser("mic_alw_factory_user", "Abcd.1234", "Factory (MIC-ALW)", "MIC-ALW Factory User", "mic.alw.factory@bcms.com", "MIC-ALW Production", projectId)
@@ -211,7 +260,7 @@ class DatabaseManager private constructor(context: Context) {
         fullName: String,
         email: String,
         department: String,
-        projectId: String = "629F9E29-0B36-4A9E-A2C4-C28969285583"
+        projectId: String = BuildConfig.PROJECT_ID // Use centralized project ID from BuildConfig
     ): Unit {
         val token = generateToken()
         
@@ -392,7 +441,7 @@ class DatabaseManager private constructor(context: Context) {
                         "contract_end_date" to "2099-12-31T00:00:00"
                     ),
                     mapOf(
-                        "proj_id" to "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                        "proj_id" to BuildConfig.PROJECT_ID, // Use centralized project ID
                         "proj_code" to "R267",
                         "proj_name" to "Anderson Road R2-6&7",
                         "contract_no" to "20210573",
@@ -815,6 +864,22 @@ class DatabaseManager private constructor(context: Context) {
             }
         } catch (e: Exception) {
             println("DatabaseManager: Error initializing BC type serial numbers: ${e.message}")
+        }
+    }
+    
+    /**
+     * Get numeric code (bc_type_code) for a specific BC type from BCTypeMapping table
+     * @param bcType BC type code (e.g., "MIC", "ALW", "TID")
+     * @return Numeric code (e.g., "107", "102", "103") or null if not found
+     */
+    fun getNumericCodeByBcType(bcType: String): String? {
+        return try {
+            database.bCTypeMappingQueries
+                .selectNumericCodeByBcType(bcType)
+                .executeAsOneOrNull()
+        } catch (e: Exception) {
+            println("DatabaseManager: Error getting numeric code for BC type $bcType: ${e.message}")
+            null
         }
     }
 }

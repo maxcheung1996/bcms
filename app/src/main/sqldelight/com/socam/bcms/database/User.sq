@@ -1,4 +1,6 @@
 -- User table for local authentication
+-- NOTE: project_id default value should match BuildConfig.PROJECT_ID
+-- SQL schemas cannot reference BuildConfig, but the actual value is set via Kotlin code
 CREATE TABLE User (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,

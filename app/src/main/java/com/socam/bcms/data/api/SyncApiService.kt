@@ -1,5 +1,6 @@
 package com.socam.bcms.data.api
 
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.data.dto.*
 import retrofit2.Response
 import retrofit2.http.Body
@@ -12,14 +13,14 @@ import retrofit2.http.Query
  * API Service for synchronization endpoints
  * STABILITY PRIORITY: Simple, focused endpoints
  * 
- * NOTE: PROJECT_ID is now hardcoded in BuildConfig per device/APK build
+ * NOTE: PROJECT_ID is now centralized in BuildConfig per device/APK build
  */
 interface SyncApiService {
     
     companion object {
-        // Legacy constant - use BuildConfig.PROJECT_ID instead
-        @Deprecated("Use BuildConfig.PROJECT_ID instead", ReplaceWith("BuildConfig.PROJECT_ID"))
-        const val PROJECT_ID = "629F9E29-0B36-4A9E-A2C4-C28969285583"
+        // Use centralized project ID from BuildConfig
+        @Deprecated("Use BuildConfig.PROJECT_ID directly instead", ReplaceWith("BuildConfig.PROJECT_ID", "com.socam.bcms.BuildConfig"))
+        const val PROJECT_ID = BuildConfig.PROJECT_ID
         const val CATEGORY_PROJECT_ID = "FCC5D974-3513-4F2E-8979-13E2867B42EE"
     }
     
@@ -85,8 +86,9 @@ interface SyncApiService {
     ): Response<SerialNumberResponse>
     
     // BC Type Serial Numbers Endpoint - fetch latest serial numbers for all BC types
-    @GET("Rfids/{projId}/BCTypes/LatestSerialNumbers")
+    // Real API: POST SerialNo/Latest/
+    @POST("SerialNo/Latest/")
     suspend fun getBCTypeSerialNumbers(
-        @Path("projId") projId: String
+        @Body request: BCTypeSerialNumberRequest
     ): Response<BCTypeSerialNumbersResponse>
 }

@@ -79,69 +79,11 @@
                     android:id="@+id/tag_preview_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="34180330XXX20210573000001"
+                    android:text="341800339XXX210573010001"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/primary"
                     android:fontFamily="monospace" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <!-- Prefix -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/prefix_label"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_secondary"
-                        android:gravity="center" />
-
-                    <!-- Main Contract -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/contract_label"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_secondary"
-                        android:gravity="center" />
-
-                    <!-- Version -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/version_label"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_secondary"
-                        android:gravity="center" />
-
-                    <!-- Reserved -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/reserved_label"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_secondary"
-                        android:gravity="center" />
-
-                    <!-- Auto Fields -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="@string/auto_fields_label"
-                        android:textSize="10sp"
-                        android:textColor="@color/text_secondary"
-                        android:gravity="center" />
-
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -195,7 +137,7 @@
                     android:inputType="number"
                     android:maxLength="2" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout> 
 
             <!-- Version No. Field (Read-only) -->
             <com.google.android.material.textfield.TextInputLayout
@@ -212,6 +154,29 @@
                     android:layout_height="wrap_content"
                     android:text="3"
                     android:enabled="false"
+                    android:inputType="number"
+                    android:maxLength="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Reserved No. Field (Configurable) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reserved_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="@string/tag_reserved_hint"
+                app:helperText="@string/tag_reserved_helper"
+                app:counterEnabled="true"
+                app:counterMaxLength="1"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reserved_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
                     android:inputType="number"
                     android:maxLength="1" />
 
@@ -240,26 +205,45 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Reserved No. Field (Configurable) -->
+            <!-- Device ID Field (Read-only) - XX in XXYYYY -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reserved_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:hint="@string/tag_reserved_hint"
-                app:helperText="@string/tag_reserved_helper"
-                app:counterEnabled="true"
-                app:counterMaxLength="1"
-                app:errorEnabled="true"
+                android:layout_marginBottom="12dp"
+                android:hint="@string/device_id_hint"
+                app:helperText="@string/device_id_helper"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/reserved_input"
+                    android:id="@+id/device_id_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0"
-                    android:inputType="number"
-                    android:maxLength="1" />
+                    android:text="XX"
+                    android:enabled="false"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Serial Numbers by BC Type Field (Read-only) - YYYY in XXYYYY -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="@string/serial_numbers_hint"
+                app:helperText="@string/serial_numbers_helper"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/serial_numbers_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Loading..."
+                    android:enabled="false"
+                    android:inputType="textMultiLine|none"
+                    android:minLines="3"
+                    android:maxLines="10"
+                    android:scrollbars="vertical"
+                    android:gravity="start|top" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

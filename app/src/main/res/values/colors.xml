@@ -49,4 +49,5 @@
     <color name="success_light">#C8E6C9</color>
     <color name="surface_variant">#E6E1E5</color>
     <color name="warning">#FF9800</color>
+    <color name="error_light">#FFCDD2</color>
 </resources>
