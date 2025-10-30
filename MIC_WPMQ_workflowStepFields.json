@@ -1,0 +1,564 @@
+{
+  "STA10": [
+    {
+      "fieldName": "Category",
+      "fieldType": "dropdown",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Category",
+      "options": null
+    },
+    {
+      "fieldName": "Subcategory",
+      "fieldType": "dropdown",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Subcategory",
+      "options": null
+    },
+    {
+      "fieldName": "Serial No.",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Serial No.",
+      "options": null
+    },
+    {
+      "fieldName": "Hinge Supplier",
+      "fieldType": "dropdown",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Hinge Supplier",
+      "options": null
+    },
+    {
+      "fieldName": "Manufacturing Date",
+      "fieldType": "datetime",
+      "order": 5,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Manufacturing Date",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 6,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 7,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "STA20": [
+    {
+      "fieldName": "Delivery Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Delivery Date",
+      "options": null
+    },
+    {
+      "fieldName": "Batch No.",
+      "fieldType": "text",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Batch No.",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "STA30": [
+    {
+      "fieldName": "Site Arrival Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Site Arrival Date",
+      "options": null
+    },
+    {
+      "fieldName": "Chip Failure (SA)",
+      "fieldType": "checkbox",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Chip Failure (SA)",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "STA40": [
+    {
+      "fieldName": "Installation Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Installation Date",
+      "options": null
+    },
+    {
+      "fieldName": "Block",
+      "fieldType": "dropdown",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Block",
+      "options": null
+    },
+    {
+      "fieldName": "Floor",
+      "fieldType": "dropdown",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Floor",
+      "options": null
+    },
+    {
+      "fieldName": "Unit",
+      "fieldType": "dropdown",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Unit",
+      "options": null
+    },
+    {
+      "fieldName": "Chip Failure (SI)",
+      "fieldType": "checkbox",
+      "order": 5,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Chip Failure (SI)",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 6,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 7,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "MIC10": [
+    {
+      "fieldName": "Category",
+      "fieldType": "dropdown",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Category",
+      "options": null
+    },
+    {
+      "fieldName": "Serial No.",
+      "fieldType": "text",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Serial No.",
+      "options": null
+    },
+    {
+      "fieldName": "Edit Serial No.",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Edit Serial No.",
+      "options": null
+    },
+    {
+      "fieldName": "Concrete Grade",
+      "fieldType": "dropdown",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Concrete Grade",
+      "options": null
+    },
+    {
+      "fieldName": "Product No.",
+      "fieldType": "text",
+      "order": 5,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Product No.",
+      "options": null
+    },
+    {
+      "fieldName": "Manufacturing Date",
+      "fieldType": "date",
+      "order": 6,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Manufacturing Date",
+      "options": null
+    },
+    {
+      "fieldName": "Block",
+      "fieldType": "dropdown",
+      "order": 7,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Block",
+      "options": null
+    },
+    {
+      "fieldName": "Floor",
+      "fieldType": "dropdown",
+      "order": 8,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Floor",
+      "options": null
+    },
+    {
+      "fieldName": "Unit",
+      "fieldType": "dropdown",
+      "order": 9,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Unit",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 10,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 11,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "MIC20": [
+    {
+      "fieldName": "RS Company",
+      "fieldType": "dropdown",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "RS Company",
+      "options": null
+    },
+    {
+      "fieldName": "RS Inspection Date",
+      "fieldType": "date",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "RS Inspection Date",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "MIC30": [
+    {
+      "fieldName": "Casting Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Casting Date",
+      "options": null
+    },
+    {
+      "fieldName": "Casting Date 2",
+      "fieldType": "date",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Casting Date 2",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "MIC35": [
+    {
+      "fieldName": "Internal Finishes Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Internal Finishes Date",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "MIC40": [
+    {
+      "fieldName": "Delivery Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Delivery Date",
+      "options": null
+    },
+    {
+      "fieldName": "License Plate No.",
+      "fieldType": "text",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "License Plate No.",
+      "options": null
+    },
+    {
+      "fieldName": "T Plate No.",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "T Plate No.",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 5,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "MIC50": [
+    {
+      "fieldName": "Site Arrival Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Site Arrival Date",
+      "options": null
+    },
+    {
+      "fieldName": "Chip Failure (SA)",
+      "fieldType": "checkbox",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Chip Failure (SA)",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ],
+  "MIC60": [
+    {
+      "fieldName": "Installation Date",
+      "fieldType": "date",
+      "order": 1,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Installation Date",
+      "options": null
+    },
+    {
+      "fieldName": "Block",
+      "fieldType": "dropdown",
+      "order": 2,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Block",
+      "options": null
+    },
+    {
+      "fieldName": "Floor",
+      "fieldType": "dropdown",
+      "order": 3,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Floor",
+      "options": null
+    },
+    {
+      "fieldName": "Unit",
+      "fieldType": "dropdown",
+      "order": 4,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Unit",
+      "options": null
+    },
+    {
+      "fieldName": "Chip Failure (SI)",
+      "fieldType": "checkbox",
+      "order": 5,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Chip Failure (SI)",
+      "options": null
+    },
+    {
+      "fieldName": "Remark",
+      "fieldType": "text",
+      "order": 6,
+      "isRequired": 0,
+      "defaultValue": null,
+      "label": "Remark",
+      "options": null
+    },
+    {
+      "fieldName": "Is Completed",
+      "fieldType": "checkbox",
+      "order": 7,
+      "isRequired": 0,
+      "defaultValue": "false",
+      "label": "Is Completed",
+      "options": null
+    }
+  ]
+}

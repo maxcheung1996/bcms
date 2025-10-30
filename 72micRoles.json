@@ -1,0 +1,178 @@
+[
+	{
+		"Id" : 70,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Read",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Admin"
+	},
+	{
+		"Id" : 71,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Update",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Admin"
+	},
+	{
+		"Id" : 72,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Activate",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Admin"
+	},
+	{
+		"Id" : 73,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "97c17fc1-f6ba-4cde-9119-3ace2f633564",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Read",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Client"
+	},
+	{
+		"Id" : 74,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Read",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Contractor"
+	},
+	{
+		"Id" : 75,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Update",
+		"ReturnValue" : "70,80",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Contractor"
+	},
+	{
+		"Id" : 76,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "97c17fc1-f6ba-4cde-9119-3ace2f633564",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Update",
+		"ReturnValue" : "0",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Client"
+	},
+	{
+		"Id" : 77,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "97c17fc1-f6ba-4cde-9119-3ace2f633564",
+		"BCType" : "*",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Activate",
+		"ReturnValue" : "0",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Client"
+	},
+	{
+		"Id" : 78,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+		"BCType" : "MIC",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Read",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(MIC)"
+	},
+	{
+		"Id" : 79,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+		"BCType" : "MIC",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Update",
+		"ReturnValue" : "10,20,30,55,60",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(MIC)"
+	},
+	{
+		"Id" : 80,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+		"BCType" : "MIC",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Activate",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(MIC)"
+	},
+	{
+		"Id" : 81,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "f55430b8-3dbd-4114-8023-34ea0465ebaf",
+		"BCType" : "STA",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Read",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(STA)"
+	},
+	{
+		"Id" : 82,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "f55430b8-3dbd-4114-8023-34ea0465ebaf",
+		"BCType" : "STA",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Update",
+		"ReturnValue" : "10,60",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(STA)"
+	},
+	{
+		"Id" : 83,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "f55430b8-3dbd-4114-8023-34ea0465ebaf",
+		"BCType" : "STA",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Activate",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(STA)"
+	},
+	{
+		"Id" : 84,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "f55430b8-3dbd-4114-8023-34ea0465ebaf",
+		"BCType" : "STA",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Read",
+		"ReturnValue" : "*",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(STA)"
+	},
+	{
+		"Id" : 85,
+		"ProjId" : "72241A60-CB37-4C99-B2F2-04EB20271124",
+		"RoleId" : "f55430b8-3dbd-4114-8023-34ea0465ebaf",
+		"BCType" : "STA",
+		"CriteriaType" : "ACTION",
+		"CriteriaValue" : "Update",
+		"ReturnValue" : "70,80",
+		"CreatedDate" : "2025-10-22 12:00:00",
+		"role_name" : "Factory(STA)"
+	}
+]

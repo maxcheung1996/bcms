@@ -3,6 +3,7 @@ package com.socam.bcms.presentation.modules
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.R
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.domain.AuthManager
@@ -136,7 +137,7 @@ class BatchProcessViewModel(
 
                 // Get allowed steps for this role and BC type
                 val allowedSteps = databaseManager.database.masterRolesQueries
-                    .selectStepsByRoleAndBcType(userRole, bcType)
+                    .selectStepsByRoleAndBcTypeAndProject(userRole, bcType, BuildConfig.PROJECT_ID)
                     .executeAsList()
                 
                 Log.d(TAG, "Found ${allowedSteps.size} allowed steps for role $userRole and BC type $bcType")

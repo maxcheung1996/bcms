@@ -155,20 +155,7 @@ CREATE TABLE User (
 ### Current Hardcoded Projects:
 
 ```kotlin
-// Project 1 - Test Project
-Project ID: "FCC5D974-3513-4F2E-8979-13E2867B42EE"
-Project Code: "KTN"
-Project Name: "KT Area 29"
-Contract No: "999999"
-Contractor ID: null
-Contractor Name: null
-Contract Description (EN): "NewContract"
-Contract Description (TC): "新合約"
-Contract Description (SC): "新合同"
-Contract Start Date: "2022-11-22T00:00:00"
-Contract End Date: "2099-12-31T00:00:00"
-
-// Project 2 - Main Production Project
+// Project 1 - Main Production Project
 Project ID: "629F9E29-0B36-4A9E-A2C4-C28969285583"
 Project Code: "R267"
 Project Name: "Anderson Road R2-6&7"
@@ -501,8 +488,8 @@ CREATE TABLE MasterCategories (
 
 **API Endpoint:** `GET /Masters/{projId}/Bcs/Categories`
 
-**Example for project FCC5D974-3513-4F2E-8979-13E2867B42EE:**
-- URL: `GET /Masters/FCC5D974-3513-4F2E-8979-13E2867B42EE/Bcs/Categories`
+**Example for project 629F9E29-0B36-4A9E-A2C4-C28969285583:**
+- URL: `GET /Masters/629F9E29-0B36-4A9E-A2C4-C28969285583/Bcs/Categories`
 
 ---
 
@@ -1077,7 +1064,6 @@ Project: BCMS Android Application
 - checkbox
 
 ### Project IDs (Current):
-- Test: FCC5D974-3513-4F2E-8979-13E2867B42EE
 - Production: 629F9E29-0B36-4A9E-A2C4-C28969285583
 
 ---

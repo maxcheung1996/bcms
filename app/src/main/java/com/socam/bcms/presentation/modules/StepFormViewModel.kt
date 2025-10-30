@@ -2,6 +2,7 @@ package com.socam.bcms.presentation.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.database.WorkflowStepFields
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +54,7 @@ class StepFormViewModel(
 
                 val stepFields = withContext(Dispatchers.IO) {
                     databaseManager.database.workflowStepFieldsQueries
-                        .selectFieldsByStep(stepCode)
+                        .selectFieldsByStepAndProject(stepCode, BuildConfig.PROJECT_ID)
                         .executeAsList()
                 }
 

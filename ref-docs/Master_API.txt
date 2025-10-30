@@ -149,7 +149,7 @@ Unit: GET https://micservice.shuion.com.hk/api/Masters/629F9E29-0B36-4A9E-A2C4-C
 ]
 
 Category & Subcategory: 
-GET https://micservice.shuion.com.hk/api/Masters/FCC5D974-3513-4F2E-8979-13E2867B42EE/Bcs/Categories
+GET https://micservice.shuion.com.hk/api/Masters/629F9E29-0B36-4A9E-A2C4-C28969285583/Bcs/Categories
 [
     {
         "Bctype": "ALW",

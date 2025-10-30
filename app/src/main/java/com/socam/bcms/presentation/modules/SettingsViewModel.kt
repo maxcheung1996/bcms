@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.socam.bcms.BCMSApp
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.data.auth.TokenManager
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.domain.AuthManager
@@ -868,7 +869,7 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
                     // Get BC type code from mapping table
                     val bcTypeCode = try {
                         databaseManager.database.bCTypeMappingQueries
-                            .selectNumericCodeByBcType(bcType)
+                            .selectNumericCodeByBcTypeAndProject(bcType, BuildConfig.PROJECT_ID)
                             .executeAsOneOrNull() ?: "404"
                     } catch (e: Exception) {
                         "404"

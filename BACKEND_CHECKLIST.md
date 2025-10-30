@@ -179,7 +179,7 @@
 
 - [ ] **Categories & Subcategories**
   - Endpoint: `GET /Masters/{projId}/Bcs/Categories`
-  - Use Project ID: `FCC5D974-3513-4F2E-8979-13E2867B42EE` (as per current API)
+  - Use Project ID: `629F9E29-0B36-4A9E-A2C4-C28969285583` (as per current API)
 
 **Data Structure:**
 ```json

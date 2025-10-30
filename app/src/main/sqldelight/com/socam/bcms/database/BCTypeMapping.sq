@@ -1,41 +1,54 @@
 -- BCTypeMapping table for BC Type to numeric code mapping
 CREATE TABLE BCTypeMapping (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    bc_type TEXT UNIQUE NOT NULL,
+    bc_type TEXT NOT NULL,
     numeric_code TEXT NOT NULL,
     description TEXT,
+    project_id TEXT,
     is_active INTEGER NOT NULL DEFAULT 1,
     created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
-    updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+    updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+    UNIQUE(bc_type, project_id)
 );
 
 -- Insert default mappings
-INSERT OR REPLACE INTO BCTypeMapping (bc_type, numeric_code, description) VALUES
-('MIC', '107', 'MIC Component Type'),
-('ALW', '102', 'ALW Component Type'), 
-('TID', '103', 'TID Component Type');
+INSERT OR REPLACE INTO BCTypeMapping (bc_type, numeric_code, description, project_id) VALUES
+('MIC', '107', 'MIC Component Type', '629F9E29-0B36-4A9E-A2C4-C28969285583'),
+('ALW', '102', 'ALW Component Type', '629F9E29-0B36-4A9E-A2C4-C28969285583'), 
+('TID', '103', 'TID Component Type', '629F9E29-0B36-4A9E-A2C4-C28969285583'),
+('MIC', '107', 'MIC Component Type', '72241A60-CB37-4C99-B2F2-04EB20271124'), 
+('STA', '102', 'STA Component Type', '72241A60-CB37-4C99-B2F2-04EB20271124');
 
 -- Queries for BCTypeMapping
 selectAllMappings:
 SELECT * FROM BCTypeMapping WHERE is_active = 1 ORDER BY bc_type;
 
+selectAllMappingsByProject:
+SELECT * FROM BCTypeMapping WHERE project_id = ? AND is_active = 1 ORDER BY bc_type;
+
 selectMappingByBcType:
 SELECT * FROM BCTypeMapping WHERE bc_type = ? AND is_active = 1;
+
+selectMappingByBcTypeAndProject:
+SELECT * FROM BCTypeMapping WHERE bc_type = ? AND project_id = ? AND is_active = 1;
 
 selectNumericCodeByBcType:
 SELECT numeric_code FROM BCTypeMapping WHERE bc_type = ? AND is_active = 1;
 
+selectNumericCodeByBcTypeAndProject:
+SELECT numeric_code FROM BCTypeMapping WHERE bc_type = ? AND project_id = ? AND is_active = 1;
+
 insertMapping:
-INSERT INTO BCTypeMapping (bc_type, numeric_code, description) 
-VALUES (?, ?, ?);
+INSERT INTO BCTypeMapping (bc_type, numeric_code, description, project_id) 
+VALUES (?, ?, ?, ?);
 
 insertOrReplaceMapping:
-INSERT OR REPLACE INTO BCTypeMapping (bc_type, numeric_code, description, is_active) 
-VALUES (?, ?, ?, 1);
+INSERT OR REPLACE INTO BCTypeMapping (bc_type, numeric_code, description, project_id, is_active) 
+VALUES (?, ?, ?, ?, 1);
 
 updateMapping:
 UPDATE BCTypeMapping SET
-    numeric_code = ?, description = ?, updated_at = strftime('%s', 'now')
+    numeric_code = ?, description = ?, project_id = ?, updated_at = strftime('%s', 'now')
 WHERE bc_type = ?;
 
 deleteMapping:

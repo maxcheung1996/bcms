@@ -3,11 +3,12 @@ CREATE TABLE MasterRoles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role_name TEXT NOT NULL,
     step_code TEXT NOT NULL,
-    bc_type TEXT NOT NULL, -- MIC, ALW, TID (extracted from step_code)
+    bc_type TEXT NOT NULL, -- MIC, ALW, TID, STA (extracted from step_code)
     step_portion INTEGER, -- Portion value from MasterWorkflowSteps for ordering
+    project_id TEXT, -- project identifier for multi-project support
     sync_status TEXT NOT NULL DEFAULT 'SYNCED',
     last_sync_date INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
-    UNIQUE(role_name, step_code)
+    UNIQUE(role_name, step_code, project_id)
 );
 
 -- Initial role-step mappings will be created programmatically by DatabaseManager
@@ -16,39 +17,66 @@ CREATE TABLE MasterRoles (
 selectAllRoles:
 SELECT * FROM MasterRoles ORDER BY role_name, bc_type, step_portion;
 
+selectAllRolesByProject:
+SELECT * FROM MasterRoles WHERE project_id = ? ORDER BY role_name, bc_type, step_portion;
+
 selectStepsByRole:
 SELECT * FROM MasterRoles WHERE role_name = ? ORDER BY bc_type, step_portion;
+
+selectStepsByRoleAndProject:
+SELECT * FROM MasterRoles WHERE role_name = ? AND project_id = ? ORDER BY bc_type, step_portion;
 
 selectRolesByStep:
 SELECT * FROM MasterRoles WHERE step_code = ? ORDER BY role_name;
 
+selectRolesByStepAndProject:
+SELECT * FROM MasterRoles WHERE step_code = ? AND project_id = ? ORDER BY role_name;
+
 selectStepsByRoleAndBcType:
 SELECT * FROM MasterRoles WHERE role_name = ? AND bc_type = ? ORDER BY step_portion;
+
+selectStepsByRoleAndBcTypeAndProject:
+SELECT * FROM MasterRoles WHERE role_name = ? AND bc_type = ? AND project_id = ? ORDER BY step_portion;
 
 selectAvailableRoles:
 SELECT DISTINCT role_name FROM MasterRoles ORDER BY role_name;
 
+selectAvailableRolesByProject:
+SELECT DISTINCT role_name FROM MasterRoles WHERE project_id = ? ORDER BY role_name;
+
 selectAvailableBcTypes:
 SELECT DISTINCT bc_type FROM MasterRoles ORDER BY bc_type;
+
+selectAvailableBcTypesByProject:
+SELECT DISTINCT bc_type FROM MasterRoles WHERE project_id = ? ORDER BY bc_type;
 
 selectStepsByRoleAndPortion:
 SELECT * FROM MasterRoles WHERE role_name = ? AND step_portion <= ? ORDER BY bc_type, step_portion;
 
+selectStepsByRoleAndPortionAndProject:
+SELECT * FROM MasterRoles WHERE role_name = ? AND step_portion <= ? AND project_id = ? ORDER BY bc_type, step_portion;
+
 insertRoleStep:
 INSERT OR REPLACE INTO MasterRoles (
-    role_name, step_code, bc_type, step_portion
-) VALUES (?, ?, ?, ?);
+    role_name, step_code, bc_type, step_portion, project_id
+) VALUES (?, ?, ?, ?, ?);
 
 updateRoleStep:
 UPDATE MasterRoles SET
     bc_type = ?, step_portion = ?, sync_status = ?, last_sync_date = ?
-WHERE role_name = ? AND step_code = ?;
+WHERE role_name = ? AND step_code = ? AND project_id = ?;
 
 deleteRoleStep:
 DELETE FROM MasterRoles WHERE role_name = ? AND step_code = ?;
 
+deleteRoleStepByProject:
+DELETE FROM MasterRoles WHERE role_name = ? AND step_code = ? AND project_id = ?;
+
 deleteRoleStepsByRole:
 DELETE FROM MasterRoles WHERE role_name = ?;
+
+deleteRoleStepsByRoleAndProject:
+DELETE FROM MasterRoles WHERE role_name = ? AND project_id = ?;
 
 deleteAllRoleSteps:
 DELETE FROM MasterRoles;
@@ -56,5 +84,11 @@ DELETE FROM MasterRoles;
 countRoleSteps:
 SELECT COUNT(*) FROM MasterRoles;
 
+countRoleStepsByProject:
+SELECT COUNT(*) FROM MasterRoles WHERE project_id = ?;
+
 countRoleStepsByRole:
 SELECT COUNT(*) FROM MasterRoles WHERE role_name = ?;
+
+countRoleStepsByRoleAndProject:
+SELECT COUNT(*) FROM MasterRoles WHERE role_name = ? AND project_id = ?;

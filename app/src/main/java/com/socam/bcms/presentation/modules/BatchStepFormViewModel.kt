@@ -3,6 +3,7 @@ package com.socam.bcms.presentation.modules
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.domain.AuthManager
 import kotlinx.coroutines.Dispatchers
@@ -93,9 +94,9 @@ class BatchStepFormViewModel(
      */
     private suspend fun loadStepFieldsFromDatabase(stepCode: String, bcType: String): List<BatchStepFieldData> = withContext(Dispatchers.IO) {
         try {
-            // Get workflow step fields
+            // Get workflow step fields filtered by project
             val stepFields = databaseManager.database.workflowStepFieldsQueries
-                .selectFieldsByStep(stepCode)
+                .selectFieldsByStepAndProject(stepCode, BuildConfig.PROJECT_ID)
                 .executeAsList()
             
             Log.d(TAG, "Found ${stepFields.size} fields in database for step: $stepCode")

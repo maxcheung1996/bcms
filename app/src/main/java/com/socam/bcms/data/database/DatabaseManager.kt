@@ -206,22 +206,18 @@ class DatabaseManager private constructor(context: Context) {
             }
             
             if (demoUser == null) {
-                println("DatabaseManager: Creating initial users with plain text passwords...")
+                println("DatabaseManager: Creating initial users with UserProjects support...")
                 
-                // Legacy users
-                createInitialUser("demo", "password", "Client", "Demo User", "demo@socam.com", "Operations")
-                createInitialUser("admin", "admin123", "Client", "System Administrator", "admin@socam.com", "IT")
-                createInitialUser("operator", "operator123", "Client", "System Operator", "operator@socam.com", "Warehouse")
+                // Legacy users (keep for backward compatibility)
+                createInitialUserWithProjects("demo", "password", "Demo User", "demo@socam.com", "Operations",
+                    listOf(BuildConfig.PROJECT_ID to "Client"))
+                createInitialUserWithProjects("admin", "admin123", "System Administrator", "admin@socam.com", "IT",
+                    listOf(BuildConfig.PROJECT_ID to "Client"))
+                createInitialUserWithProjects("operator", "operator123", "System Operator", "operator@socam.com", "Warehouse",
+                    listOf(BuildConfig.PROJECT_ID to "Client"))
                 
-                // New role-based users - use centralized project ID
-                val projectId = BuildConfig.PROJECT_ID
-                createInitialUser("client_user", "Abcd.1234", "Client", "Client User", "client@bcms.com", "Client Services", projectId)
-                createInitialUser("mic_factory_user", "Abcd.1234", "Factory (MIC)", "MIC Factory User", "mic.factory@bcms.com", "MIC Production", projectId)
-                createInitialUser("mic_alw_factory_user", "Abcd.1234", "Factory (MIC-ALW)", "MIC-ALW Factory User", "mic.alw.factory@bcms.com", "MIC-ALW Production", projectId)
-                createInitialUser("mic_tid_factory_user", "Abcd.1234", "Factory (MIC-TID)", "MIC-TID Factory User", "mic.tid.factory@bcms.com", "MIC-TID Production", projectId)
-                createInitialUser("alw_factory_user", "Abcd.1234", "Factory (ALW)", "ALW Factory User", "alw.factory@bcms.com", "ALW Production", projectId)
-                createInitialUser("tid_factory_user", "Abcd.1234", "Factory (TID)", "TID Factory User", "tid.factory@bcms.com", "TID Production", projectId)
-                createInitialUser("contractor_user", "Abcd.1234", "Contractor", "Contractor User", "contractor@bcms.com", "Site Operations", projectId)
+                // Seed production users from 72userlist.json
+                seedProductionUsers()
                 
                 println("DatabaseManager: Initial users created successfully")
             } else {
@@ -232,6 +228,64 @@ class DatabaseManager private constructor(context: Context) {
             println("DatabaseManager: Error seeding initial users: ${e.message}")
             e.printStackTrace()
         }
+    }
+    
+    /**
+     * Seed production users from 72userlist.json data
+     */
+    private fun seedProductionUsers(): Unit {
+        println("DatabaseManager: Seeding production users...")
+        
+        val andersonRoadProject = "629F9E29-0B36-4A9E-A2C4-C28969285583"
+        val wpmqProject = "72241A60-CB37-4C99-B2F2-04EB20271124"
+        
+        // User data from 72userlist.json - only users with project roles
+        val productionUsers = listOf(
+            Triple("sfc5732", "sfc5732", "sfc5732@test.com") to listOf(andersonRoadProject to "Factory(ALW)"),
+            Triple("carolchan", "IT Carol", "carol.chan@shuion.com.hk") to listOf(wpmqProject to "Factory(STA)", andersonRoadProject to "Admin"),
+            Triple("vickyxiao", "vickyxiao", "1234@a.com") to listOf(andersonRoadProject to "Factory(MIC)", andersonRoadProject to "Factory(ALW)", andersonRoadProject to "Factory(TID)", andersonRoadProject to "Factory(MIC-ALW)"),
+            Triple("hai5732", "hai5732", "hai5732@test.com") to listOf(andersonRoadProject to "Factory(MIC)", andersonRoadProject to "Factory(MIC-TID)", andersonRoadProject to "Factory(MIC-ALW)"),
+            Triple("dormanlee124", "Dorman Lee", "dorman.lee124@shuion.com.hk") to listOf(andersonRoadProject to "Contractor"),
+            Triple("itadmin", "IT Admin", "itadmin@itdemo.com") to listOf(wpmqProject to "Admin", andersonRoadProject to "Admin"),
+            Triple("it-alw", "IT ALW", "it-alw@a.com") to listOf(andersonRoadProject to "Factory(ALW)"),
+            Triple("so5731", "so5731", "so5731@test.com") to listOf(andersonRoadProject to "Contractor"),
+            Triple("sfc5731", "sfc5731", "sfc5731@test.com") to listOf(andersonRoadProject to "Factory(ALW)"),
+            Triple("stone", "stone", "abcd@shuion.com.hk") to listOf(andersonRoadProject to "Admin"),
+            Triple("powingyan", "IT YAN", "po.wingyan@shuion.com.hk") to listOf(andersonRoadProject to "Admin"),
+            Triple("it-mic", "IT MIC", "itdev1@shuon.com.hk") to listOf(andersonRoadProject to "Factory(MIC)"),
+            Triple("powingyan1", "powingyan1", "po.wingyan1@shuion.com.hk") to listOf(andersonRoadProject to "Admin"),
+            Triple("hai5731", "hai5731", "hai5731@test.com") to listOf(andersonRoadProject to "Factory(MIC-TID)", andersonRoadProject to "Factory(MIC-ALW)", andersonRoadProject to "Factory(MIC)"),
+            Triple("edmondlee", "Edmond Lee", "edmond.lee@shuion.com.hk") to listOf(andersonRoadProject to "Admin"),
+            Triple("it-con", "Contractor", "it-con@shuion.com.hk") to listOf(andersonRoadProject to "Contractor"),
+            Triple("dormanlee", "Dorman Lee ABC", "dorman.lee@shuion.com.hk") to listOf(andersonRoadProject to "Factory(MIC-TID)"),
+            Triple("itgps", "IT GPS", "bcms.itgps@shuion.com.hk") to listOf(andersonRoadProject to "GpsTracking"),
+            Triple("it-r267", "IT MIC+ALW", "it-r267@shuion.com.hk") to listOf(andersonRoadProject to "Factory(MIC)", andersonRoadProject to "Factory(MIC-ALW)"),
+            Triple("hai5734", "hai5734", "hai5734@test.com") to listOf(andersonRoadProject to "Factory(MIC)"),
+            Triple("it-tid", "IT TID", "it-tid@a.com") to listOf(andersonRoadProject to "Factory(TID)"),
+            Triple("hai5733", "hai5733", "hai5733@test.com") to listOf(andersonRoadProject to "Factory(MIC)", andersonRoadProject to "Factory(MIC-ALW)", andersonRoadProject to "Factory(MIC-TID)"),
+            Triple("mic-r267", "mic r267", "itdev@shuion.com.hk") to listOf(andersonRoadProject to "Factory(MIC-ALW)", andersonRoadProject to "Factory(MIC)"),
+            Triple("kh5732", "kh5732", "kh5732@test.com") to listOf(andersonRoadProject to "Factory(TID)"),
+            Triple("sor267", "sor267", "sor267@test.com") to listOf(andersonRoadProject to "Contractor"),
+            Triple("edwin", "ed", "edwin.chan@shuion.com.hk") to listOf(andersonRoadProject to "Contractor", andersonRoadProject to "Admin", andersonRoadProject to "Client"),
+            Triple("evolution", "evolution", "evolution@shuion.com.hk") to listOf(andersonRoadProject to "GpsTracking"),
+            Triple("lorenlaw", "lorenlaw", "loren.law@shuion.com.hk") to listOf(andersonRoadProject to "Admin"),
+            Triple("soadmin", "SO Demo", "r267@shuion.com.hk") to listOf(andersonRoadProject to "Admin"),
+            Triple("kh5731", "kh5731", "kh5731@test.com") to listOf(andersonRoadProject to "Factory(TID)")
+        )
+        
+        productionUsers.forEach { (userInfo, projectRoles) ->
+            val (username, fullName, email) = userInfo
+            createInitialUserWithProjects(
+                username = username,
+                password = "Abcd.1234",
+                fullName = fullName,
+                email = email,
+                department = "N/A",
+                projectRoles = projectRoles
+            )
+        }
+        
+        println("DatabaseManager: Production users seeded successfully!")
     }
     
     /**
@@ -251,28 +305,33 @@ class DatabaseManager private constructor(context: Context) {
     }
     
     /**
-     * Create initial user with PLAIN TEXT password for stability
+     * Create initial user with PLAIN TEXT password and UserProjects support
      */
-    private fun createInitialUser(
+    private fun createInitialUserWithProjects(
         username: String,
         password: String,
-        role: String,
         fullName: String,
         email: String,
         department: String,
-        projectId: String = BuildConfig.PROJECT_ID // Use centralized project ID from BuildConfig
+        projectRoles: List<Pair<String, String>> // List of (project_id, role_name)
     ): Unit {
         val token = generateToken()
         
-        println("DatabaseManager: Creating user '$username' with plain text password")
+        // Determine primary project and role (prefer BuildConfig.PROJECT_ID if available)
+        val primaryProjectRole = projectRoles.firstOrNull { it.first == BuildConfig.PROJECT_ID }
+            ?: projectRoles.firstOrNull()
+            ?: (BuildConfig.PROJECT_ID to "Client") // Fallback
         
+        println("DatabaseManager: Creating user '$username' with ${projectRoles.size} project(s)")
+        
+        // Create user in User table with primary project/role
         database.userQueries.insertUser(
             username = username,
             password_hash = password,  // Store password as plain text
             salt = "",                // No salt needed
             token = token,
-            role = role,
-            project_id = projectId,
+            role = primaryProjectRole.second,
+            project_id = primaryProjectRole.first,
             full_name = fullName,
             email = email,
             department = department,
@@ -280,7 +339,21 @@ class DatabaseManager private constructor(context: Context) {
             tag_contract_no = "210573"  // Default 6-digit tag contract for 24-char EPC
         )
         
-        println("DatabaseManager: User '$username' created successfully")
+        // Get the user ID that was just created
+        val createdUser = database.userQueries.selectByUsername(username).executeAsOneOrNull()
+        if (createdUser != null) {
+            // Create UserProjects entries for all project-role combinations
+            projectRoles.forEach { (projectId, roleName) ->
+                database.userProjectsQueries.insertUserProject(
+                    user_id = createdUser.id,
+                    project_id = projectId,
+                    role_name = roleName
+                )
+            }
+            println("DatabaseManager: User '$username' created with ${projectRoles.size} project(s)")
+        } else {
+            println("DatabaseManager: ERROR - Failed to retrieve user '$username' after creation")
+        }
     }
     
     /**
@@ -290,16 +363,64 @@ class DatabaseManager private constructor(context: Context) {
         try {
             println("DatabaseManager: Force recreating all users with plain text passwords...")
             database.userQueries.deleteAllUsers()
+            database.userProjectsQueries.deleteAllUserProjects()
             
-            createInitialUser("demo", "password", "USER", "Demo User", "demo@socam.com", "Operations")
-            createInitialUser("admin", "admin123", "ADMIN", "System Administrator", "admin@socam.com", "IT")
-            createInitialUser("operator", "operator123", "OPERATOR", "System Operator", "operator@socam.com", "Warehouse")
+            createInitialUserWithProjects("demo", "password", "Demo User", "demo@socam.com", "Operations",
+                listOf(BuildConfig.PROJECT_ID to "Client"))
+            createInitialUserWithProjects("admin", "admin123", "System Administrator", "admin@socam.com", "IT",
+                listOf(BuildConfig.PROJECT_ID to "Client"))
+            createInitialUserWithProjects("operator", "operator123", "System Operator", "operator@socam.com", "Warehouse",
+                listOf(BuildConfig.PROJECT_ID to "Client"))
             
             println("DatabaseManager: All users recreated successfully")
         } catch (e: Exception) {
             println("DatabaseManager: Error recreating users: ${e.message}")
             e.printStackTrace()
         }
+    }
+    
+    /**
+     * Get user's role for a specific project from UserProjects table
+     * Returns the role name if user has access to the project, null otherwise
+     */
+    fun getUserRoleForProject(userId: Long, projectId: String): String? {
+        return try {
+            database.userProjectsQueries
+                .selectRoleByUserAndProject(userId, projectId)
+                .executeAsOneOrNull()
+        } catch (e: Exception) {
+            println("DatabaseManager: Error getting user role for project: ${e.message}")
+            null
+        }
+    }
+    
+    /**
+     * Get user's role for the current BuildConfig.PROJECT_ID
+     */
+    fun getUserRoleForCurrentProject(userId: Long): String? {
+        return getUserRoleForProject(userId, BuildConfig.PROJECT_ID)
+    }
+    
+    /**
+     * Check if user has access to a specific project
+     */
+    fun userHasProjectAccess(userId: Long, projectId: String): Boolean {
+        return try {
+            val userProject = database.userProjectsQueries
+                .selectUserProjectByUserAndProject(userId, projectId)
+                .executeAsOneOrNull()
+            userProject != null
+        } catch (e: Exception) {
+            println("DatabaseManager: Error checking user project access: ${e.message}")
+            false
+        }
+    }
+    
+    /**
+     * Check if user has access to the current BuildConfig.PROJECT_ID
+     */
+    fun userHasCurrentProjectAccess(userId: Long): Boolean {
+        return userHasProjectAccess(userId, BuildConfig.PROJECT_ID)
     }
     
     /**
@@ -426,22 +547,7 @@ class DatabaseManager private constructor(context: Context) {
                 // Hardcoded project data
                 val projects = listOf(
                     mapOf(
-                        "proj_id" to "FCC5D974-3513-4F2E-8979-13E2867B42EE",
-                        "proj_code" to "KTN",
-                        "proj_name" to "KT Area 29",
-                        "contract_no" to "999999",
-                        "contractor_id" to null,
-                        "contractor_name_en" to null,
-                        "contractor_name_tc" to null,
-                        "contractor_name_sc" to null,
-                        "contract_desc_en" to "NewContract",
-                        "contract_desc_tc" to "新合約",
-                        "contract_desc_sc" to "新合同",
-                        "contract_start_date" to "2022-11-22T00:00:00",
-                        "contract_end_date" to "2099-12-31T00:00:00"
-                    ),
-                    mapOf(
-                        "proj_id" to BuildConfig.PROJECT_ID, // Use centralized project ID
+                        "proj_id" to "629F9E29-0B36-4A9E-A2C4-C28969285583",
                         "proj_code" to "R267",
                         "proj_name" to "Anderson Road R2-6&7",
                         "contract_no" to "20210573",
@@ -454,6 +560,21 @@ class DatabaseManager private constructor(context: Context) {
                         "contract_desc_sc" to "Construction of Public Housing Developments at Anderson Road Quarry Sites R2-6 and R2-7",
                         "contract_start_date" to "2022-10-10T00:00:00",
                         "contract_end_date" to "2024-12-09T00:00:00"
+                    ),
+                    mapOf(
+                        "proj_id" to "72241A60-CB37-4C99-B2F2-04EB20271124",
+                        "proj_code" to "WPMQ",
+                        "proj_name" to "Design and Construction of Western Police Married Quarters",
+                        "contract_no" to "SSJ506",
+                        "contractor_id" to "ba1ca1b7-6f8f-11ed-bf6f-005056acb348",
+                        "contractor_name_en" to "Shui On Building Contractors Limited",
+                        "contractor_name_tc" to "瑞安承建有限公司",
+                        "contractor_name_sc" to "瑞安承建有限公司",
+                        "contract_desc_en" to "Design and Construction of Western Police Married Quarters",
+                        "contract_desc_tc" to "西區已婚警務人員宿舍重建計劃",
+                        "contract_desc_sc" to "西區已婚警務人員宿舍重建計劃",
+                        "contract_start_date" to "2023-05-31T00:00:00",
+                        "contract_end_date" to "2026-09-12T00:00:00"
                     )
                 )
                 
@@ -483,7 +604,7 @@ class DatabaseManager private constructor(context: Context) {
     }
     
     /**
-     * Seed master roles with role-step mappings
+     * Seed master roles with role-step mappings for both projects
      */
     private fun seedMasterRoles(): Unit {
         try {
@@ -492,8 +613,15 @@ class DatabaseManager private constructor(context: Context) {
             if (roleCount == 0L) {
                 println("DatabaseManager: Creating master role-step mappings...")
                 
-                // Role-step mappings based on requirements
-                val roleMappings = mapOf(
+                // Project IDs
+                val andersonRoadProjectId = "629F9E29-0B36-4A9E-A2C4-C28969285583"
+                val wpmqProjectId = "72241A60-CB37-4C99-B2F2-04EB20271124"
+                
+                // ========================================
+                // ANDERSON ROAD PROJECT (629F9E29...)
+                // ========================================
+                
+                val andersonRoadRoleMappings = mapOf(
                     "Client" to listOf(
                         "MIC10", "MIC20", "MIC30", "MIC35", "MIC40", "MIC50", "MIC60",
                         "ALW10", "ALW20", "ALW30", "ALW40",
@@ -507,30 +635,72 @@ class DatabaseManager private constructor(context: Context) {
                     "Contractor" to listOf("MIC50", "MIC60", "ALW30", "ALW40", "TID30", "TID40")
                 )
                 
-                // Step portions for ordering (approximate values based on workflow)
-                val stepPortions = mapOf(
+                val andersonRoadStepPortions = mapOf(
                     "MIC10" to 10, "MIC20" to 20, "MIC30" to 30, "MIC35" to 35, 
                     "MIC40" to 40, "MIC50" to 50, "MIC60" to 60,
                     "ALW10" to 10, "ALW20" to 20, "ALW30" to 30, "ALW40" to 40,
                     "TID10" to 10, "TID20" to 20, "TID30" to 30, "TID40" to 40
                 )
                 
-                // Insert role-step mappings
-                roleMappings.forEach { (roleName, steps) ->
+                // Insert Anderson Road role-step mappings
+                andersonRoadRoleMappings.forEach { (roleName, steps) ->
                     steps.forEach { stepCode ->
                         val bcType = stepCode.substring(0, 3) // Extract MIC, ALW, TID
-                        val portion = stepPortions[stepCode] ?: 0
+                        val portion = andersonRoadStepPortions[stepCode] ?: 0
                         
                         database.masterRolesQueries.insertRoleStep(
                             role_name = roleName,
                             step_code = stepCode,
                             bc_type = bcType,
-                            step_portion = portion.toLong()
+                            step_portion = portion.toLong(),
+                            project_id = andersonRoadProjectId
                         )
                     }
                 }
                 
-                println("DatabaseManager: Master role-step mappings created successfully")
+                // ========================================
+                // WPMQ PROJECT (72241A60...)
+                // ========================================
+                
+                val wpmqRoleMappings = mapOf(
+                    "Admin" to listOf(
+                        "MIC10", "MIC20", "MIC30", "MIC35", "MIC40", "MIC50", "MIC60",
+                        "STA10", "STA20", "STA30", "STA40"
+                    ),
+                    "Client" to listOf(
+                        "MIC10", "MIC20", "MIC30", "MIC35", "MIC40", "MIC50", "MIC60",
+                        "STA10", "STA20", "STA30", "STA40"
+                    ),
+                    "Factory(MIC)" to listOf("MIC10", "MIC20", "MIC30", "MIC35", "MIC40"),
+                    "Factory(STA)" to listOf("STA10", "STA20", "STA30", "STA40"),
+                    "Contractor" to listOf("MIC50", "MIC60", "STA30", "STA40")
+                )
+                
+                // Step portions based on 72micworkflowstep.json
+                val wpmqStepPortions = mapOf(
+                    "MIC10" to 10, "MIC20" to 20, "MIC30" to 30, "MIC35" to 55, 
+                    "MIC40" to 60, "MIC50" to 70, "MIC60" to 80,
+                    "STA10" to 10, "STA20" to 60, "STA30" to 70, "STA40" to 80
+                )
+                
+                // Insert WPMQ role-step mappings
+                wpmqRoleMappings.forEach { (roleName, steps) ->
+                    steps.forEach { stepCode ->
+                        val bcType = stepCode.substring(0, 3) // Extract MIC, STA
+                        val portion = wpmqStepPortions[stepCode] ?: 0
+                        
+                        database.masterRolesQueries.insertRoleStep(
+                            role_name = roleName,
+                            step_code = stepCode,
+                            bc_type = bcType,
+                            step_portion = portion.toLong(),
+                            project_id = wpmqProjectId
+                        )
+                    }
+                }
+                
+                val totalRoleMappings = database.masterRolesQueries.countRoleSteps().executeAsOne()
+                println("DatabaseManager: Master role-step mappings created successfully! Total: $totalRoleMappings")
             } else {
                 println("DatabaseManager: Master roles already exist, skipping creation")
             }
@@ -553,116 +723,210 @@ class DatabaseManager private constructor(context: Context) {
 
             println("DatabaseManager: Seeding workflow step fields...")
 
+            // Project IDs
+            val andersonRoadProjectId = "629F9E29-0B36-4A9E-A2C4-C28969285583"
+            val wpmqProjectId = "72241A60-CB37-4C99-B2F2-04EB20271124"
+
+            // ========================================
+            // ANDERSON ROAD PROJECT (629F9E29...)
+            // ========================================
+
             // ALW10 fields
-            database.workflowStepFieldsQueries.insertStepField("ALW10", "Category", "dropdown", 1, 0, null, "Category", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW10", "Subcategory", "dropdown", 2, 0, null, "Subcategory", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW10", "Serial No.", "text", 3, 0, null, "Serial No.", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW10", "Hinge Supplier", "dropdown", 4, 0, null, "Hinge Supplier", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW10", "Manufacturing Date", "datetime", 5, 0, null, "Manufacturing Date", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW10", "Remark", "text", 6, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW10", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("ALW10", "Category", "dropdown", 1, 0, null, "Category", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW10", "Subcategory", "dropdown", 2, 0, null, "Subcategory", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW10", "Serial No.", "text", 3, 0, null, "Serial No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW10", "Hinge Supplier", "dropdown", 4, 0, null, "Hinge Supplier", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW10", "Manufacturing Date", "datetime", 5, 0, null, "Manufacturing Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW10", "Remark", "text", 6, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW10", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // ALW20 fields
-            database.workflowStepFieldsQueries.insertStepField("ALW20", "Delivery Date", "date", 1, 0, null, "Delivery Date", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW20", "Batch No.", "text", 2, 0, null, "Batch No.", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW20", "Remark", "text", 3, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("ALW20", "Delivery Date", "date", 1, 0, null, "Delivery Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW20", "Batch No.", "text", 2, 0, null, "Batch No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW20", "Remark", "text", 3, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // ALW30 fields
-            database.workflowStepFieldsQueries.insertStepField("ALW30", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW30", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false")
-            database.workflowStepFieldsQueries.insertStepField("ALW30", "Remark", "text", 3, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("ALW30", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW30", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false", andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW30", "Remark", "text", 3, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // ALW40 fields
-            database.workflowStepFieldsQueries.insertStepField("ALW40", "Installation Date", "date", 1, 0, null, "Installation Date", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW40", "Block", "dropdown", 2, 0, null, "Block", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW40", "Floor", "dropdown", 3, 0, null, "Floor", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW40", "Unit", "dropdown", 4, 0, null, "Unit", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW40", "Chip Failure (SI)", "checkbox", 5, 0, null, "Chip Failure (SI)", "false")
-            database.workflowStepFieldsQueries.insertStepField("ALW40", "Remark", "text", 6, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("ALW40", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("ALW40", "Installation Date", "date", 1, 0, null, "Installation Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW40", "Block", "dropdown", 2, 0, null, "Block", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW40", "Floor", "dropdown", 3, 0, null, "Floor", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW40", "Unit", "dropdown", 4, 0, null, "Unit", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW40", "Chip Failure (SI)", "checkbox", 5, 0, null, "Chip Failure (SI)", "false", andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW40", "Remark", "text", 6, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("ALW40", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // MIC10 fields
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Category", "dropdown", 1, 0, null, "Category", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Serial No.", "text", 2, 0, null, "Serial No.", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Edit Serial No.", "text", 3, 0, null, "Edit Serial No.", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Concrete Grade", "dropdown", 4, 0, null, "Concrete Grade", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Product No.", "text", 5, 0, null, "Product No.", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Manufacturing Date", "date", 6, 0, null, "Manufacturing Date", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Block", "dropdown", 7, 0, null, "Block", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Floor", "dropdown", 8, 0, null, "Floor", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Unit", "dropdown", 9, 0, null, "Unit", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Remark", "text", 10, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC10", "Is Completed", "checkbox", 11, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Category", "dropdown", 1, 0, null, "Category", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Serial No.", "text", 2, 0, null, "Serial No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Edit Serial No.", "text", 3, 0, null, "Edit Serial No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Concrete Grade", "dropdown", 4, 0, null, "Concrete Grade", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Product No.", "text", 5, 0, null, "Product No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Manufacturing Date", "date", 6, 0, null, "Manufacturing Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Block", "dropdown", 7, 0, null, "Block", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Floor", "dropdown", 8, 0, null, "Floor", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Unit", "dropdown", 9, 0, null, "Unit", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Remark", "text", 10, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Is Completed", "checkbox", 11, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // MIC20 fields
-            database.workflowStepFieldsQueries.insertStepField("MIC20", "RS Company", "dropdown", 1, 0, null, "RS Company", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC20", "RS Inspection Date", "date", 2, 0, null, "RS Inspection Date", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC20", "Remark", "text", 3, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "RS Company", "dropdown", 1, 0, null, "RS Company", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "RS Inspection Date", "date", 2, 0, null, "RS Inspection Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "Remark", "text", 3, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // MIC30 fields
-            database.workflowStepFieldsQueries.insertStepField("MIC30", "Casting Date", "date", 1, 0, null, "Casting Date", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC30", "Casting Date 2", "date", 2, 0, null, "Casting Date 2", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC30", "Remark", "text", 3, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Casting Date", "date", 1, 0, null, "Casting Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Casting Date 2", "date", 2, 0, null, "Casting Date 2", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Remark", "text", 3, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // MIC35 fields
-            database.workflowStepFieldsQueries.insertStepField("MIC35", "Internal Finishes Date", "date", 1, 0, null, "Internal Finishes Date", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC35", "Remark", "text", 2, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC35", "Is Completed", "checkbox", 3, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("MIC35", "Internal Finishes Date", "date", 1, 0, null, "Internal Finishes Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC35", "Remark", "text", 2, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC35", "Is Completed", "checkbox", 3, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // MIC40 fields
-            database.workflowStepFieldsQueries.insertStepField("MIC40", "Delivery Date", "date", 1, 0, null, "Delivery Date", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC40", "License Plate No.", "text", 2, 0, null, "License Plate No.", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC40", "T Plate No.", "text", 3, 0, null, "T Plate No.", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC40", "Remark", "text", 4, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC40", "Is Completed", "checkbox", 5, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "Delivery Date", "date", 1, 0, null, "Delivery Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "License Plate No.", "text", 2, 0, null, "License Plate No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "T Plate No.", "text", 3, 0, null, "T Plate No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "Remark", "text", 4, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "Is Completed", "checkbox", 5, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // MIC50 fields
-            database.workflowStepFieldsQueries.insertStepField("MIC50", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC50", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false")
-            database.workflowStepFieldsQueries.insertStepField("MIC50", "Remark", "text", 3, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC50", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false", andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Remark", "text", 3, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // MIC60 fields
-            database.workflowStepFieldsQueries.insertStepField("MIC60", "Installation Date", "date", 1, 0, null, "Installation Date", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC60", "Block", "dropdown", 2, 0, null, "Block", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC60", "Floor", "dropdown", 3, 0, null, "Floor", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC60", "Unit", "dropdown", 4, 0, null, "Unit", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC60", "Chip Failure (SI)", "checkbox", 5, 0, null, "Chip Failure (SI)", "false")
-            database.workflowStepFieldsQueries.insertStepField("MIC60", "Remark", "text", 6, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("MIC60", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Installation Date", "date", 1, 0, null, "Installation Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Block", "dropdown", 2, 0, null, "Block", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Floor", "dropdown", 3, 0, null, "Floor", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Unit", "dropdown", 4, 0, null, "Unit", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Chip Failure (SI)", "checkbox", 5, 0, null, "Chip Failure (SI)", "false", andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Remark", "text", 6, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // TID10 fields
-            database.workflowStepFieldsQueries.insertStepField("TID10", "Category", "dropdown", 1, 0, null, "Category", null)
-            database.workflowStepFieldsQueries.insertStepField("TID10", "Serial No.", "text", 2, 0, null, "Serial No.", null)
-            database.workflowStepFieldsQueries.insertStepField("TID10", "Edit Serial No.", "text", 3, 0, null, "Edit Serial No.", null)
-            database.workflowStepFieldsQueries.insertStepField("TID10", "Manufacturing Date", "date", 4, 0, null, "Manufacturing Date", null)
-            database.workflowStepFieldsQueries.insertStepField("TID10", "Remark", "text", 5, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("TID10", "Is Completed", "checkbox", 6, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("TID10", "Category", "dropdown", 1, 0, null, "Category", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID10", "Serial No.", "text", 2, 0, null, "Serial No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID10", "Edit Serial No.", "text", 3, 0, null, "Edit Serial No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID10", "Manufacturing Date", "date", 4, 0, null, "Manufacturing Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID10", "Remark", "text", 5, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID10", "Is Completed", "checkbox", 6, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // TID20 fields
-            database.workflowStepFieldsQueries.insertStepField("TID20", "Delivery Date", "date", 1, 0, null, "Delivery Date", null)
-            database.workflowStepFieldsQueries.insertStepField("TID20", "Batch No.", "text", 2, 0, null, "Batch No.", null)
-            database.workflowStepFieldsQueries.insertStepField("TID20", "Remark", "text", 3, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("TID20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("TID20", "Delivery Date", "date", 1, 0, null, "Delivery Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID20", "Batch No.", "text", 2, 0, null, "Batch No.", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID20", "Remark", "text", 3, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // TID30 fields
-            database.workflowStepFieldsQueries.insertStepField("TID30", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null)
-            database.workflowStepFieldsQueries.insertStepField("TID30", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false")
-            database.workflowStepFieldsQueries.insertStepField("TID30", "Remark", "text", 3, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("TID30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("TID30", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID30", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false", andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID30", "Remark", "text", 3, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", andersonRoadProjectId)
 
             // TID40 fields
-            database.workflowStepFieldsQueries.insertStepField("TID40", "Installation Date", "date", 1, 0, null, "Installation Date", null)
-            database.workflowStepFieldsQueries.insertStepField("TID40", "Block", "dropdown", 2, 0, null, "Block", null)
-            database.workflowStepFieldsQueries.insertStepField("TID40", "Floor", "dropdown", 3, 0, null, "Floor", null)
-            database.workflowStepFieldsQueries.insertStepField("TID40", "Unit", "dropdown", 4, 0, null, "Unit", null)
-            database.workflowStepFieldsQueries.insertStepField("TID40", "Chip Failure (SA)", "checkbox", 5, 0, null, "Chip Failure (SA)", "false")
-            database.workflowStepFieldsQueries.insertStepField("TID40", "Remark", "text", 6, 0, null, "Remark", null)
-            database.workflowStepFieldsQueries.insertStepField("TID40", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false")
+            database.workflowStepFieldsQueries.insertStepField("TID40", "Installation Date", "date", 1, 0, null, "Installation Date", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID40", "Block", "dropdown", 2, 0, null, "Block", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID40", "Floor", "dropdown", 3, 0, null, "Floor", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID40", "Unit", "dropdown", 4, 0, null, "Unit", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID40", "Chip Failure (SA)", "checkbox", 5, 0, null, "Chip Failure (SA)", "false", andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID40", "Remark", "text", 6, 0, null, "Remark", null, andersonRoadProjectId)
+            database.workflowStepFieldsQueries.insertStepField("TID40", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false", andersonRoadProjectId)
+
+            // ========================================
+            // WPMQ PROJECT (72241A60...)
+            // ========================================
+
+            // STA10 fields
+            database.workflowStepFieldsQueries.insertStepField("STA10", "Category", "dropdown", 1, 0, null, "Category", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA10", "Subcategory", "dropdown", 2, 0, null, "Subcategory", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA10", "Serial No.", "text", 3, 0, null, "Serial No.", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA10", "Hinge Supplier", "dropdown", 4, 0, null, "Hinge Supplier", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA10", "Manufacturing Date", "datetime", 5, 0, null, "Manufacturing Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA10", "Remark", "text", 6, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA10", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // STA20 fields
+            database.workflowStepFieldsQueries.insertStepField("STA20", "Delivery Date", "date", 1, 0, null, "Delivery Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA20", "Batch No.", "text", 2, 0, null, "Batch No.", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA20", "Remark", "text", 3, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // STA30 fields
+            database.workflowStepFieldsQueries.insertStepField("STA30", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA30", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false", wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA30", "Remark", "text", 3, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // STA40 fields
+            database.workflowStepFieldsQueries.insertStepField("STA40", "Installation Date", "date", 1, 0, null, "Installation Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA40", "Block", "dropdown", 2, 0, null, "Block", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA40", "Floor", "dropdown", 3, 0, null, "Floor", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA40", "Unit", "dropdown", 4, 0, null, "Unit", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA40", "Chip Failure (SI)", "checkbox", 5, 0, null, "Chip Failure (SI)", "false", wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA40", "Remark", "text", 6, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("STA40", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // MIC10 fields (WPMQ)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Category", "dropdown", 1, 0, null, "Category", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Serial No.", "text", 2, 0, null, "Serial No.", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Edit Serial No.", "text", 3, 0, null, "Edit Serial No.", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Concrete Grade", "dropdown", 4, 0, null, "Concrete Grade", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Product No.", "text", 5, 0, null, "Product No.", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Manufacturing Date", "date", 6, 0, null, "Manufacturing Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Block", "dropdown", 7, 0, null, "Block", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Floor", "dropdown", 8, 0, null, "Floor", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Unit", "dropdown", 9, 0, null, "Unit", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Remark", "text", 10, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC10", "Is Completed", "checkbox", 11, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // MIC20 fields (WPMQ)
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "RS Company", "dropdown", 1, 0, null, "RS Company", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "RS Inspection Date", "date", 2, 0, null, "RS Inspection Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "Remark", "text", 3, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC20", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // MIC30 fields (WPMQ)
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Casting Date", "date", 1, 0, null, "Casting Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Casting Date 2", "date", 2, 0, null, "Casting Date 2", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Remark", "text", 3, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC30", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // MIC35 fields (WPMQ)
+            database.workflowStepFieldsQueries.insertStepField("MIC35", "Internal Finishes Date", "date", 1, 0, null, "Internal Finishes Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC35", "Remark", "text", 2, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC35", "Is Completed", "checkbox", 3, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // MIC40 fields (WPMQ)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "Delivery Date", "date", 1, 0, null, "Delivery Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "License Plate No.", "text", 2, 0, null, "License Plate No.", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "T Plate No.", "text", 3, 0, null, "T Plate No.", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "Remark", "text", 4, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC40", "Is Completed", "checkbox", 5, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // MIC50 fields (WPMQ)
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Site Arrival Date", "date", 1, 0, null, "Site Arrival Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Chip Failure (SA)", "checkbox", 2, 0, null, "Chip Failure (SA)", "false", wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Remark", "text", 3, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC50", "Is Completed", "checkbox", 4, 0, null, "Is Completed", "false", wpmqProjectId)
+
+            // MIC60 fields (WPMQ)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Installation Date", "date", 1, 0, null, "Installation Date", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Block", "dropdown", 2, 0, null, "Block", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Floor", "dropdown", 3, 0, null, "Floor", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Unit", "dropdown", 4, 0, null, "Unit", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Chip Failure (SI)", "checkbox", 5, 0, null, "Chip Failure (SI)", "false", wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Remark", "text", 6, 0, null, "Remark", null, wpmqProjectId)
+            database.workflowStepFieldsQueries.insertStepField("MIC60", "Is Completed", "checkbox", 7, 0, null, "Is Completed", "false", wpmqProjectId)
 
             val totalFields = database.workflowStepFieldsQueries.countStepFields().executeAsOne()
             println("DatabaseManager: Workflow step fields seeded successfully! Total fields: $totalFields")
@@ -848,7 +1112,7 @@ class DatabaseManager private constructor(context: Context) {
                 if (!bcTypeSerialNumberExists(bcType)) {
                     // Get BC type code from mapping table
                     val bcTypeCode = database.bCTypeMappingQueries
-                        .selectNumericCodeByBcType(bcType)
+                        .selectNumericCodeByBcTypeAndProject(bcType, BuildConfig.PROJECT_ID)
                         .executeAsOneOrNull() ?: "404"
                     
                     // Initialize with "0000" - signals need to fetch from server
@@ -875,7 +1139,7 @@ class DatabaseManager private constructor(context: Context) {
     fun getNumericCodeByBcType(bcType: String): String? {
         return try {
             database.bCTypeMappingQueries
-                .selectNumericCodeByBcType(bcType)
+                .selectNumericCodeByBcTypeAndProject(bcType, BuildConfig.PROJECT_ID)
                 .executeAsOneOrNull()
         } catch (e: Exception) {
             println("DatabaseManager: Error getting numeric code for BC type $bcType: ${e.message}")

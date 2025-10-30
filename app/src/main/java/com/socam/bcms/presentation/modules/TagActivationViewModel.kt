@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.R
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.domain.AuthManager
@@ -807,7 +808,7 @@ class TagActivationViewModel(
 
                 // Get BC Type numeric code
                 val bcTypeCode = databaseManager.database.bCTypeMappingQueries
-                    .selectNumericCodeByBcType(bcType).executeAsOneOrNull() ?: "404"
+                    .selectNumericCodeByBcTypeAndProject(bcType, BuildConfig.PROJECT_ID).executeAsOneOrNull() ?: "404"
 
                 // Get current user's contract number
                 val currentUser = authManager.getCurrentUser()

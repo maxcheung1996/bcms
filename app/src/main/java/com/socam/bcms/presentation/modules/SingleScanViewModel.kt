@@ -3,6 +3,7 @@ package com.socam.bcms.presentation.modules
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.socam.bcms.BuildConfig
 import com.socam.bcms.R
 import com.socam.bcms.data.database.DatabaseManager
 import com.socam.bcms.domain.AuthManager
@@ -461,7 +462,7 @@ class SingleScanViewModel(
                 val currentUser = authManager.getCurrentUser()
                 val workflowSteps = if (rfidModule.BCType != null && currentUser != null) {
                     val roleSteps = databaseManager.database.masterRolesQueries
-                        .selectStepsByRoleAndBcType(currentUser.role, rfidModule.BCType)
+                        .selectStepsByRoleAndBcTypeAndProject(currentUser.role, rfidModule.BCType, BuildConfig.PROJECT_ID)
                         .executeAsList()
                     
                     // Get full workflow step details with icon and description (aligned with Batch Process)

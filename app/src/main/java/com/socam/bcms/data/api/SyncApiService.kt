@@ -21,7 +21,6 @@ interface SyncApiService {
         // Use centralized project ID from BuildConfig
         @Deprecated("Use BuildConfig.PROJECT_ID directly instead", ReplaceWith("BuildConfig.PROJECT_ID", "com.socam.bcms.BuildConfig"))
         const val PROJECT_ID = BuildConfig.PROJECT_ID
-        const val CATEGORY_PROJECT_ID = "FCC5D974-3513-4F2E-8979-13E2867B42EE"
     }
     
     // RfidModule Data Endpoints (MIC/ALW/TID)

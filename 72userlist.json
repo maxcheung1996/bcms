@@ -1,0 +1,1152 @@
+[
+    {
+        "UserId": "01047ee4-59d1-4465-81a1-65df8041d9f7",
+        "UserName": "sfc5732",
+        "FullName": "sfc5732",
+        "Team": "N/A",
+        "CompanyId": "f3939c65-704e-11ed-bf6f-005056acb348",
+        "CompanyNameEN": "Shui On Facade Company Limited",
+        "CompanyNameTC": "瑞安幕牆有限公司",
+        "CompanyNameSC": "瑞安幕墙有限公司",
+        "Email": "sfc5732@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "aeb8af41-fffd-4396-8ec0-767f30ef79a4",
+                "RoleName": "Factory(ALW)"
+            }
+        ],
+        "PhoneNumber": "11108114",
+        "Status": "Active"
+    },
+    {
+        "UserId": "022e5fc1-c09c-4268-9661-3c50401bd7ca",
+        "UserName": "carolchan",
+        "FullName": "IT Carol",
+        "Team": "Team C",
+        "CompanyId": "ba1ca1b7-6f8f-11ed-bf6f-005056acb348",
+        "CompanyNameEN": "Shui On Building Contractors Limited",
+        "CompanyNameTC": "瑞安承建有限公司",
+        "CompanyNameSC": "瑞安承建有限公司",
+        "Email": "carol.chan@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "72241A60-CB37-4C99-B2F2-04EB20271124",
+                "ProjName": "Design and Construction of Western Police Married Quarters",
+                "RoleId": "f55430b8-3dbd-4114-8023-34ea0465ebaf",
+                "RoleName": "Factory(STA)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "67001490",
+        "Status": "Active"
+    },
+    {
+        "UserId": "049289f9-0ea7-4fb1-9c4b-945ecf3c8914",
+        "UserName": "vickyxiao",
+        "FullName": "vickyxiao",
+        "Team": "N/A",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "1234@a.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "aeb8af41-fffd-4396-8ec0-767f30ef79a4",
+                "RoleName": "Factory(ALW)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "01dbd9f4-c89a-49e5-9686-5a870051937e",
+                "RoleName": "Factory(TID)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "9db5bf17-21b3-4515-8e63-e7cc863b5580",
+                "RoleName": "Factory(MIC-ALW)"
+            }
+        ],
+        "PhoneNumber": "11223344",
+        "Status": "Active"
+    },
+    {
+        "UserId": "09051a5a-ebe4-49dd-b6f5-00203ed9f689",
+        "UserName": "hai5732",
+        "FullName": "hai5732",
+        "Team": "N/A",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "hai5732@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "32530fe3-1fce-11ee-9ba1-005056acfaf2",
+                "RoleName": "Factory(MIC-TID)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "9db5bf17-21b3-4515-8e63-e7cc863b5580",
+                "RoleName": "Factory(MIC-ALW)"
+            }
+        ],
+        "PhoneNumber": "11108112",
+        "Status": "Active"
+    },
+    {
+        "UserId": "0c025cae-2c3b-4639-a696-86e8b9e44e93",
+        "UserName": "jnlkjn",
+        "FullName": "ljniun",
+        "Team": "qowieur",
+        "CompanyId": "8a60f85d-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "Jacob",
+        "CompanyNameTC": "Jacobs",
+        "CompanyNameSC": "Jacobs",
+        "Email": "qwer@wer.cvs",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "3db4b336-0b18-4c1c-a272-179f560c38a9",
+                "RoleName": "Factory(VPB)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "01dbd9f4-c89a-49e5-9686-5a870051937e",
+                "RoleName": "Factory(TID)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "3db4b336-0b18-4c1c-a272-179f560c38a9",
+                "RoleName": "Factory(VPB)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "01dbd9f4-c89a-49e5-9686-5a870051937e",
+                "RoleName": "Factory(TID)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            }
+        ],
+        "PhoneNumber": "82738473",
+        "Status": "Active"
+    },
+    {
+        "UserId": "0c371363-7601-4ead-a091-6e0cceac703a",
+        "UserName": "dormanlee124",
+        "FullName": "Dorman Lee",
+        "Team": "IT",
+        "CompanyId": "8a60ee4e-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "東成",
+        "CompanyNameTC": "東成",
+        "CompanyNameSC": "東成",
+        "Email": "dorman.lee124@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            }
+        ],
+        "PhoneNumber": "66811124",
+        "Status": "Active"
+    },
+    {
+        "UserId": "0e231944-0e9f-4fce-9bbc-71d34242d829",
+        "UserName": "itadmin",
+        "FullName": "IT Admin",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "itadmin@itdemo.com",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            },
+            {
+                "ProjId": "72241A60-CB37-4C99-B2F2-04EB20271124",
+                "ProjName": "Design and Construction of Western Police Married Quarters",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "16716710",
+        "Status": "Active"
+    },
+    {
+        "UserId": "13bca4d1-4e03-4953-906d-c50e4729d1d3",
+        "UserName": "it-alw",
+        "FullName": "IT ALW",
+        "Team": "IT",
+        "CompanyId": "f3939c65-704e-11ed-bf6f-005056acb348",
+        "CompanyNameEN": "Shui On Facade Company Limited",
+        "CompanyNameTC": "瑞安幕牆有限公司",
+        "CompanyNameSC": "瑞安幕墙有限公司",
+        "Email": "it-alw@a.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "aeb8af41-fffd-4396-8ec0-767f30ef79a4",
+                "RoleName": "Factory(ALW)"
+            }
+        ],
+        "PhoneNumber": "22345679",
+        "Status": "Active"
+    },
+    {
+        "UserId": "144e88a4-0815-4ac8-b3ed-f032790b27ec",
+        "UserName": "so5731",
+        "FullName": "so5731",
+        "Team": "N/A",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "so5731@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            }
+        ],
+        "PhoneNumber": "66775522",
+        "Status": "Active"
+    },
+    {
+        "UserId": "1826d12a-bbd8-43c8-8d90-cf9a3d5d3d4f",
+        "UserName": "sfc5731",
+        "FullName": "sfc5731",
+        "Team": "N/A",
+        "CompanyId": "f3939c65-704e-11ed-bf6f-005056acb348",
+        "CompanyNameEN": "Shui On Facade Company Limited",
+        "CompanyNameTC": "瑞安幕牆有限公司",
+        "CompanyNameSC": "瑞安幕墙有限公司",
+        "Email": "sfc5731@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "aeb8af41-fffd-4396-8ec0-767f30ef79a4",
+                "RoleName": "Factory(ALW)"
+            }
+        ],
+        "PhoneNumber": "11108113",
+        "Status": "Active"
+    },
+    {
+        "UserId": "1c673b72-11ea-4e44-b6bd-44edd7928f43",
+        "UserName": "Harry_Peter",
+        "FullName": "哈你彼德",
+        "Team": "felix team",
+        "CompanyId": "82deebb6-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "",
+        "CompanyNameTC": "",
+        "CompanyNameSC": "",
+        "Email": "harry.peter@p.com",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "01dbd9f4-c89a-49e5-9686-5a870051937e",
+                "RoleName": "Factory(TID)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "2cfcbd52-33df-49a5-ac76-e3d5a693607b",
+                "RoleName": "Factory(PCF)"
+            }
+        ],
+        "PhoneNumber": "67891234",
+        "Status": "Active"
+    },
+    {
+        "UserId": "21284415-ccd7-4cda-9de5-8f75b5d69d87",
+        "UserName": "stone",
+        "FullName": "stone",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "abcd@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "42345678",
+        "Status": "Active"
+    },
+    {
+        "UserId": "27ebd7d9-e86a-425d-807d-5c544a342629",
+        "UserName": "dorman123",
+        "FullName": "Dorman Lee",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "dorman.lee123@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "66811123",
+        "Status": "Active"
+    },
+    {
+        "UserId": "297a5ab0-8867-4e21-b52b-8d08de2fed20",
+        "UserName": "powingyan",
+        "FullName": "IT YAN",
+        "Team": "NA",
+        "CompanyId": "8a60f85d-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "Jacob",
+        "CompanyNameTC": "Jacobs",
+        "CompanyNameSC": "Jacobs",
+        "Email": "po.wingyan@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            }
+        ],
+        "PhoneNumber": "12345611",
+        "Status": "Active"
+    },
+    {
+        "UserId": "2cd571c6-4cff-4cec-8c21-9dfe032f01d9",
+        "UserName": "dorman-2",
+        "FullName": "Dorman Lee-2",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "dorman.lee112@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "66811112",
+        "Status": "Active"
+    },
+    {
+        "UserId": "2e34c898-c0aa-4ffc-ae37-6b05dc4ce586",
+        "UserName": "it-mic",
+        "FullName": "IT MIC",
+        "Team": "IT",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "itdev1@shuon.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            }
+        ],
+        "PhoneNumber": "22345678",
+        "Status": "Active"
+    },
+    {
+        "UserId": "304df781-2c62-4fb0-b982-8867c58088d7",
+        "UserName": "powingyan1",
+        "FullName": "powingyan1",
+        "Team": "NA",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "po.wingyan1@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "12345612",
+        "Status": "Active"
+    },
+    {
+        "UserId": "35fd66e4-64ea-4630-8411-07d815581f3a",
+        "UserName": "hai5731",
+        "FullName": "hai5731",
+        "Team": "N/A",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "hai5731@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "32530fe3-1fce-11ee-9ba1-005056acfaf2",
+                "RoleName": "Factory(MIC-TID)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "9db5bf17-21b3-4515-8e63-e7cc863b5580",
+                "RoleName": "Factory(MIC-ALW)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            }
+        ],
+        "PhoneNumber": "11108111",
+        "Status": "Active"
+    },
+    {
+        "UserId": "4076951d-01f9-46b6-84c0-b067841033af",
+        "UserName": "edmondlee",
+        "FullName": "Edmond Lee",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "edmond.lee@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "62717597",
+        "Status": "Active"
+    },
+    {
+        "UserId": "4213bd0c-fe0f-423e-8eb2-ca78f0c890d4",
+        "UserName": "it-con",
+        "FullName": "Contractor",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "it-con@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            }
+        ],
+        "PhoneNumber": "92345678",
+        "Status": "Active"
+    },
+    {
+        "UserId": "4a7a1e6b-b0a2-42d8-8c54-3b9d8f9777c6",
+        "UserName": "dormanlee",
+        "FullName": "Dorman Lee ABC",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "dorman.lee@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "32530fe3-1fce-11ee-9ba1-005056acfaf2",
+                "RoleName": "Factory(MIC-TID)"
+            }
+        ],
+        "PhoneNumber": "66811673",
+        "Status": "Active"
+    },
+    {
+        "UserId": "4bc748de-89b9-4c34-a7ea-a6b9bdc8a964",
+        "UserName": "wefwef",
+        "FullName": "qwer",
+        "Team": "qwer",
+        "CompanyId": "82deebb6-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "",
+        "CompanyNameTC": "",
+        "CompanyNameSC": "",
+        "Email": "ew@wer.cc",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "18089df7-43c1-42dd-ae0e-f32b79770772",
+                "RoleName": "Factory(VPK)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "2cfcbd52-33df-49a5-ac76-e3d5a693607b",
+                "RoleName": "Factory(PCF)"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            }
+        ],
+        "PhoneNumber": "43212343",
+        "Status": "Active"
+    },
+    {
+        "UserId": "4f3b446e-9dcb-4638-bb79-d27a6c07a542",
+        "UserName": "ascascq",
+        "FullName": "qwcqw",
+        "Team": "87",
+        "CompanyId": "8a60ee4e-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "東成",
+        "CompanyNameTC": "東成",
+        "CompanyNameSC": "東成",
+        "Email": "e@e.cc",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "18089df7-43c1-42dd-ae0e-f32b79770772",
+                "RoleName": "Factory(VPK)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "18089df7-43c1-42dd-ae0e-f32b79770772",
+                "RoleName": "Factory(VPK)"
+            }
+        ],
+        "PhoneNumber": "99993824",
+        "Status": "Active"
+    },
+    {
+        "UserId": "5bbe2f93-8b24-4c01-9a99-bb8906851670",
+        "UserName": "hai5733",
+        "FullName": "hai5733",
+        "Team": "N/A",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "hai5733@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "9db5bf17-21b3-4515-8e63-e7cc863b5580",
+                "RoleName": "Factory(MIC-ALW)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "32530fe3-1fce-11ee-9ba1-005056acfaf2",
+                "RoleName": "Factory(MIC-TID)"
+            }
+        ],
+        "PhoneNumber": "11109033",
+        "Status": "Active"
+    },
+    {
+        "UserId": "67939e56-9b53-4a63-aef2-c6d01a9b4a1f",
+        "UserName": "it-tid",
+        "FullName": "IT TID",
+        "Team": "IT",
+        "CompanyId": "0869e013-6965-4260-b20b-12a7f4825d73",
+        "CompanyNameEN": "Kin Hing Door Engineering Limited",
+        "CompanyNameTC": "建興門業工程有限公司",
+        "CompanyNameSC": "建兴门业工程有限公司",
+        "Email": "it-tid@a.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "01dbd9f4-c89a-49e5-9686-5a870051937e",
+                "RoleName": "Factory(TID)"
+            }
+        ],
+        "PhoneNumber": "22345670",
+        "Status": "Active"
+    },
+    {
+        "UserId": "6e194d7a-f3c3-4b49-b464-6b78e7253c2f",
+        "UserName": "dorman-4",
+        "FullName": "Dorman Lee",
+        "Team": "IT",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "dorman.lee114@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "66811114",
+        "Status": "Active"
+    },
+    {
+        "UserId": "76838865-e5a2-49f7-92ec-09028f94ee42",
+        "UserName": "mic-r267",
+        "FullName": "mic r267",
+        "Team": "MIC",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "itdev@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "9db5bf17-21b3-4515-8e63-e7cc863b5580",
+                "RoleName": "Factory(MIC-ALW)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            }
+        ],
+        "PhoneNumber": "12345678",
+        "Status": "Active"
+    },
+    {
+        "UserId": "7a78d3a3-c1db-40d7-a6e0-28058ea0df6d",
+        "UserName": "itgps",
+        "FullName": "IT GPS",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "bcms.itgps@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "995609c1-1585-11ee-8201-005056ac2efc",
+                "RoleName": "GpsTracking"
+            }
+        ],
+        "PhoneNumber": "60011102",
+        "Status": "Active"
+    },
+    {
+        "UserId": "7e87da8d-53f3-42ca-aef0-a248c3b238c9",
+        "UserName": "it-r267",
+        "FullName": "IT MIC+ALW",
+        "Team": "IT",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "it-r267@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "9db5bf17-21b3-4515-8e63-e7cc863b5580",
+                "RoleName": "Factory(MIC-ALW)"
+            }
+        ],
+        "PhoneNumber": "12345679",
+        "Status": "Active"
+    },
+    {
+        "UserId": "7f7ff93b-dcf9-4c85-a12d-708899fb277a",
+        "UserName": "cdmondlee",
+        "FullName": "cDrom",
+        "Team": "REWQ",
+        "CompanyId": "82deebb6-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "",
+        "CompanyNameTC": "",
+        "CompanyNameSC": "",
+        "Email": "c@cccc.cc",
+        "ProjRoles": [],
+        "PhoneNumber": "77777777",
+        "Status": "Active"
+    },
+    {
+        "UserId": "849ef0e7-ff2a-4247-820c-4d10bb5f1c58",
+        "UserName": "hai5734",
+        "FullName": "hai5734",
+        "Team": "N/A",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "hai5734@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            }
+        ],
+        "PhoneNumber": "11109034",
+        "Status": "Active"
+    },
+    {
+        "UserId": "888d23a8-30b4-47f4-91ed-ad293227524f",
+        "UserName": "dorman-1",
+        "FullName": "Dorman Lee",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "dorman.lee111@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "66811111",
+        "Status": "Active"
+    },
+    {
+        "UserId": "8d68852c-46de-4772-a76f-e06987a47cc3",
+        "UserName": "dorman001",
+        "FullName": "Dorman Lee",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "dorman001@example.com",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "97c17fc1-f6ba-4cde-9119-3ace2f633564",
+                "RoleName": "Client"
+            }
+        ],
+        "PhoneNumber": "60010001",
+        "Status": "Active"
+    },
+    {
+        "UserId": "97754ffb-bc7d-4add-a7ed-e4fe1473cb9a",
+        "UserName": "kh5732",
+        "FullName": "kh5732",
+        "Team": "N/A",
+        "CompanyId": "0869e013-6965-4260-b20b-12a7f4825d73",
+        "CompanyNameEN": "Kin Hing Door Engineering Limited",
+        "CompanyNameTC": "建興門業工程有限公司",
+        "CompanyNameSC": "建兴门业工程有限公司",
+        "Email": "kh5732@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "01dbd9f4-c89a-49e5-9686-5a870051937e",
+                "RoleName": "Factory(TID)"
+            }
+        ],
+        "PhoneNumber": "11108116",
+        "Status": "Active"
+    },
+    {
+        "UserId": "9b94dd19-a4bb-4d7c-a94c-fd302601182f",
+        "UserName": "admondlee",
+        "FullName": "eeejj",
+        "Team": "QWER",
+        "CompanyId": "ba1ca1b7-6f8f-11ed-bf6f-005056acb348",
+        "CompanyNameEN": "Shui On Building Contractors Limited",
+        "CompanyNameTC": "瑞安承建有限公司",
+        "CompanyNameSC": "瑞安承建有限公司",
+        "Email": "admond@a.cc",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "2cfcbd52-33df-49a5-ac76-e3d5a693607b",
+                "RoleName": "Factory(PCF)"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "02a8e1b2-b0c2-44e1-b54d-ff2b7eba5f20",
+                "RoleName": "Factory(MIC)"
+            }
+        ],
+        "PhoneNumber": "22222222",
+        "Status": "Active"
+    },
+    {
+        "UserId": "a9bdc99e-0bc3-4307-a9d5-bfb0f53eebe7",
+        "UserName": "sor267",
+        "FullName": "sor267",
+        "Team": "N/A",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "sor267@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            }
+        ],
+        "PhoneNumber": "88442255",
+        "Status": "Active"
+    },
+    {
+        "UserId": "bad7aa02-373e-41be-80d0-6e8790d7e005",
+        "UserName": "edwin",
+        "FullName": "ed",
+        "Team": "it",
+        "CompanyId": "ba1ca1b7-6f8f-11ed-bf6f-005056acb348",
+        "CompanyNameEN": "Shui On Building Contractors Limited",
+        "CompanyNameTC": "瑞安承建有限公司",
+        "CompanyNameSC": "瑞安承建有限公司",
+        "Email": "edwin.chan@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "97c17fc1-f6ba-4cde-9119-3ace2f633564",
+                "RoleName": "Client"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            },
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "97c17fc1-f6ba-4cde-9119-3ace2f633564",
+                "RoleName": "Client"
+            },
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "96896dd1-a4f9-4c44-97bb-1d2b80f15591",
+                "RoleName": "Contractor"
+            }
+        ],
+        "PhoneNumber": "60719379",
+        "Status": "Active"
+    },
+    {
+        "UserId": "c0320ea6-c268-404f-a25d-aaaa0aa757cb",
+        "UserName": "evolution",
+        "FullName": "evolution",
+        "Team": "N/A",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "evolution@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "995609c1-1585-11ee-8201-005056ac2efc",
+                "RoleName": "GpsTracking"
+            }
+        ],
+        "PhoneNumber": "66811674",
+        "Status": "Active"
+    },
+    {
+        "UserId": "c9e9ea0d-d4ab-43cb-be9a-28602cb3880f",
+        "UserName": "wefwq",
+        "FullName": "w",
+        "Team": "w",
+        "CompanyId": "8a60ee4e-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "東成",
+        "CompanyNameTC": "東成",
+        "CompanyNameSC": "東成",
+        "Email": "werq@ewrq.ccc",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "18089df7-43c1-42dd-ae0e-f32b79770772",
+                "RoleName": "Factory(VPK)"
+            }
+        ],
+        "PhoneNumber": "12344321",
+        "Status": "Active"
+    },
+    {
+        "UserId": "d9aa31be-7836-4af2-af6a-06b311f5aabc",
+        "UserName": "lorenlaw",
+        "FullName": "lorenlaw",
+        "Team": "N/A",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "loren.law@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "15523645",
+        "Status": "Active"
+    },
+    {
+        "UserId": "df3a89ff-693d-4a65-969a-b8788f823f1a",
+        "UserName": "dorman-3",
+        "FullName": "Dorman Lee-3",
+        "Team": "IT",
+        "CompanyId": "a2145b03-662b-11ed-b67a-005056acb348",
+        "CompanyNameEN": "China State Hailong Construction Technology Company Limited",
+        "CompanyNameTC": "廣東海龍建築科技有限公司",
+        "CompanyNameSC": "广东海龙建筑科技有限公司",
+        "Email": "dorman.lee113@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "FCC5D974-3513-4F2E-8979-13E2867B42EE",
+                "ProjName": "KT Area 29",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "66811113",
+        "Status": "Active"
+    },
+    {
+        "UserId": "ee363a34-a62d-437f-9d61-bebab33340af",
+        "UserName": "soadmin",
+        "FullName": "SO Demo",
+        "Team": "IT",
+        "CompanyId": "8a60fd42-6560-11ed-b67a-005056acb348",
+        "CompanyNameEN": "SOCAM",
+        "CompanyNameTC": "瑞安建業",
+        "CompanyNameSC": "瑞安建业",
+        "Email": "r267@shuion.com.hk",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "72fe7d01-d90b-440a-848c-58a7ad74ccfa",
+                "RoleName": "Admin"
+            }
+        ],
+        "PhoneNumber": "90123456",
+        "Status": "Active"
+    },
+    {
+        "UserId": "f0dce902-5dee-490b-8213-803fcfb23eb7",
+        "UserName": "ddmondlee",
+        "FullName": "dd0bb",
+        "Team": "qrewf",
+        "CompanyId": "f3939c65-704e-11ed-bf6f-005056acb348",
+        "CompanyNameEN": "Shui On Facade Company Limited",
+        "CompanyNameTC": "瑞安幕牆有限公司",
+        "CompanyNameSC": "瑞安幕墙有限公司",
+        "Email": "d@d.cc",
+        "ProjRoles": [],
+        "PhoneNumber": "66666666",
+        "Status": "Active"
+    },
+    {
+        "UserId": "f718cad8-c9d0-434a-ae48-8f03ad71eb92",
+        "UserName": "kh5731",
+        "FullName": "kh5731",
+        "Team": "N/A",
+        "CompanyId": "0869e013-6965-4260-b20b-12a7f4825d73",
+        "CompanyNameEN": "Kin Hing Door Engineering Limited",
+        "CompanyNameTC": "建興門業工程有限公司",
+        "CompanyNameSC": "建兴门业工程有限公司",
+        "Email": "kh5731@test.com",
+        "ProjRoles": [
+            {
+                "ProjId": "629F9E29-0B36-4A9E-A2C4-C28969285583",
+                "ProjName": "Anderson Road R2-6&7",
+                "RoleId": "01dbd9f4-c89a-49e5-9686-5a870051937e",
+                "RoleName": "Factory(TID)"
+            }
+        ],
+        "PhoneNumber": "11108115",
+        "Status": "Active"
+    }
+]
